@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-bg-start: #0b0f19;
+  --color-brand-bg-end: #111827;
+  --color-brand-card: rgba(22, 28, 45, 0.6);
+  --color-brand-sidebar: rgba(15, 23, 42, 0.85);
+  --color-brand-accent: #3b82f6;
+  --color-brand-accent-glow: rgba(59, 130, 246, 0.3);
+  --color-brand-text: #f3f4f6;
+  --color-brand-muted: #9ca3af;
+  --color-brand-border: rgba(255, 255, 255, 0.08);
+  --color-brand-cyan: #06b6d4;
+  --color-brand-purple: #a855f7;
+
+  --font-sans: var(--font-inter), sans-serif;
+  --font-display: var(--font-outfit), sans-serif;
+}
+
+:root {
+  --background: #0b0f19;
+  --foreground: #f3f4f6;
+}
+
+body {
+  background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0b0f19 100%);
+  color: var(--foreground);
+  font-family: var(--font-inter), sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0f19;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(22, 28, 45, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-panel-hover:hover {
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+}
