@@ -15,7 +15,7 @@ export interface Module {
 }
 
 export const courseInfo = {
-  title: "Complete Guide to MCP in Python",
+  title: "AI Protocol Hub: The Complete MCP Guide",
   subtitle: "The Ultimate Beginner-to-Advanced Guide for Building MCP Servers & Clients",
   description: "Learn the complete architecture, protocol, deployment, and real-world implementation of MCP (Model Context Protocol) using the Python SDK.",
   difficulty: "Beginner to Advanced",

@@ -1,21 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "Complete Guide to MCP in Python - Interactive Course Platform",
+  title: "AI Protocol Hub: The Complete MCP Guide - Interactive Course Platform",
   description: "Learn Model Context Protocol (MCP) in Python, from beginner foundations to production deployment with hands-on labs, interactive quizzes, and visual guides.",
-  keywords: ["MCP", "Model Context Protocol", "Python", "AI Agents", "LLM Integration", "LMS", "Course"],
+  keywords: ["MCP", "Model Context Protocol", "Python", "AI Agents", "LLM Integration", "LMS", "Course", "AI Protocol Hub"],
   authors: [{ name: "Uditya Narayan Tiwari" }],
 };
 
@@ -25,11 +14,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${outfit.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col font-sans bg-brand-bg-start text-brand-text">
+    <html lang="en" className="h-full antialiased">
+      <body className="min-h-full flex flex-col font-sans bg-white text-slate-dark">
         {children}
       </body>
     </html>

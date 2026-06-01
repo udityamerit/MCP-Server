@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { modulesData, courseInfo, Lesson } from "@/data/courseData";
+import { modulesData, courseInfo } from "@/data/courseData";
 
 export default function LessonsLayout({
   children,
@@ -41,6 +41,8 @@ export default function LessonsLayout({
 
     setCompletedLessons(updated);
     localStorage.setItem("mcp_completed_lessons", JSON.stringify(updated));
+    // Trigger global storage update event to sync slug page
+    window.dispatchEvent(new Event("storage"));
   };
 
   const totalLessons = courseInfo.totalLessons;
@@ -53,12 +55,12 @@ export default function LessonsLayout({
   }, [activeSlug]);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-brand-bg-start">
-      {/* Mobile Header Bar */}
-      <div className="absolute top-0 left-0 right-0 h-16 flex items-center justify-between px-4 glass-panel border-b border-brand-border md:hidden z-30">
+    <div className="flex h-screen overflow-hidden bg-white text-slate-dark antialiased">
+      {/* Mobile Header Bar - Light Spec */}
+      <div className="absolute top-0 left-0 right-0 h-16 flex items-center justify-between px-4 bg-white border-b border-slate-light md:hidden z-30 shadow-sm">
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="p-2 text-brand-text hover:text-white focus:outline-none"
+          className="p-2 text-slate-medium hover:text-slate-dark focus:outline-none"
           aria-label="Toggle navigation menu"
         >
           <svg
@@ -84,40 +86,41 @@ export default function LessonsLayout({
             )}
           </svg>
         </button>
-        <Link href="/" className="font-display font-bold text-sm text-white">
-          🐍 MCP Course Hub
+        <Link href="/" className="font-sans font-bold text-sm text-slate-dark hover:text-blue-primary">
+          🐍 AI Protocol Hub
         </Link>
-        <div className="text-xs font-semibold text-blue-400">
+        <div className="text-xs font-semibold text-blue-primary">
           {progressPercent}% Complete
         </div>
       </div>
 
-      {/* Sidebar Navigation */}
+      {/* Sidebar Navigation - Light Spec */}
       <aside
-        className={`fixed inset-y-0 left-0 z-40 w-72 flex flex-col glass-panel border-r border-brand-border transform transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:shrink-0 ${
+        className={`fixed inset-y-0 left-0 z-40 w-72 flex flex-col bg-white border-r border-slate-light transform transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:shrink-0 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Sidebar Header */}
-        <div className="h-16 flex items-center justify-between px-6 border-b border-brand-border">
-          <Link href="/" className="font-display font-extrabold text-lg text-white hover:text-blue-400 transition-colors">
-            📚 MCP LMS
+        <div className="h-16 flex items-center justify-between px-6 border-b border-slate-light">
+          <Link href="/" className="font-sans font-extrabold text-base text-slate-dark hover:text-blue-primary transition-colors flex items-center gap-2">
+            <span>📚</span>
+            <span>AI Protocol Hub</span>
           </Link>
-          <span className="text-xs font-medium text-brand-muted bg-white/5 px-2 py-1 rounded-md">
+          <span className="text-[10px] font-bold text-slate-medium bg-gray-light border border-slate-light px-2 py-0.5 rounded">
             Python
           </span>
         </div>
 
         {/* Progress Tracker Widget */}
         {mounted && (
-          <div className="p-6 border-b border-brand-border bg-brand-card/30">
+          <div className="p-6 border-b border-slate-light bg-gray-light/50">
             <div className="flex justify-between text-xs font-semibold mb-2">
-              <span className="text-brand-muted">Your Progression</span>
-              <span className="text-blue-400">{completedCount}/{totalLessons} Completed</span>
+              <span className="text-slate-medium">Your Progression / प्रगति</span>
+              <span className="text-blue-primary">{completedCount}/{totalLessons} Completed</span>
             </div>
-            <div className="w-full bg-white/10 rounded-full h-2">
+            <div className="w-full bg-slate-light rounded-full h-2">
               <div
-                className="bg-blue-500 h-2 rounded-full transition-all duration-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]"
+                className="bg-blue-primary h-2 rounded-full transition-all duration-500 shadow-[0_0_6px_rgba(37,99,235,0.3)]"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
@@ -128,7 +131,7 @@ export default function LessonsLayout({
         <nav className="flex-1 overflow-y-auto p-4 space-y-6">
           {modulesData.map((module) => (
             <div key={module.id} className="space-y-2">
-              <h4 className="font-display text-xs font-extrabold tracking-wider text-brand-muted uppercase px-3">
+              <h4 className="font-sans text-[10px] font-extrabold tracking-wider text-slate-medium uppercase px-3">
                 {module.title.split(":")[0]} {/* Render short Module label */}
               </h4>
               <ul className="space-y-1">
@@ -140,10 +143,10 @@ export default function LessonsLayout({
                     <li key={lesson.id}>
                       <Link
                         href={`/lessons/${lesson.slug}`}
-                        className={`group flex items-center justify-between px-3 py-2.5 rounded-xl transition-all ${
+                        className={`group flex items-center justify-between px-3 py-2.5 rounded-lg border-l-4 transition-all ${
                           isActive
-                            ? "bg-blue-600/20 text-white border-l-4 border-blue-500 font-semibold"
-                            : "text-brand-muted hover:text-white hover:bg-white/5"
+                            ? "bg-blue-primary/10 border-l-blue-primary text-blue-primary font-semibold"
+                            : "border-l-transparent text-slate-medium hover:text-slate-dark hover:bg-gray-light"
                         }`}
                       >
                         <div className="flex items-center gap-3 min-w-0">
@@ -153,8 +156,8 @@ export default function LessonsLayout({
                               onClick={(e) => toggleComplete(lesson.slug, e)}
                               className={`flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-colors ${
                                 isCompleted
-                                  ? "bg-blue-500 border-blue-500 text-white"
-                                  : "border-white/20 hover:border-white/40"
+                                  ? "bg-blue-primary border-blue-primary text-white"
+                                  : "border-slate-pale bg-white hover:border-slate-medium"
                               }`}
                               aria-label={isCompleted ? "Mark lesson incomplete" : "Mark lesson complete"}
                             >
@@ -175,11 +178,11 @@ export default function LessonsLayout({
                               )}
                             </button>
                           ) : (
-                            <div className="h-5 w-5 rounded border border-white/10" />
+                            <div className="h-5 w-5 rounded border border-slate-light bg-white" />
                           )}
                           <span className="text-xs truncate">{lesson.title}</span>
                         </div>
-                        <span className="text-[10px] text-brand-muted group-hover:text-brand-text">
+                        <span className="text-[10px] text-slate-medium group-hover:text-slate-dark">
                           {lesson.duration}
                         </span>
                       </Link>
@@ -196,12 +199,12 @@ export default function LessonsLayout({
       {isSidebarOpen && (
         <div
           onClick={() => setIsSidebarOpen(false)}
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 md:hidden"
+          className="fixed inset-0 bg-slate-darkest/60 backdrop-blur-sm z-30 md:hidden"
         />
       )}
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col overflow-y-auto pt-16 md:pt-0">
+      <main className="flex-1 flex flex-col overflow-y-auto pt-16 md:pt-0 bg-gray-light/35">
         <div className="flex-1 flex flex-col relative">
           {children}
         </div>
