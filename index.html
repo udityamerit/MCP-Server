@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+  <!-- Theme Initializer (Pre-render script) -->
+  <script>
+    (function() {
+      const theme = localStorage.getItem('theme') || 'dark';
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Model Context Protocol in Python &mdash; Complete Guide | Uditya Narayan Tiwari</title>
@@ -45,8 +56,21 @@
               light: '#FCD34D',
               glow: 'rgba(245, 158, 11, 0.15)',
             },
-            bgDeep: '#0F172A',    // Slate Deep
-            bgCard: '#1E293B',    // Slate Card
+            bgDeep: 'var(--bg-deep)',    // Slate Deep
+            bgCard: 'var(--bg-card)',    // Slate Card
+            slate: {
+              50: 'var(--slate-50)',
+              100: 'var(--slate-100)',
+              200: 'var(--slate-200)',
+              300: 'var(--slate-300)',
+              400: 'var(--slate-400)',
+              500: 'var(--slate-500)',
+              600: 'var(--slate-600)',
+              700: 'var(--slate-700)',
+              800: 'var(--slate-800)',
+              900: 'var(--slate-900)',
+              950: 'var(--slate-950)',
+            },
           },
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -65,20 +89,73 @@
 
   <!-- Custom CSS Animations & UI Style Overrides -->
   <style>
+    /* Theme variable configuration */
+    :root {
+      /* Theme state: Light Mode */
+      --bg-deep: #F8FAFC;
+      --bg-card: #FFFFFF;
+      
+      --slate-50: #0F172A;
+      --slate-100: #1E293B;
+      --slate-200: #334155;
+      --slate-300: #475569;
+      --slate-400: #64748B;
+      --slate-500: #94A3B8;
+      --slate-600: #CBD5E1;
+      --slate-700: #CBD5E1;
+      --slate-850: #E2E8F0;
+      --slate-800: #E2E8F0;
+      --slate-900: #F1F5F9;
+      --slate-950: #FFFFFF;
+
+      --glass-bg: rgba(255, 255, 255, 0.75);
+      --glass-border: rgba(15, 23, 42, 0.08);
+      
+      --scrollbar-track: #F1F5F9;
+      --scrollbar-thumb: #CBD5E1;
+      --scrollbar-thumb-hover: #94A3B8;
+    }
+    
+    .dark {
+      /* Theme state: Dark Mode */
+      --bg-deep: #0F172A;
+      --bg-card: #1E293B;
+
+      --slate-50: #F8FAFC;
+      --slate-100: #F1F5F9;
+      --slate-200: #E2E8F0;
+      --slate-300: #CBD5E1;
+      --slate-400: #94A3B8;
+      --slate-500: #64748B;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-850: #1E293B;
+      --slate-800: #1E293B;
+      --slate-900: #0F172A;
+      --slate-950: #020617;
+
+      --glass-bg: rgba(30, 41, 59, 0.65);
+      --glass-border: rgba(255, 255, 255, 0.06);
+
+      --scrollbar-track: #0F172A;
+      --scrollbar-thumb: #1E293B;
+      --scrollbar-thumb-hover: #334155;
+    }
+
     /* Custom Scrollbar */
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
     }
     ::-webkit-scrollbar-track {
-      background: #0F172A;
+      background: var(--scrollbar-track);
     }
     ::-webkit-scrollbar-thumb {
-      background: #1E293B;
+      background: var(--scrollbar-thumb);
       border-radius: 4px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #334155;
+      background: var(--scrollbar-thumb-hover);
     }
 
     /* Keyframe Animations */
@@ -153,7 +230,7 @@
       stroke: #22C55E !important;
       stroke-width: 3px !important;
       filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.4));
-      fill: #1E293B !important;
+      fill: var(--bg-card) !important;
     }
 
     /* SVG Typography Mapping overrides */
@@ -177,10 +254,10 @@
 
     /* Glass card class */
     .glass-card {
-      background: rgba(30, 41, 59, 0.65);
+      background: var(--glass-bg);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--glass-border);
     }
 
     /* Code Block token highlights */
@@ -190,6 +267,138 @@
     .cm { color: #546E7A; font-style: italic; } /* comment */
     .dc { color: #F78C6C; } /* decorator */
     .cl { color: #FFCB6B; } /* class */
+
+    /* Headings & Text-white overrides in Light Mode */
+    html:not(.dark) .text-white {
+      color: #0F172A !important;
+    }
+    pre .text-white, .code-dark-panel .text-white {
+      color: #FFFFFF !important;
+    }
+    
+    /* Code blocks, terminals, and panels dynamically adapt background and borders */
+    pre, .code-dark-panel, [class*="bg-slate-950"], .font-mono.text-xs.text-slate-450 {
+      background-color: var(--slate-900) !important; /* Slate 100 in light mode, Slate 900 in dark mode */
+      border-color: var(--slate-800) !important;      /* Slate 200 in light mode, Slate 800 in dark mode */
+    }
+    
+    /* Ensure that elements with absolute text-white class inside pre/code elements also stay legible */
+    pre .text-white, .code-dark-panel .text-white {
+      color: var(--slate-50) !important;
+    }
+
+    /* Inline code blocks style */
+    code:not(pre code) {
+      background-color: var(--slate-900) !important;
+      color: var(--slate-200) !important;
+      padding: 0.15rem 0.35rem;
+      border-radius: 0.375rem;
+      font-size: 0.875em;
+    }
+
+    /* Soften background glows in Light Mode */
+    html:not(.dark) .animate-glow-pulse {
+      opacity: 0.05 !important;
+    }
+    
+    /* SVG overrides for diagram visibility in light mode */
+    html:not(.dark) svg.arch-svg rect {
+      fill: #FFFFFF !important;
+      stroke: #CBD5E1 !important;
+    }
+    html:not(.dark) svg.arch-svg rect.active-node {
+      fill: #FFFFFF !important;
+      stroke: #22C55E !important;
+      stroke-width: 3px !important;
+    }
+    html:not(.dark) svg.arch-svg text {
+      fill: #0F172A !important;
+    }
+    html:not(.dark) svg.arch-svg text[fill="#64748B"] {
+      fill: #475569 !important;
+    }
+    html:not(.dark) svg.arch-svg path {
+      stroke: #94A3B8 !important;
+    }
+    html:not(.dark) svg.arch-svg path.path-upstream-active {
+      stroke: #16A34A !important;
+    }
+    html:not(.dark) svg.arch-svg path.path-downstream-active {
+      stroke: #0891B2 !important;
+    }
+    
+    /* SVG marker arrowheads color overrides for theme matching */
+    html:not(.dark) #arrow path {
+      fill: #94A3B8 !important;
+    }
+    html:not(.dark) #arrow-active path {
+      fill: #16A34A !important;
+    }
+    html:not(.dark) #arrow-active-downstream path {
+      fill: #0891B2 !important;
+    }
+
+    /* Text logo and title gradient overrides in light mode */
+    html:not(.dark) .logo-gradient-text {
+      background: none !important;
+      color: #0F172A !important;
+      -webkit-text-fill-color: #0F172A !important;
+    }
+    html:not(.dark) .hero-gradient-text {
+      background: none !important;
+      color: #0F172A !important;
+      -webkit-text-fill-color: transparent !important;
+      background-image: linear-gradient(to right, #0F172A, #334155, #22C55E) !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+    }
+
+    /* Syntax highlighting overrides in Light Mode */
+    html:not(.dark) .kw { color: #7C3AED !important; font-weight: 600; } /* keyword - Purple */
+    html:not(.dark) .fn { color: #2563EB !important; } /* function - Blue */
+    html:not(.dark) .st { color: #16A34A !important; } /* string - Green */
+    html:not(.dark) .cm { color: #64748B !important; font-style: italic; } /* comment - Slate 550 */
+    html:not(.dark) .dc { color: #EA580C !important; } /* decorator - Orange */
+    html:not(.dark) .cl { color: #D97706 !important; } /* class - Amber */
+
+    /* Severity and Muted text contrast fixes in Light Mode */
+    html:not(.dark) .text-accent-light {
+      color: #16A34A !important; /* Emerald 600 */
+    }
+    html:not(.dark) .text-neon-light {
+      color: #4F46E5 !important; /* Indigo 600 */
+    }
+    html:not(.dark) .text-gold-light {
+      color: #D97706 !important; /* Amber 600 */
+    }
+    html:not(.dark) .text-red-400 {
+      color: #DC2626 !important; /* Red 600 */
+    }
+    html:not(.dark) .text-yellow-400 {
+      color: #D97706 !important; /* Amber 600 */
+    }
+    html:not(.dark) .text-cyan-400 {
+      color: #0891B2 !important; /* Cyan 600 */
+    }
+    html:not(.dark) .text-indigo-400 {
+      color: #4F46E5 !important; /* Indigo 600 */
+    }
+
+    /* Hover and Group Hover text visibility overrides in Light Mode */
+    html:not(.dark) .hover\:text-white:hover {
+      color: #0F172A !important;
+    }
+    html:not(.dark) .group:hover .group-hover\:text-white {
+      color: #0F172A !important;
+    }
+
+    /* Console outputs & payload loggers styling in Light Mode */
+    html:not(.dark) #arch-step-payload,
+    html:not(.dark) #jsonrpc-code-viewer {
+      color: #047857 !important; /* Emerald 700 */
+      background-color: #F8FAFC !important;
+      border-color: #E2E8F0 !important;
+    }
   </style>
 </head>
 <body class="bg-bgDeep text-slate-200 font-sans antialiased overflow-x-hidden">
@@ -209,13 +418,13 @@
         <span class="w-3.5 h-3.5 rounded-full bg-accent shadow-neonAccent relative flex items-center justify-center">
           <span class="absolute inline-flex h-full w-full rounded-full bg-accent opacity-75 animate-ping"></span>
         </span>
-        <span class="bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent group-hover:to-accent-light transition-all duration-300">MCP in Python</span>
+        <span class="logo-gradient-text bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent group-hover:to-accent-light transition-all duration-300">MCP in Python</span>
       </a>
 
       <!-- Desktop Links -->
       <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
         <a href="#motivation" class="hover:text-white transition-colors cursor-pointer">Motivation</a>
-        <a href="#architecture" class="hover:text-white transition-colors cursor-pointer">Architecture</a>
+        <a href="architectures.html" class="hover:text-white transition-colors cursor-pointer">Architecture</a>
         <a href="#primitives" class="hover:text-white transition-colors cursor-pointer">Primitives</a>
         <a href="#transports" class="hover:text-white transition-colors cursor-pointer">Transports</a>
         <a href="#projects" class="hover:text-white transition-colors cursor-pointer">Projects</a>
@@ -224,11 +433,22 @@
 
       <!-- CTA -->
       <div class="hidden md:flex items-center gap-4">
+        <!-- Theme Toggle Button -->
+        <button id="theme-toggle" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition-all cursor-pointer mr-2 flex items-center justify-center" aria-label="Toggle Theme">
+          <!-- Moon Icon (shows in light mode) -->
+          <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+          <!-- Sun Icon (shows in dark mode) -->
+          <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M14 12a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+        </button>
         <a href="https://github.com/udityamerit/Complete-Guide-to-MCP-in-Python" target="_blank" rel="noopener" class="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors mr-2 cursor-pointer">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
           Repository
         </a>
-        <a href="#newsletter" class="px-5 py-2.5 bg-accent hover:bg-accent-light text-bgDeep font-bold text-sm rounded-xl transition-all hover:-translate-y-0.5 shadow-neonAccent hover:shadow-lg cursor-pointer">
+        <a href="#newsletter" class="px-5 py-2.5 bg-accent hover:bg-accent-light text-[#0F172A] font-bold text-sm rounded-xl transition-all hover:-translate-y-0.5 shadow-neonAccent hover:shadow-lg cursor-pointer">
           Get Updates
         </a>
       </div>
@@ -243,7 +463,7 @@
     <div class="hidden max-h-0 overflow-hidden transition-all duration-300 px-6 py-4 border-t border-slate-800 bg-bgDeep" id="mobile-nav">
       <ul class="flex flex-col gap-4 font-medium text-slate-400">
         <li><a href="#motivation" class="block py-2 hover:text-white transition-colors mobile-link cursor-pointer">Motivation</a></li>
-        <li><a href="#architecture" class="block py-2 hover:text-white transition-colors mobile-link cursor-pointer">Architecture</a></li>
+        <li><a href="architectures.html" class="block py-2 hover:text-white transition-colors mobile-link cursor-pointer">Architecture</a></li>
         <li><a href="#primitives" class="block py-2 hover:text-white transition-colors mobile-link cursor-pointer">Primitives</a></li>
         <li><a href="#transports" class="block py-2 hover:text-white transition-colors mobile-link cursor-pointer">Transports</a></li>
         <li><a href="#projects" class="block py-2 hover:text-white transition-colors mobile-link cursor-pointer">Projects</a></li>
@@ -253,9 +473,22 @@
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
             GitHub Repository
           </a>
-          <a href="#newsletter" class="w-full text-center py-2.5 bg-accent text-bgDeep font-bold rounded-xl mobile-link cursor-pointer">
+          <a href="#newsletter" class="w-full text-center py-2.5 bg-accent text-[#0F172A] font-bold rounded-xl mobile-link cursor-pointer">
             Get Updates
           </a>
+        </li>
+        <li class="pt-2 border-t border-slate-800 flex items-center justify-between">
+          <span class="text-sm font-medium text-slate-400">Appearance</span>
+          <button id="mobile-theme-toggle" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-all cursor-pointer flex items-center justify-center" aria-label="Toggle Theme">
+            <!-- Moon Icon (shows in light mode) -->
+            <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+            <!-- Sun Icon (shows in dark mode) -->
+            <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M14 12a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </button>
         </li>
       </ul>
     </div>
@@ -278,15 +511,15 @@
           </div>
           <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-white mb-6 leading-[1.05]">
             Model Context<br>
-            <span class="bg-gradient-to-r from-white via-slate-100 to-accent bg-clip-text text-transparent">Protocol in Python</span>
+            <span class="hero-gradient-text bg-gradient-to-r from-white via-slate-100 to-accent bg-clip-text text-transparent">Protocol in Python</span>
           </h1>
           <p class="text-slate-400 text-lg leading-relaxed max-w-xl mb-8 font-light">
             A comprehensive, production-grade guide to Anthropic's Model Context Protocol (MCP). Master server primitives, transport layers, and orchestrate custom AI memory architectures.
           </p>
           
           <div class="flex flex-col sm:flex-row gap-4 mb-12">
-            <a href="https://github.com/udityamerit/Complete-Guide-to-MCP-in-Python" target="_blank" rel="noopener" class="px-8 py-4 bg-accent hover:bg-accent-light text-bgDeep font-bold text-base rounded-xl transition-all shadow-neonAccent hover:shadow-lg hover:-translate-y-0.5 text-center flex items-center justify-center gap-3 cursor-pointer">
-              <svg class="w-5 h-5 text-bgDeep" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            <a href="https://github.com/udityamerit/Complete-Guide-to-MCP-in-Python" target="_blank" rel="noopener" class="px-8 py-4 bg-accent hover:bg-accent-light text-[#0F172A] font-bold text-base rounded-xl transition-all shadow-neonAccent hover:shadow-lg hover:-translate-y-0.5 text-center flex items-center justify-center gap-3 cursor-pointer">
+              <svg class="w-5 h-5 text-[#0F172A]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
               Clone Guide Repo
             </a>
             <a href="#projects" class="px-8 py-4 bg-slate-800 hover:bg-slate-700/80 border border-slate-700 text-white font-semibold text-base rounded-xl transition-all hover:-translate-y-0.5 text-center flex items-center justify-center gap-2 group cursor-pointer">
@@ -411,6 +644,106 @@ mcp = <span class="cl">FastMCP</span>(<span class="st">"weather"</span>)
       </div>
     </section>
 
+    <!-- ==================== HISTORICAL TIMELINE SECTION ==================== -->
+    <section class="reveal max-w-7xl mx-auto px-6 py-20 border-t border-slate-900" id="timeline">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-accent/10 border border-accent/20 text-accent-light">
+          Chronology &amp; Milestones
+        </span>
+        <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-white mt-4 mb-4">
+          The Journey of MCP
+        </h2>
+        <p class="text-slate-400 text-base leading-relaxed font-light">
+          From a personal developer utility solving context transfer limitations to a standard infrastructure integrated by major industry players.
+        </p>
+      </div>
+
+      <div class="relative max-w-5xl mx-auto">
+        <!-- Vertical Center Line -->
+        <div class="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-slate-800"></div>
+
+        <!-- Milestone 1 -->
+        <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          <div class="md:text-right flex flex-col justify-center pr-0 md:pr-12 order-1 md:order-none">
+            <span class="text-xs font-mono font-bold text-accent uppercase tracking-wider">Conception Phase</span>
+            <h3 class="font-display font-extrabold text-2xl text-white mt-2 mb-3">Origins at Anthropic</h3>
+            <p class="text-sm text-slate-400 leading-relaxed font-light">
+              Conceived by core engineers David Soria Parra and Justin Spahr-Summers. The protocol was born out of Soria Parra's personal frustration with copy-pasting code snippets, shell logs, and workspace file details back and forth into Claude.
+            </p>
+          </div>
+          <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-slate-950 border-4 border-slate-700 flex items-center justify-center z-10 animate-pulse">
+            <span class="w-2 h-2 rounded-full bg-accent"></span>
+          </div>
+          <div class="flex flex-col justify-center pl-0 md:pl-12">
+            <div class="glass-card p-5 rounded-2xl border border-slate-800 inline-block max-w-xs md:max-w-none">
+              <span class="font-mono text-[10px] font-bold text-slate-400">CONTEXT LIMITATION</span>
+              <p class="text-[11px] text-slate-500 mt-1 leading-relaxed">Manual buffer exchanges between the developer's shell and conversational models represented a key latency bottleneck.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestone 2 -->
+        <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          <div class="flex flex-col justify-center pr-0 md:pr-12 md:items-end order-2 md:order-none">
+            <div class="glass-card p-5 rounded-2xl border border-slate-800 inline-block max-w-xs md:max-w-none">
+              <span class="font-mono text-[10px] font-bold text-slate-400">OPEN SPECIFICATION</span>
+              <p class="text-[11px] text-slate-500 mt-1 leading-relaxed">Public release of Python &amp; TypeScript SDKs, establishing STDIO subprocess patterns for agent host links.</p>
+            </div>
+          </div>
+          <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-slate-950 border-4 border-slate-700 flex items-center justify-center z-10">
+            <span class="w-2 h-2 rounded-full bg-neon"></span>
+          </div>
+          <div class="flex flex-col justify-center pl-0 md:pl-12">
+            <span class="text-xs font-mono font-bold text-neon uppercase tracking-wider">November 2024</span>
+            <h3 class="font-display font-extrabold text-2xl text-white mt-2 mb-3">Official Public Launch</h3>
+            <p class="text-sm text-slate-400 leading-relaxed font-light">
+              Anthropic officially open-sources the Model Context Protocol. By publishing the core specifications alongside open libraries, the community began decoupling LLM orchestrators from custom API integration wrappers.
+            </p>
+          </div>
+        </div>
+
+        <!-- Milestone 3 -->
+        <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          <div class="md:text-right flex flex-col justify-center pr-0 md:pr-12 order-1 md:order-none">
+            <span class="text-xs font-mono font-bold text-gold uppercase tracking-wider">November 2025</span>
+            <h3 class="font-display font-extrabold text-2xl text-white mt-2 mb-3">Modular Extensions v1.1</h3>
+            <p class="text-sm text-slate-400 leading-relaxed font-light">
+              One year following launch, the maintainers released the first major update to the MCP spec. This added structured progress tracking patterns, dynamic resources subscriptions, and critical security handshake guidelines.
+            </p>
+          </div>
+          <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-slate-950 border-4 border-slate-700 flex items-center justify-center z-10">
+            <span class="w-2 h-2 rounded-full bg-gold"></span>
+          </div>
+          <div class="flex flex-col justify-center pl-0 md:pl-12">
+            <div class="glass-card p-5 rounded-2xl border border-slate-800 inline-block max-w-xs md:max-w-none">
+              <span class="font-mono text-[10px] font-bold text-slate-400">SPEC REFINEMENTS</span>
+              <p class="text-[11px] text-slate-500 mt-1 leading-relaxed">Introduction of structured task updates and client-approved command validations to reduce model execution risks.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestone 4 -->
+        <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="flex flex-col justify-center pr-0 md:pr-12 md:items-end order-2 md:order-none">
+            <div class="glass-card p-5 rounded-2xl border border-slate-800 inline-block max-w-xs md:max-w-none">
+              <span class="font-mono text-[10px] font-bold text-slate-400">GLOBAL STANDARD</span>
+              <p class="text-[11px] text-slate-500 mt-1 leading-relaxed">Cross-industry integration with unified client implementations from Anthropic, OpenAI, AWS, and Google.</p>
+            </div>
+          </div>
+          <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-slate-950 border-4 border-slate-700 flex items-center justify-center z-10 animate-pulse">
+            <span class="w-2 h-2 rounded-full bg-accent"></span>
+          </div>
+          <div class="flex flex-col justify-center pl-0 md:pl-12">
+            <span class="text-xs font-mono font-bold text-accent uppercase tracking-wider">March 2026</span>
+            <h3 class="font-display font-extrabold text-2xl text-white mt-2 mb-3">Enterprise Scale Milestone</h3>
+            <p class="text-sm text-slate-400 leading-relaxed font-light">
+              MCP records over 97 million monthly SDK downloads. The community catalog of open-source servers expands beyond 5,800 verified packages. MCP becomes standard infrastructure for agentic AI orchestration.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ==================== ARCHITECTURE SECTION ==================== -->
     <section class="reveal max-w-7xl mx-auto px-6 py-20 border-t border-slate-900" id="architecture">
       <div class="text-center max-w-3xl mx-auto mb-16">
@@ -427,7 +760,7 @@ mcp = <span class="cl">FastMCP</span>(<span class="st">"weather"</span>)
 
       <!-- Architecture Selector Tabs -->
       <div class="flex flex-wrap items-center justify-center gap-4 mb-8">
-        <button onclick="switchArchitecture('stdio', this)" class="arch-tab-btn px-6 py-3 rounded-xl font-display font-bold text-sm bg-accent text-bgDeep border border-accent transition-all cursor-pointer">
+        <button onclick="switchArchitecture('stdio', this)" class="arch-tab-btn px-6 py-3 rounded-xl font-display font-bold text-sm bg-accent text-[#0F172A] border border-accent transition-all cursor-pointer">
           Local STDIO Subprocess
         </button>
         <button onclick="switchArchitecture('sse', this)" class="arch-tab-btn px-6 py-3 rounded-xl font-display font-bold text-sm bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-all cursor-pointer">
@@ -612,7 +945,7 @@ mcp = <span class="cl">FastMCP</span>(<span class="st">"weather"</span>)
             <!-- Playback Controls -->
             <div class="flex items-center justify-center gap-4 mt-6 relative z-10">
               <button onclick="timelineController('prev')" class="px-4 py-2 bg-slate-900 border border-slate-800 text-slate-400 hover:text-white rounded-lg text-xs font-semibold cursor-pointer">&larr; Back</button>
-              <button id="btn-play-pause-arch" onclick="timelineController('toggle')" class="px-5 py-2 bg-accent hover:bg-accent-light text-bgDeep font-bold rounded-lg text-xs cursor-pointer shadow-neonAccent">Start Particle Flow</button>
+              <button id="btn-play-pause-arch" onclick="timelineController('toggle')" class="px-5 py-2 bg-accent hover:bg-accent-light text-[#0F172A] font-bold rounded-lg text-xs cursor-pointer shadow-neonAccent">Start Particle Flow</button>
               <button onclick="timelineController('next')" class="px-4 py-2 bg-slate-900 border border-slate-800 text-slate-400 hover:text-white rounded-lg text-xs font-semibold cursor-pointer">Next Stage &rarr;</button>
               <button onclick="timelineController('reset')" class="px-3 py-2 bg-slate-900 border border-slate-800 text-slate-500 hover:text-white rounded-lg text-xs cursor-pointer">Reset</button>
             </div>
@@ -656,7 +989,7 @@ mcp = <span class="cl">FastMCP</span>(<span class="st">"weather"</span>)
 
       <!-- Interactive Tab controls -->
       <div class="flex flex-wrap items-center justify-center gap-4 mb-8">
-        <button onclick="switchPrimitive('tools', this)" class="tab-btn px-6 py-3 rounded-xl font-display font-bold text-sm bg-accent text-bgDeep border border-accent transition-all flex items-center gap-2 cursor-pointer">
+        <button onclick="switchPrimitive('tools', this)" class="tab-btn px-6 py-3 rounded-xl font-display font-bold text-sm bg-accent text-[#0F172A] border border-accent transition-all flex items-center gap-2 cursor-pointer">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -905,7 +1238,7 @@ mcp = <span class="cl">FastMCP</span>(<span class="st">"analysis-booster"</span>
 
         <!-- Streamable HTTP Card -->
         <div class="glass-card rounded-2xl p-8 border border-accent/20 hover:border-accent/40 shadow-neonAccent/5 transition-all group flex flex-col justify-between relative">
-          <div class="absolute top-4 right-4 bg-accent text-bgDeep text-[9px] font-extrabold tracking-wider uppercase px-2.5 py-1 rounded-full shadow">
+          <div class="absolute top-4 right-4 bg-accent text-[#0F172A] text-[9px] font-extrabold tracking-wider uppercase px-2.5 py-1 rounded-full shadow">
             Recommended
           </div>
           <div>
@@ -1151,6 +1484,77 @@ Content-Type: application/json
           </div>
         </div>
       </div>
+
+      <!-- Community Registry Showcase -->
+      <div class="mt-12 glass-card rounded-[24px] p-6 lg:p-8 border border-slate-800">
+        <h4 class="font-display font-bold text-lg text-white mb-4 flex items-center gap-2">
+          <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+          Community MCP Server Registry Catalog
+        </h4>
+        <p class="text-sm text-slate-400 leading-relaxed mb-6 font-light">
+          Expose databases, system browsers, developer APIs, or cloud platforms directly to your AI clients using pre-built community packages launched via the <code>uvx</code> tool runner.
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Item 1: Database -->
+          <div class="p-5 bg-slate-950/40 border border-slate-900 rounded-xl flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-mono font-semibold text-accent-light uppercase block mb-1">Databases</span>
+              <h5 class="font-display font-bold text-sm text-white mb-2">PostgreSQL Server</h5>
+              <p class="text-[11px] text-slate-500 font-light mb-4 leading-relaxed">
+                Inspect table schemas, query structures, and select data tables directly via natural dialogue.
+              </p>
+            </div>
+            <div class="bg-slate-950/80 p-2.5 rounded font-mono text-[9px] text-slate-400 overflow-x-auto select-all">
+              uvx mcp-server-postgres --db-url &lt;url&gt;
+            </div>
+          </div>
+
+          <!-- Item 2: Developer Tooling -->
+          <div class="p-5 bg-slate-950/40 border border-slate-900 rounded-xl flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-mono font-semibold text-neon-light uppercase block mb-1">Developer APIs</span>
+              <h5 class="font-display font-bold text-sm text-white mb-2">GitHub Integration</h5>
+              <p class="text-[11px] text-slate-500 font-light mb-4 leading-relaxed">
+                Review branches, fetch diff files, inspect issues, and open pull requests programmatically.
+              </p>
+            </div>
+            <div class="bg-slate-950/80 p-2.5 rounded font-mono text-[9px] text-slate-400 overflow-x-auto select-all">
+              uvx mcp-server-github --token &lt;key&gt;
+            </div>
+          </div>
+
+          <!-- Item 3: OS & System -->
+          <div class="p-5 bg-slate-950/40 border border-slate-900 rounded-xl flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-mono font-semibold text-gold-light uppercase block mb-1">OS &amp; Browsers</span>
+              <h5 class="font-display font-bold text-sm text-white mb-2">Puppeteer Browser</h5>
+              <p class="text-[11px] text-slate-500 font-light mb-4 leading-relaxed">
+                Expose a headless chromium browser to take screenshots, scrape articles, and click buttons.
+              </p>
+            </div>
+            <div class="bg-slate-950/80 p-2.5 rounded font-mono text-[9px] text-slate-400 overflow-x-auto select-all">
+              uvx mcp-server-puppeteer
+            </div>
+          </div>
+
+          <!-- Item 4: File Systems -->
+          <div class="p-5 bg-slate-950/40 border border-slate-900 rounded-xl flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-mono font-semibold text-white uppercase block mb-1">Local Context</span>
+              <h5 class="font-display font-bold text-sm text-white mb-2">Local File System</h5>
+              <p class="text-[11px] text-slate-500 font-light mb-4 leading-relaxed">
+                Securely bind directory folders, allowing agents to read file listings and edit path lines.
+              </p>
+            </div>
+            <div class="bg-slate-950/80 p-2.5 rounded font-mono text-[9px] text-slate-400 overflow-x-auto select-all">
+              uvx mcp-server-filesystem &lt;path&gt;
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- ==================== PACKAGING & DEPLOYMENT ==================== -->
@@ -1201,6 +1605,108 @@ Content-Type: application/json
                 <span><strong>Supervisor control:</strong> Configure systems using PM2 daemon controllers, preserving state through restarts.</span>
               </li>
             </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CLIENT-SIDE LLM INTEGRATION ==================== -->
+    <section class="reveal max-w-7xl mx-auto px-6 py-20 border-t border-slate-900" id="client-integration">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+        
+        <!-- Left: Textual analysis -->
+        <div class="lg:col-span-5 flex flex-col justify-center">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-accent/10 border border-accent/20 text-accent-light mb-6 self-start">
+            Client-Side Integration
+          </span>
+          <h3 class="font-display font-extrabold text-3xl text-white mb-6 leading-tight">
+            Exposing MCP Tools to LLM Engines
+          </h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6 font-light">
+            Once host clients discover available server tools via JSON-RPC, they must map tool specifications to the format expected by the LLM provider, then orchestrate a recursive completions execution loop.
+          </p>
+          
+          <ul class="text-xs text-slate-500 space-y-4 font-light mb-6">
+            <li class="flex items-start gap-2.5">
+              <span class="text-accent font-bold mt-0.5">&bull;</span>
+              <span><strong>OpenAI Schema Mapping:</strong> Map the server's discovered <code>inputSchema</code> directly into the <code>parameters</code> block of OpenAI's tool function schema.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-accent font-bold mt-0.5">&bull;</span>
+              <span><strong>Recursive Execution Loop:</strong> Run a while-loop feeding completions back to the agent. If the LLM generates a tool execution request, capture it, run it against the target MCP server, append the outcome, and repeat until the model yields a text response.</span>
+            </li>
+          </ul>
+          
+          <div class="p-4 bg-slate-950/40 border border-slate-900 rounded-xl">
+            <span class="text-xs font-semibold text-white flex items-center gap-1.5 mb-1">
+              <svg class="w-3.5 h-3.5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              Developer Tip
+            </span>
+            <p class="text-xs text-slate-400 font-light">Implement a "human-in-the-loop" approval step on the client side before resolving sensitive write tools to prevent automated security exploits.</p>
+          </div>
+        </div>
+
+        <!-- Right: Code Panel -->
+        <div class="lg:col-span-7 relative flex flex-col justify-center">
+          <div class="absolute inset-[-10px] bg-accent/5 rounded-[24px] filter blur-2xl opacity-40 z-0"></div>
+          
+          <div class="relative z-10 glass-card rounded-2xl border border-slate-700/60 overflow-hidden shadow-glowCard">
+            <!-- IDE Bar -->
+            <div class="bg-slate-950/60 px-5 py-4 border-b border-slate-800 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full bg-[#FF5F57]"></div>
+                <div class="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
+                <div class="w-3 h-3 rounded-full bg-[#28CA41]"></div>
+              </div>
+              <span class="text-xs font-mono text-slate-500">openai_mcp_agent.py</span>
+              <button onclick="copyCode('openai-agent-code', this)" class="p-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition-all text-xs flex items-center gap-1.5 cursor-pointer" title="Copy Code">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
+                <span>Copy</span>
+              </button>
+            </div>
+            
+            <!-- Code Body -->
+            <pre class="p-5 text-[11.5px] font-mono leading-relaxed overflow-x-auto text-slate-300 bg-slate-950/40 max-h-[380px]" id="openai-agent-code"><code><span class="kw">async def</span> <span class="fn">agent_loop</span>(user_prompt: <span class="cl">str</span>):
+    messages = [{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: user_prompt}]
+    
+    <span class="cm"># 1. Fetch tool definitions from MCP Server</span>
+    mcp_tools = <span class="kw">await</span> mcp_session.list_tools()
+    openai_tools = [{
+        <span class="st">"type"</span>: <span class="st">"function"</span>,
+        <span class="st">"function"</span>: {
+            <span class="st">"name"</span>: t.name,
+            <span class="st">"description"</span>: t.description,
+            <span class="st">"parameters"</span>: t.inputSchema
+        }
+    } <span class="kw">for</span> t <span class="kw">in</span> mcp_tools]
+    
+    <span class="kw">while True</span>:
+        <span class="cm"># 2. Query LLM with capabilities exposed</span>
+        response = <span class="kw">await</span> openai_client.chat.completions.create(
+            model=<span class="st">"gpt-4o"</span>,
+            messages=messages,
+            tools=openai_tools
+        )
+        msg = response.choices[0].message
+        messages.append(msg)
+        
+        <span class="kw">if not</span> msg.tool_calls:
+            <span class="kw">return</span> msg.content <span class="cm"># Exit when model returns text</span>
+            
+        <span class="cm"># 3. Resolve tool calls recursively against MCP</span>
+        <span class="kw">for</span> tool_call <span class="kw">in</span> msg.tool_calls:
+            name = tool_call.function.name
+            args = json.loads(tool_call.function.arguments)
+            
+            mcp_result = <span class="kw">await</span> mcp_session.call_tool(name, args)
+            
+            messages.append({
+                <span class="st">"role"</span>: <span class="st">"tool"</span>,
+                <span class="st">"tool_call_id"</span>: tool_call.id,
+                <span class="st">"content"</span>: mcp_result.content[0].text
+            })</code></pre>
           </div>
         </div>
       </div>
@@ -1258,6 +1764,257 @@ Content-Type: application/json
           <span class="text-[11px] font-mono text-slate-650 mt-4 block">Session federation patterns</span>
         </div>
 
+      </div>
+
+      <!-- Security Threat Matrix -->
+      <div class="mb-12 glass-card rounded-[24px] p-6 lg:p-8 border border-slate-800">
+        <h3 class="font-display font-bold text-xl text-white mb-6 flex items-center gap-2">
+          <svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+          AI Agent Security Threat Matrix
+        </h3>
+        <p class="text-sm text-slate-400 leading-relaxed mb-8 font-light">
+          Exposing OS tools and database capabilities directly to LLMs presents critical security vectors. Review the protocol threat matrix and mitigation requirements below.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Threat 1 -->
+          <div class="p-5 bg-slate-950/40 border border-slate-900 rounded-xl flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-xs font-semibold uppercase tracking-wider text-red-500 py-0.5 px-2 bg-red-500/10 border border-red-500/20 rounded">Critical Severity</span>
+              </div>
+              <h4 class="font-display font-bold text-sm text-white mb-2">1. Indirect Prompt Injection (Confused Deputy)</h4>
+              <p class="text-[11px] text-slate-500 font-light mb-4 leading-relaxed">
+                An attacker hides instructions in untrusted resources parsed by the agent (e.g., summary of a webpage). The model is unable to segregate data from instructions, triggering local tools (e.g., Slack notifications, file edits) on the attacker's behalf.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-slate-900 text-[10.5px] font-sans text-slate-400">
+              <strong class="text-accent">Mitigation:</strong> Implement human-in-the-loop modals for destructive tools; strip instructions templates from scraped streams.
+            </div>
+          </div>
+
+          <!-- Threat 2 -->
+          <div class="p-5 bg-slate-950/40 border border-slate-900 rounded-xl flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-xs font-semibold uppercase tracking-wider text-amber-500 py-0.5 px-2 bg-amber-500/10 border border-amber-500/20 rounded">Medium Severity</span>
+              </div>
+              <h4 class="font-display font-bold text-sm text-white mb-2">2. Tool Poisoning &amp; Shadowing</h4>
+              <p class="text-[11px] text-slate-500 font-light mb-4 leading-relaxed">
+                A compromised or malicious MCP server registers tool signatures matching trusted servers, intercepting execution payloads or parameters from the router.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-slate-900 text-[10.5px] font-sans text-slate-400">
+              <strong class="text-accent">Mitigation:</strong> Enforce routing tables namespacing (prepending server names to prefixes, e.g. <code>github_</code>, <code>postgres_</code>).
+            </div>
+          </div>
+
+          <!-- Threat 3 -->
+          <div class="p-5 bg-slate-950/40 border border-slate-900 rounded-xl flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-xs font-semibold uppercase tracking-wider text-amber-500 py-0.5 px-2 bg-amber-500/10 border border-amber-500/20 rounded">Medium Severity</span>
+              </div>
+              <h4 class="font-display font-bold text-sm text-white mb-2">3. "Rug Pull" Code Execution</h4>
+              <p class="text-[11px] text-slate-500 font-light mb-4 leading-relaxed">
+                A server script passes audit checks during initial mount, but updates dynamically in the background to inject malicious dependencies or execute unauthorized shell scripts.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-slate-900 text-[10.5px] font-sans text-slate-400">
+              <strong class="text-accent">Mitigation:</strong> Enforce workspace directories containment; pin exact package hashes; mount local scripts as read-only.
+            </div>
+          </div>
+
+          <!-- Threat 4 -->
+          <div class="p-5 bg-slate-950/40 border border-slate-900 rounded-xl flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-xs font-semibold uppercase tracking-wider text-slate-400 py-0.5 px-2 bg-slate-900 border border-slate-800 rounded">Low Severity</span>
+              </div>
+              <h4 class="font-display font-bold text-sm text-white mb-2">4. LLM Sampling Feature Abuse</h4>
+              <p class="text-[11px] text-slate-500 font-light mb-4 leading-relaxed">
+                Servers can request completions from the host model. Malicious loops can exhaust token quotas or leak session history variables to external nodes.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-slate-900 text-[10.5px] font-sans text-slate-400">
+              <strong class="text-accent">Mitigation:</strong> Limit sampling capabilities to verified servers and enforce rate-limiting thresholds.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== ENTERPRISE ROADMAP SECTION ==================== -->
+      <section class="reveal max-w-7xl mx-auto px-6 py-20 border-t border-slate-900" id="roadmap">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-accent/10 border border-accent/20 text-accent-light">
+            Future Architecture &amp; Specs
+          </span>
+          <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-white mt-4 mb-4">
+            Enterprise Roadmap &amp; Specification Extensions (2026+)
+          </h2>
+          <p class="text-slate-400 text-base leading-relaxed font-light">
+            A view into the upcoming protocol updates designed to extend MCP scalability, enable server-rendered interfaces, and introduce enterprise authentication layers.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- Card 1: Stateless Core Transport -->
+          <div class="glass-card p-6 rounded-2xl border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-all duration-300">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 text-accent">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                </svg>
+              </div>
+              <h3 class="font-display font-bold text-lg text-white mb-3">Stateless Core Transport</h3>
+              <p class="text-xs text-slate-400 leading-relaxed font-light mb-6">
+                Migrating from persistent, stateful Server-Sent Events (SSE) channels to stateless HTTP/2 and REST message frames. Resolves load-balancing bottlenecks in distributed cloud clusters (such as AWS ALB or GCP GCLB).
+              </p>
+            </div>
+            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">Status: Spec Drafting</span>
+          </div>
+
+          <!-- Card 2: Asynchronous Task Orchestration -->
+          <div class="glass-card p-6 rounded-2xl border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-all duration-300">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-neon/10 border border-neon/20 flex items-center justify-center mb-6 text-neon-light">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 class="font-display font-bold text-lg text-white mb-3">Asynchronous Task Loops</h3>
+              <p class="text-xs text-slate-400 leading-relaxed font-light mb-6">
+                Introduces progress-tracking channels and callback loops for long-running tools. Hosts retrieve immediate task receipt tokens and query intermediate status updates (e.g., <code>45% completed</code>) without thread lockups.
+              </p>
+            </div>
+            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">Status: Development</span>
+          </div>
+
+          <!-- Card 3: MCP Apps (Server-Rendered UI Views) -->
+          <div class="glass-card p-6 rounded-2xl border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-all duration-300">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center mb-6 text-gold-light">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
+                </svg>
+              </div>
+              <h3 class="font-display font-bold text-lg text-white mb-3">MCP App UI Views</h3>
+              <p class="text-xs text-slate-400 leading-relaxed font-light mb-6">
+                Enables servers to return dynamic JSON layout schemas back to host applications. The client UI renders rich, interactive layouts (forms, graphs, checklists) directly in the user interface, improving human-in-the-loop loops.
+              </p>
+            </div>
+            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">Status: RFC Phase</span>
+          </div>
+
+          <!-- Card 4: Centralized MCP Registry -->
+          <div class="glass-card p-6 rounded-2xl border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-all duration-300">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 text-accent">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
+              </div>
+              <h3 class="font-display font-bold text-lg text-white mb-3">Centralized MCP Registry</h3>
+              <p class="text-xs text-slate-400 leading-relaxed font-light mb-6">
+                A curated hub for discovering, installing, and managing servers. Features package signing, sandboxed static analysis, automated vulnerability assessments, and dynamic local runtime installation catalogs.
+              </p>
+            </div>
+            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">Status: Planning</span>
+          </div>
+
+          <!-- Card 5: OAuth 2.1 & Authorization Protocols -->
+          <div class="glass-card p-6 rounded-2xl border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-all duration-300">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-neon/10 border border-neon/20 flex items-center justify-center mb-6 text-neon-light">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <h3 class="font-display font-bold text-lg text-white mb-3">Cryptographic Identity</h3>
+              <p class="text-xs text-slate-400 leading-relaxed font-light mb-6">
+                Adopting OpenID Connect (OIDC) and OAuth 2.1 authentication standards for remote endpoints. Leverages DPoP (Demonstrating Proof-of-Possession) authorization bindings to prevent session hijacking in zero-trust setups.
+              </p>
+            </div>
+            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">Status: Spec Drafting</span>
+          </div>
+
+          <!-- Card 6: Multi-Server Namespace Mesh -->
+          <div class="glass-card p-6 rounded-2xl border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-all duration-300">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center mb-6 text-gold-light">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M11 4a2 2 0 114 0v1a2 2 0 002 2h3a2 2 0 012 2v3a2 2 0 00-2 2v3a2 2 0 01-2 2h-3a2 2 0 00-2-2v-1a2 2 0 00-2-2H5a2 2 0 00-2 2v1a2 2 0 01-2 2H0v-3a2 2 0 012-2h3a2 2 0 002-2V9a2 2 0 00-2-2H2V4a2 2 0 012-2h3a2 2 0 002 2v1a2 2 0 002 2h2V4z" />
+                </svg>
+              </div>
+              <h3 class="font-display font-bold text-lg text-white mb-3">Federated Routing Mesh</h3>
+              <p class="text-xs text-slate-400 leading-relaxed font-light mb-6">
+                Establishes standard routing matrices across federated multi-server configurations. Enables AI orchestrators to dynamically resolve tool shadowing, register fallback routes, and execute recursive cross-server calling sequences.
+              </p>
+            </div>
+            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">Status: RFC Phase</span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- JSON-RPC Playground Specs Viewer -->
+      <div class="mb-12 glass-card rounded-[24px] p-6 lg:p-8 border border-slate-800">
+        <h3 class="font-display font-bold text-xl text-white mb-4 flex items-center gap-2">
+          <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          Interactive JSON-RPC Schema Console
+        </h3>
+        <p class="text-sm text-slate-400 leading-relaxed mb-6 font-light">
+          Switch tabs below to inspect the standard JSON-RPC 2.0 frames exchanged between host clients and servers during capability discovery and tool invocation.
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          <!-- Left: Tab Controls -->
+          <div class="lg:col-span-3 flex flex-col gap-2.5">
+            <button onclick="switchJSONRPC('initReq', this)" class="jsonrpc-tab w-full text-left px-4 py-3 rounded-xl font-display font-bold text-xs bg-accent text-[#0F172A] border border-accent transition-all cursor-pointer">
+              1. Initialize Request
+            </button>
+            <button onclick="switchJSONRPC('initRes', this)" class="jsonrpc-tab w-full text-left px-4 py-3 rounded-xl font-display font-bold text-xs bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-all cursor-pointer">
+              2. Initialize Response
+            </button>
+            <button onclick="switchJSONRPC('toolList', this)" class="jsonrpc-tab w-full text-left px-4 py-3 rounded-xl font-display font-bold text-xs bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-all cursor-pointer">
+              3. Tools Discovery
+            </button>
+            <button onclick="switchJSONRPC('toolCall', this)" class="jsonrpc-tab w-full text-left px-4 py-3 rounded-xl font-display font-bold text-xs bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-all cursor-pointer">
+              4. Tool Execution
+            </button>
+          </div>
+
+          <!-- Right: Code Output -->
+          <div class="lg:col-span-9 relative">
+            <div class="absolute top-3 right-4 z-10">
+              <button onclick="copyCode('jsonrpc-code-viewer', this)" class="px-2 py-1.5 rounded bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition-all text-[11px] flex items-center gap-1 cursor-pointer" title="Copy to Clipboard">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
+                <span>Copy Schema</span>
+              </button>
+            </div>
+            <pre class="h-full p-6 text-[11px] font-mono leading-relaxed bg-slate-950/60 border border-slate-800 rounded-2xl text-emerald-400 overflow-x-auto select-all max-h-[320px]" id="jsonrpc-code-viewer"><code>{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "initialize",
+  "params": {
+    "protocolVersion": "2025-03-26",
+    "capabilities": {
+      "roots": { "listChanged": true },
+      "sampling": {}
+    },
+    "clientInfo": {
+      "name": "example-client",
+      "version": "1.0.0"
+    }
+  }
+}</code></pre>
+          </div>
+        </div>
       </div>
 
       <!-- Architectural Gaps Checklist -->
@@ -1389,7 +2146,7 @@ Content-Type: application/json
         <!-- Dynamic Form -->
         <form onsubmit="handleSignup(event)" class="max-w-md mx-auto flex flex-col sm:flex-row gap-3 relative z-10">
           <input type="email" required placeholder="Enter developer email..." class="flex-1 px-5 py-4 bg-slate-950/85 border border-slate-800 focus:border-accent rounded-xl text-sm text-slate-300 placeholder-slate-650 focus:outline-none transition-colors">
-          <button type="submit" class="px-8 py-4 bg-accent hover:bg-accent-light text-bgDeep font-bold text-sm rounded-xl transition-all shadow-neonAccent hover:shadow-lg whitespace-nowrap cursor-pointer">
+          <button type="submit" class="px-8 py-4 bg-accent hover:bg-accent-light text-[#0F172A] font-bold text-sm rounded-xl transition-all shadow-neonAccent hover:shadow-lg whitespace-nowrap cursor-pointer">
             Subscribe Now
           </button>
         </form>
@@ -1503,9 +2260,9 @@ Content-Type: application/json
 
       document.getElementById(`content-${primitiveKey}`).classList.remove('hidden');
       if (primitiveKey === 'prompts') {
-        btnElem.className = "tab-btn px-6 py-3 rounded-xl font-display font-bold text-sm transition-all flex items-center gap-2 bg-gold text-bgDeep border border-gold cursor-pointer";
+        btnElem.className = "tab-btn px-6 py-3 rounded-xl font-display font-bold text-sm transition-all flex items-center gap-2 bg-gold text-[#0F172A] border border-gold cursor-pointer";
       } else {
-        btnElem.className = "tab-btn px-6 py-3 rounded-xl font-display font-bold text-sm transition-all flex items-center gap-2 bg-accent text-bgDeep border border-accent cursor-pointer";
+        btnElem.className = "tab-btn px-6 py-3 rounded-xl font-display font-bold text-sm transition-all flex items-center gap-2 bg-accent text-[#0F172A] border border-accent cursor-pointer";
       }
     }
 
@@ -1704,7 +2461,7 @@ Content-Type: application/json
       document.querySelectorAll('.arch-tab-btn').forEach(btn => {
         btn.className = "arch-tab-btn px-6 py-3 rounded-xl font-display font-bold text-sm bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-all cursor-pointer";
       });
-      btnElem.className = "arch-tab-btn px-6 py-3 rounded-xl font-display font-bold text-sm bg-accent text-bgDeep border border-accent transition-all cursor-pointer";
+      btnElem.className = "arch-tab-btn px-6 py-3 rounded-xl font-display font-bold text-sm bg-accent text-[#0F172A] border border-accent transition-all cursor-pointer";
 
       // Toggle SVGs
       document.querySelectorAll('.arch-svg').forEach(svg => svg.classList.add('hidden'));
@@ -1915,6 +2672,86 @@ Content-Type: application/json
         playPauseBtn.innerText = "Start Particle Flow";
       }
     }
+
+    // JSON-RPC Schemas for the spec switch tab controller
+    const jsonrpcSchemas = {
+      initReq: `{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "initialize",
+  "params": {
+    "protocolVersion": "2025-03-26",
+    "capabilities": {
+      "roots": { "listChanged": true },
+      "sampling": {}
+    },
+    "clientInfo": {
+      "name": "example-client",
+      "version": "1.0.0"
+    }
+  }
+}`,
+      initRes: `{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "protocolVersion": "2025-03-26",
+    "capabilities": {
+      "tools": { "listChanged": true },
+      "resources": { "subscribe": true },
+      "prompts": { "listChanged": false }
+    },
+    "serverInfo": {
+      "name": "weather-server",
+      "version": "1.0.0"
+    }
+  }
+}`,
+      toolList: `{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "tools/list"
+}`,
+      toolCall: `{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "tools/call",
+  "params": {
+    "name": "get_weather",
+    "arguments": { "location": "Austin" }
+  }
+}`
+    };
+
+    function switchJSONRPC(schemaKey, btnElem) {
+      document.querySelectorAll('.jsonrpc-tab').forEach(btn => {
+        btn.className = "jsonrpc-tab w-full text-left px-4 py-3 rounded-xl font-display font-bold text-xs bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-all cursor-pointer";
+      });
+      btnElem.className = "jsonrpc-tab w-full text-left px-4 py-3 rounded-xl font-display font-bold text-xs bg-accent text-[#0F172A] border border-accent transition-all cursor-pointer";
+      
+      const codeBlock = document.getElementById('jsonrpc-code-viewer');
+      if (codeBlock) {
+        codeBlock.innerText = jsonrpcSchemas[schemaKey];
+      }
+    }
+
+    // Theme switching logic
+    function toggleTheme() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      const mobileThemeToggleBtn = document.getElementById('mobile-theme-toggle');
+      if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+      if (mobileThemeToggleBtn) mobileThemeToggleBtn.addEventListener('click', toggleTheme);
+    });
   </script>
 </body>
 </html>
