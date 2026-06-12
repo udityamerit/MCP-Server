@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <!-- Theme Initializer (Pre-render script) -->
+  <script>
+    (function() {
+      const theme = localStorage.getItem('theme') || 'dark';
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Context Protocol Architecture Specifications | Uditya Narayan Tiwari</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Custom Tailwind Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#1E293B',
+              light: '#334155',
+              dark: '#0F172A',
+            },
+            accent: {
+              DEFAULT: '#22C55E',
+              light: '#4ADE80',
+            },
+            neon: {
+              DEFAULT: '#6366F1',
+              light: '#818CF8',
+            },
+            gold: {
+              DEFAULT: '#F59E0B',
+              light: '#FCD34D',
+            },
+            bgDeep: 'var(--bg-deep)',
+            bgCard: 'var(--bg-card)',
+            slate: {
+              50: 'var(--slate-50)',
+              100: 'var(--slate-100)',
+              200: 'var(--slate-200)',
+              300: 'var(--slate-300)',
+              400: 'var(--slate-400)',
+              500: 'var(--slate-500)',
+              600: 'var(--slate-600)',
+              700: 'var(--slate-700)',
+              800: 'var(--slate-800)',
+              900: 'var(--slate-900)',
+              950: 'var(--slate-950)',
+            },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Stylesheet overrides -->
+  <style>
+    :root {
+      --bg-deep: #F8FAFC;
+      --bg-card: #FFFFFF;
+      --slate-50: #0F172A;
+      --slate-100: #1E293B;
+      --slate-200: #334155;
+      --slate-300: #475569;
+      --slate-400: #64748B;
+      --slate-500: #94A3B8;
+      --slate-600: #CBD5E1;
+      --slate-700: #CBD5E1;
+      --slate-800: #E2E8F0;
+      --slate-900: #F1F5F9;
+      --slate-950: #FFFFFF;
+      --glass-bg: rgba(255, 255, 255, 0.75);
+      --glass-border: rgba(15, 23, 42, 0.08);
+      --scrollbar-track: #F1F5F9;
+      --scrollbar-thumb: #CBD5E1;
+      --scrollbar-thumb-hover: #94A3B8;
+    }
+    
+    .dark {
+      --bg-deep: #0F172A;
+      --bg-card: #1E293B;
+      --slate-50: #F8FAFC;
+      --slate-100: #F1F5F9;
+      --slate-200: #E2E8F0;
+      --slate-300: #CBD5E1;
+      --slate-400: #94A3B8;
+      --slate-500: #64748B;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1E293B;
+      --slate-900: #0F172A;
+      --slate-950: #020617;
+      --glass-bg: rgba(30, 41, 59, 0.65);
+      --glass-border: rgba(255, 255, 255, 0.06);
+      --scrollbar-track: #0F172A;
+      --scrollbar-thumb: #1E293B;
+      --scrollbar-thumb-hover: #334155;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--scrollbar-track);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--scrollbar-thumb-hover);
+    }
+
+    /* Glass card class */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+    }
+
+    /* Hover and Group Hover text visibility overrides in Light Mode */
+    html:not(.dark) .hover\:text-white:hover {
+      color: #0F172A !important;
+    }
+    html:not(.dark) .group:hover .group-hover\:text-white {
+      color: #0F172A !important;
+    }
+
+    /* Mermaid custom styles overrides for seamless theme integration */
+    .mermaid {
+      background: var(--bg-card);
+      border: 1px solid var(--slate-800);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+      overflow-x: auto;
+      overflow-y: hidden;
+      display: block;
+      text-align: center;
+      position: relative;
+    }
+    .mermaid svg {
+      max-width: 100%;
+      height: auto;
+      display: inline-block;
+      min-width: 750px;
+      transition: min-width 0.2s ease;
+    }
+    .mermaid.seq-diag svg {
+      min-width: 650px;
+    }
+    
+    /* Dynamic active node styles inside SVG */
+    .mermaid svg .node rect, 
+    .mermaid svg .node circle, 
+    .mermaid svg .node polygon,
+    .mermaid svg .node path {
+      fill: var(--bg-deep) !important;
+      stroke: var(--slate-700) !important;
+      stroke-width: 1.2px !important;
+      transition: all 0.3s ease;
+      rx: 8px !important;
+    }
+    .mermaid svg .node:hover rect, 
+    .mermaid svg .node:hover circle, 
+    .mermaid svg .node:hover polygon,
+    .mermaid svg .node:hover path {
+      stroke: #22C55E !important;
+      stroke-width: 1.8px !important;
+      filter: drop-shadow(0 0 6px rgba(34, 197, 94, 0.35));
+    }
+    
+    /* Clean overrides for Mermaid subgraph clusters */
+    .mermaid svg rect.cluster {
+      fill: var(--bg-deep) !important;
+      fill-opacity: 0.4 !important;
+      stroke: var(--slate-800) !important;
+      stroke-width: 1.2px !important;
+      rx: 12px !important;
+    }
+    
+    /* Custom Arrowheads and Markers */
+    .mermaid svg marker,
+    .mermaid svg marker path {
+      fill: var(--slate-600) !important;
+      stroke: none !important;
+    }
+    
+    /* Typography Overrides */
+    .mermaid svg .label, 
+    .mermaid svg .node .label {
+      color: var(--slate-50) !important;
+      fill: var(--slate-50) !important;
+      font-family: 'Space Grotesk', sans-serif !important;
+      font-weight: 600 !important;
+      font-size: 13.5px !important;
+    }
+    
+    /* Edge Path lines and labels */
+    .mermaid svg .edgePaths .edgePath .path {
+      stroke: var(--slate-700) !important;
+      stroke-width: 1.2px !important;
+      transition: all 0.3s ease;
+    }
+    
+    /* Edge Labels custom badge styling */
+    .mermaid svg .edgeLabel,
+    .mermaid svg .edgeLabel span {
+      background-color: var(--bg-card) !important;
+      color: var(--slate-400) !important;
+      font-family: 'Inter', sans-serif !important;
+      font-size: 11px !important;
+      font-weight: 500 !important;
+      padding: 2px 6px !important;
+      border-radius: 4px !important;
+    }
+    
+    .mermaid svg .edgeLabel rect {
+      fill: var(--bg-card) !important;
+      stroke: none !important;
+      rx: 4px !important;
+    }
+
+    /* Sequence Diagram Elements */
+    .mermaid svg rect.actor {
+      fill: var(--bg-card) !important;
+      stroke: var(--slate-800) !important;
+      stroke-width: 1.2px !important;
+      rx: 8px !important;
+    }
+    .mermaid svg line.actor-line {
+      stroke: var(--slate-800) !important;
+      stroke-dasharray: 4 !important;
+    }
+    .mermaid svg .messageLine0, 
+    .mermaid svg .messageLine1 {
+      stroke: var(--slate-700) !important;
+      stroke-width: 1.2px !important;
+    }
+    .mermaid svg .messageText {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 11px !important;
+      fill: var(--slate-300) !important;
+      stroke: none !important;
+    }
+    .mermaid svg #arrowhead path {
+      fill: var(--slate-700) !important;
+    }
+    .mermaid svg .loopLine {
+      stroke: var(--slate-700) !important;
+      stroke-width: 1.2px !important;
+    }
+    .mermaid svg .loopText {
+      font-family: 'Space Grotesk', sans-serif !important;
+      font-size: 11px !important;
+      fill: var(--slate-50) !important;
+    }
+    
+    html:not(.dark) .mermaid svg .label,
+    html:not(.dark) .mermaid svg .node .label {
+      color: #0F172A !important;
+      fill: #0F172A !important;
+    }
+    html:not(.dark) .mermaid svg .edgePaths .edgePath .path {
+      stroke: #CBD5E1 !important;
+    }
+    html:not(.dark) .mermaid svg .edgeLabel,
+    html:not(.dark) .mermaid svg .edgeLabel span {
+      color: #475569 !important;
+    }
+
+    /* Glow backdrop classes */
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.15; }
+      50% { opacity: 0.35; }
+    }
+    .animate-glow-pulse {
+      animation: pulseGlow 6s ease-in-out infinite;
+    }
+    html:not(.dark) .animate-glow-pulse {
+      opacity: 0.05 !important;
+    }
+
+    /* Active link style in sidebar */
+    .sidebar-link {
+      border-left: 2px solid transparent;
+      padding-left: 12px;
+      transition: all 0.2s ease;
+    }
+    .sidebar-link:hover {
+      color: var(--slate-50) !important;
+      background-color: var(--slate-900) !important;
+      border-left-color: var(--slate-450) !important;
+    }
+    .sidebar-link.active {
+      color: #22C55E !important;
+      border-left-color: #22C55E !important;
+      background-color: rgba(34, 197, 94, 0.06) !important;
+      font-weight: 600 !important;
+    }
+    html:not(.dark) .sidebar-link:hover {
+      background-color: #F1F5F9 !important;
+    }
+  </style>
+
+  <!-- Mermaid.js ESM Load -->
+  <script type="module">
+    const theme = localStorage.getItem('theme') || 'dark';
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    
+    const isDark = theme === 'dark';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      securityLevel: 'loose',
+      themeVariables: {
+        background: isDark ? '#1E293B' : '#FFFFFF',
+        primaryColor: isDark ? '#0F172A' : '#F1F5F9',
+        primaryTextColor: isDark ? '#F8FAFC' : '#0F172A',
+        primaryBorderColor: isDark ? '#334155' : '#CBD5E1',
+        lineColor: isDark ? '#475569' : '#94A3B8',
+        secondaryColor: isDark ? '#1E293B' : '#F8FAFC',
+        tertiaryColor: isDark ? '#1E293B' : '#F8FAFC',
+        fontFamily: 'Space Grotesk, Inter, system-ui, sans-serif',
+        fontSize: '12px',
+        nodeBorder: isDark ? '#334155' : '#CBD5E1',
+        mainBkg: isDark ? '#0F172A' : '#FFFFFF',
+        actorBorder: isDark ? '#334155' : '#CBD5E1',
+        actorBkg: isDark ? '#1E293B' : '#FFFFFF',
+        actorTextColor: isDark ? '#F8FAFC' : '#0F172A',
+        actorLineColor: isDark ? '#334155' : '#E2E8F0',
+        signalColor: isDark ? '#F8FAFC' : '#0F172A',
+        signalLineColor: isDark ? '#475569' : '#CBD5E1',
+        labelBoxBkgColor: isDark ? '#1E293B' : '#FFFFFF',
+        labelBoxBorderColor: isDark ? '#334155' : '#CBD5E1',
+        labelTextColor: isDark ? '#F8FAFC' : '#0F172A',
+        loopTextColor: isDark ? '#F8FAFC' : '#0F172A',
+      }
+    });
+  </script>
+</head>
+<body class="bg-bgDeep text-slate-200 font-sans antialiased overflow-x-hidden">
+
+  <!-- ==================== BACKGROUND GLOWS ==================== -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="absolute top-[-5%] left-[15%] w-[500px] h-[500px] bg-neon rounded-full filter blur-[140px] opacity-20 animate-glow-pulse"></div>
+    <div class="absolute top-[35%] right-[-10%] w-[600px] h-[600px] bg-accent rounded-full filter blur-[160px] opacity-15 animate-glow-pulse" style="animation-delay: -2s;"></div>
+    <div class="absolute bottom-[20%] left-[-15%] w-[500px] h-[500px] bg-gold rounded-full filter blur-[150px] opacity-8 animate-glow-pulse" style="animation-delay: -4s;"></div>
+  </div>
+
+  <!-- ==================== HEADER & NAV ==================== -->
+  <header class="fixed top-0 left-0 right-0 z-50 glass-card py-4" id="main-header">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center gap-3 font-display font-extrabold text-lg tracking-tight text-white group cursor-pointer">
+        <span class="w-3.5 h-3.5 rounded-full bg-accent shadow-neonAccent relative flex items-center justify-center">
+          <span class="absolute inline-flex h-full w-full rounded-full bg-accent opacity-75 animate-ping"></span>
+        </span>
+        <span class="logo-gradient-text bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent group-hover:to-accent-light transition-all duration-300 dark:from-white dark:to-slate-300">MCP System Design</span>
+      </a>
+
+      <!-- Desktop Links -->
+      <div class="flex items-center gap-4">
+        <!-- Back Button -->
+        <a href="index.html" class="px-4 py-2 bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer">
+          &larr; Back to Main Guide
+        </a>
+        
+        <!-- Theme Toggle Button -->
+        <button id="theme-toggle" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition-all cursor-pointer flex items-center justify-center" aria-label="Toggle Theme">
+          <!-- Moon Icon (shows in light mode) -->
+          <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+          <!-- Sun Icon (shows in dark mode) -->
+          <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M14 12a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT SECTION ==================== -->
+  <main class="relative z-10 pt-28 pb-24 max-w-7xl mx-auto px-6">
+    <!-- Hero Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-accent/10 border border-accent/20 text-accent-light">
+        Technical Blueprints
+      </span>
+      <h1 class="font-display font-extrabold text-4xl sm:text-5xl text-white mt-4 mb-4">
+        MCP Architecture Specifications
+      </h1>
+      <p class="text-slate-400 text-base leading-relaxed font-light">
+        In-depth blueprint representations detailing Model Context Protocol networks. Includes sequence streams, zero-trust sessions, transport pipes, and local/remote routing topologies.
+      </p>
+    </div>
+
+    <!-- Layout Grid: Sticky Sidebar + Main Content -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+      
+      <!-- Sidebar Navigation -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-28 self-start">
+        <div class="glass-card rounded-2xl p-6 border border-slate-800 space-y-2">
+          <h4 class="font-display font-bold text-xs uppercase tracking-wider text-slate-500 mb-4 px-2">Table of Contents</h4>
+          <nav class="space-y-1">
+            <a href="#core-flow" class="sidebar-link block py-2.5 px-3 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-900 border-l-2 border-transparent transition-all">1. Core Architecture Flow</a>
+            <a href="#advanced-zt" class="sidebar-link block py-2.5 px-3 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-900 border-l-2 border-transparent transition-all">2. Advanced Zero-Trust Model</a>
+            <a href="#client-server" class="sidebar-link block py-2.5 px-3 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-900 border-l-2 border-transparent transition-all">3. Client-Server Sequence</a>
+            <a href="#stdio-transport" class="sidebar-link block py-2.5 px-3 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-900 border-l-2 border-transparent transition-all">4. Local STDIO Subprocess</a>
+            <a href="#http-transport" class="sidebar-link block py-2.5 px-3 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-900 border-l-2 border-transparent transition-all">5. Streamable HTTP / SSE</a>
+            <a href="#multi-server" class="sidebar-link block py-2.5 px-3 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-900 border-l-2 border-transparent transition-all">6. Federated Routing Mesh</a>
+            <a href="#deployment" class="sidebar-link block py-2.5 px-3 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-900 border-l-2 border-transparent transition-all">7. Production Deployment</a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Specifications Main Panels -->
+      <div class="lg:col-span-9 space-y-16">
+
+        <!-- Architecture 1: Core Flow -->
+        <section id="core-flow" class="scroll-mt-28">
+          <div class="glass-card rounded-[24px] p-6 lg:p-8 border border-slate-800">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-[10px] font-mono font-bold text-accent uppercase tracking-wider px-2 py-0.5 bg-accent/10 border border-accent/20 rounded">Data Pipeline</span>
+            </div>
+            <h2 class="font-display font-bold text-2xl text-white mb-3">1. MCP Core Architecture Flow</h2>
+            <p class="text-sm text-slate-400 leading-relaxed font-light mb-6">
+              A comprehensive system data lifecycle mapping showing how operator prompts translate to client session transport layers and execute context routines.
+            </p>
+            
+            <!-- Mermaid Container -->
+            <div class="mermaid">
+flowchart LR
+    subgraph HostApp ["Host Application Boundary (e.g. Claude, IDE)"]
+        direction TB
+        LLM["LLM Engine (Claude / GPT-4o)"]
+        Client["MCP Client Session"]
+        LLM <-->|Context Exchange| Client
+    end
+
+    subgraph Transport ["Stateful Transport Layer"]
+        direction TB
+        Stdio["Local STDIO Pipe"]
+        Sse["Remote HTTP + SSE"]
+    end
+
+    Client <-->|JSON-RPC 2.0| Stdio
+    Client <-->|JSON-RPC 2.0| Sse
+
+    subgraph ServerSpace ["MCP Server Boundary"]
+        direction TB
+        Server["MCP Server Primitives"]
+        subgraph Primitives ["Exposed Catalogs"]
+            Tools["Tools (Actions)"]
+            Resources["Resources (Data)"]
+            Prompts["Prompts (Templates)"]
+        end
+        Server --- Primitives
+    end
+
+    Stdio <-->|Context Queries| Server
+    Sse <-->|Context Queries| Server
+
+    subgraph External ["External Data & Systems"]
+        direction TB
+        APIs["Third-Party APIs"]
+        DBs["Databases (SQL/NoSQL)"]
+        FS["Host Filesystem"]
+    end
+
+    Primitives <-->|Read/Write Operations| APIs
+    Primitives <-->|Query Execution| DBs
+    Primitives <-->|File System Access| FS
+            </div>
+            
+            <!-- Detailed System Design Analysis -->
+            <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
+              <h4 class="text-sm font-semibold uppercase tracking-wider text-accent">System Design Process</h4>
+              <p class="text-xs text-slate-400 leading-relaxed font-light">
+                1. **Request Inception**: The user interacts with an AI agent. The coordinator triggers the **MCP Client** layer to look up capabilities required to resolve the user's intent.
+              </p>
+              <p class="text-xs text-slate-400 leading-relaxed font-light">
+                2. **Multiplexing Transport**: The client directs payloads to either a local child process pipe (STDIO) or remote web socket/HTTP connection (SSE).
+              </p>
+              <p class="text-xs text-slate-400 leading-relaxed font-light">
+                3. **Context Assembly**: The server resolves the variables (fetching database tables, running scripts, rendering markdown prompt templates) and sends structured JSON schemas back to the client. The client feeds this context to the LLM to write the final synthesized answer.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Architecture 2: Advanced ZT -->
+        <section id="advanced-zt" class="scroll-mt-28">
+          <div class="glass-card rounded-[24px] p-6 lg:p-8 border border-slate-800">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-[10px] font-mono font-bold text-neon-light uppercase tracking-wider px-2 py-0.5 bg-neon/10 border border-neon/20 rounded">Security Blueprint</span>
+            </div>
+            <h2 class="font-display font-bold text-2xl text-white mb-3">2. Advanced Zero-Trust Architecture</h2>
+            <p class="text-sm text-slate-400 leading-relaxed font-light mb-6">
+              A security boundary schematic showing session containment wrappers, parameter filter guards, and database isolation levels.
+            </p>
+            
+            <div class="mermaid">
+flowchart LR
+    subgraph ClientSpace ["Host Security Boundary (MCP Client)"]
+        direction LR
+        HostApp["Host App (Claude/IDE)"] --> SessionMgr["Session Manager"]
+        SessionMgr --> ParamFilter["Param Filter"]
+        ParamFilter --> TransportMgr["Transport Mgr"]
+    end
+
+    subgraph TransportLayer ["Secure Transport Channel"]
+        direction TB
+        StdioPipe["STDIO Pipe (Local)"]
+        SseHttp["SSE HTTP Tunnel (Remote)"]
+    end
+
+    TransportMgr --> StdioPipe
+    TransportMgr --> SseHttp
+
+    subgraph ServerSpace ["Isolated Server Sandbox (MCP Server)"]
+        direction LR
+        AuthToken["OAuth/DPoP Guard"] --> Router["Request Router"]
+        
+        subgraph Registries ["Registry Catalogs"]
+            direction TB
+            ToolReg["Tools Reg"]
+            ResReg["Resources Reg"]
+            PromptReg["Prompts Reg"]
+        end
+        
+        Router --> Registries
+        Registries --> ExecEngine["Safe Exec Engine"]
+    end
+
+    StdioPipe --> AuthToken
+    SseHttp --> AuthToken
+
+    subgraph ResourceLayer ["Isolated Resource Domain"]
+        direction TB
+        LocalFS["Local Filesystem"]
+        RemoteAPIs["REST APIs"]
+        SecureDB["Secure Database"]
+    end
+
+    ExecEngine --> LocalFS
+    ExecEngine --> RemoteAPIs
+    ExecEngine --> SecureDB
+            </div>
+            
+            <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
+              <h4 class="text-sm font-semibold uppercase tracking-wider text-neon-light">System Design Process</h4>
+              <p class="text-xs text-slate-400 leading-relaxed font-light">
+                - **Session Sandbox Containment**: The Client Session isolates individual connection handles. Even if one server is compromised, it cannot write or query data outside its local session or view variables from another server.
+              </p>
+              <p class="text-xs text-slate-400 leading-relaxed font-light">
+                - **Command & Schema Guards**: Before routing tool calls, parameters are validated against strict JSON schemas. Authentication middleware validates JWT headers and checks secure network certificates to protect local operating systems.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Architecture 3: Client-Server Sequence -->
+        <section id="client-server" class="scroll-mt-28">
+          <div class="glass-card rounded-[24px] p-6 lg:p-8 border border-slate-800">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-[10px] font-mono font-bold text-gold-light uppercase tracking-wider px-2 py-0.5 bg-gold/10 border border-gold/20 rounded">Protocol Exchange</span>
+            </div>
+            <h2 class="font-display font-bold text-2xl text-white mb-3">3. Client-Server Communication Flow</h2>
+            <p class="text-sm text-slate-400 leading-relaxed font-light mb-6">
+              JSON-RPC handshake sequences, capability listings, and tool execution routines detailed chronologically.
+            </p>
+            
+            <div class="mermaid seq-diag">
+sequenceDiagram
+    autonumber
+    actor User as User Operator
+    participant Host as Host (AI Orchestrator)
+    participant Client as MCP Client
+    participant Server as MCP Server
+    participant Res as Data Source / API
+
+    User->>Host: Dispatch Intent (e.g., "Analyze user signup trends")
+    Note over Host, Client: Phase 1: Session Handshake & Protocol Negotiation
+    Host->>Client: Boot Connection (Negotiate versions)
+    Client->>Server: JSON-RPC 2.0: initialize (protocolVersion="2025-03-26", capabilities={})
+    Server-->>Client: 200 OK: InitializeResult (protocolVersion="2025-03-26", capabilities={tools, resources})
+    Client->>Server: JSON-RPC 2.0: notifications/initialized (Ready notification)
+    
+    Note over Host, Server: Phase 2: Schema Discovery & Capability Registration
+    Client->>Server: JSON-RPC 2.0: tools/list (Enumerate capabilities)
+    Server-->>Client: 200 OK: ToolListResponse (List of tools + JSON schemas)
+    Client->>Host: Register Available Tools (Expose to LLM reasoning model)
+    
+    Note over Host, Res: Phase 3: Execution Loop & Context Ingestion
+    Host->>Client: Trigger Tool Execution ("run_query", args={"limit": 100})
+    Client->>Server: JSON-RPC 2.0: tools/call (name="run_query", arguments={"limit": 100})
+    Server->>Res: Query SQL Database / Request HTTP API Endpoint
+    Res-->>Server: Return Raw Data / JSON Payload
+    Server-->>Client: 200 OK: CallToolResult (content=[{type="text", text="..."}], isError=false)
+    Client-->>Host: Synthesize Context Payload (Translate to prompt variables)
+    Host->>User: Render Final CoT Response (Natural language response)
+            </div>
+            
+            <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
+              <h4 class="text-sm font-semibold uppercase tracking-wider text-gold-light">System Design Process</h4>
+              <p class="text-xs text-slate-400 leading-relaxed font-light">
+                1. **Handshake Lifecycle**: On connection, an exchange of `initialize` schemas maps protocol versions and client credentials. Client replies with an `initialized` notification to unlock routes.
+              </p>
+              <p class="text-xs text-slate-400 leading-relaxed font-light">
+                2. **Protocol Multiplexing**: After registering tools via `tools/list`, requests translate parameters to specific Pydantic types. The execution returns results to the client inside standard message structures.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Architecture 4: Local STDIO Subprocess -->
+        <section id="stdio-transport" class="scroll-mt-28">
+          <div class="glass-card rounded-[24px] p-6 lg:p-8 border border-slate-800">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-[10px] font-mono font-bold text-accent uppercase tracking-wider px-2 py-0.5 bg-accent/10 border border-accent/20 rounded">IPC Channel</span>
+            </div>
+            <h2 class="font-display font-bold text-2xl text-white mb-3">4. Local STDIO Subprocess Architecture</h2>
+            <p class="text-sm text-slate-400 leading-relaxed font-light mb-6">
+              Low-level visualization of process boundaries, stdin/stdout stream redirects, and system pipe isolation boundaries.
+            </p>
+            
+            <div class="mermaid">
+flowchart LR
+    subgraph Parent ["Parent Process Boundary (Host App)"]
+        Client["MCP Client Engine"]
+        Debugger["Stderr Logs Logger"]
+    end
+
+    subgraph Streams ["Subprocess Standard Streams"]
+        direction TB
+        Stdin["STDIN (JSON-RPC Requests)"]
+        Stdout["STDOUT (JSON-RPC Responses)"]
+        Stderr["STDERR (Console Logs / Debug Text)"]
+    end
+
+    Client -->|Write Line Buffer| Stdin
+    Stdout -->|Read Line Buffer| Client
+    Stderr -->|Redirect Stream| Debugger
+
+    subgraph Child ["Child Process Boundary (MCP Server Subprocess)"]
+        direction TB
+        Server["MCP Python Server (FastMCP)"]
+        subgraph Handlers ["Execution Handlers"]
+            direction LR
+            Tools["Tools Exec"]
+            Res["Resources Read"]
+            Prompts["Prompts Render"]
+        end
+        Server --> Handlers
+    end
+
+    Stdin -->|Read Line| Server
+    Server -->|Write Line| Stdout
+    Handlers -->|Output Buffers| Server
+            </div>
+            
+            <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
+              <h4 class="text-sm font-semibold uppercase tracking-wider text-accent">System Design Process</h4>
+              <p class="text-xs text-slate-400 leading-relaxed font-light">
+                - **Subprocess Isolation**: The parent application spawns the Python server as an isolated subprocess. No networking ports are opened, keeping interactions strictly local.
+              </p>
+              <p class="text-xs text-slate-400 leading-relaxed font-light">
+                - **Stream Redirects**: JSON-RPC lines write to `stdin` and response logs stream from `stdout`. Crucially, `stderr` is captured by the client and written to a developer logs panel to prevent terminal noise.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Architecture 5: Streamable HTTP / SSE -->
+        <section id="http-transport" class="scroll-mt-28">
+          <div class="glass-card rounded-[24px] p-6 lg:p-8 border border-slate-800">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-[10px] font-mono font-bold text-neon-light uppercase tracking-wider px-2 py-0.5 bg-neon/10 border border-neon/20 rounded">Cloud Transport</span>
+            </div>
+            <h2 class="font-display font-bold text-2xl text-white mb-3">5. Streamable HTTP / SSE Architecture</h2>
+            <p class="text-sm text-slate-400 leading-relaxed font-light mb-6">
+              Network service layout detailing persistent Server-Sent Events streams, HTTP POST communication endpoints, and proxy configurations.
+            </p>
+            
+            <div class="mermaid">
+flowchart LR
+    subgraph Client ["MCP Client"]
+        ClientCore["Client Engine"]
+        StreamListener["SSE Stream Listener"]
+    end
+
+    subgraph ProxyGateway ["Proxy & Edge Gateway"]
+        Nginx["Nginx Proxy (HTTPS / SSL)"]
+    end
+
+    subgraph Server ["Cloud MCP Server Container"]
+        Router["HTTP Endpoint Router"]
+        SseMgr["SSE Session Manager"]
+        AuthGate["OAuth/DPoP Validator"]
+        Executor["Execution Engine"]
+        
+        Router --> AuthGate
+        AuthGate --> Executor
+        Executor -->|Push Response| SseMgr
+    end
+
+    ClientCore -->|1. HTTP GET /sse| Nginx
+    Nginx -->|2. Forward Session Connection| SseMgr
+    SseMgr -->>|3. text/event-stream (active session id)| StreamListener
+
+    ClientCore -->|4. HTTP POST /message?id=session_id| Nginx
+    Nginx -->|5. Forward Payload| Router
+            </div>
+            
+            <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
+              <h4 class="text-sm font-semibold uppercase tracking-wider text-neon-light">System Design Process</h4>
+              <p class="text-xs text-slate-400 leading-relaxed font-light">
+                1. **GET Stream Connection**: The client initiates an SSE connection (`GET /sse`). The server creates a continuous unidirectional stream to push server notifications.
+              </p>
+              <p class="text-xs text-slate-400 leading-relaxed font-light">
+                2. **Stateless POST Actions**: Since SSE is read-only, client commands are sent as separate, stateless `POST /messages` requests containing authentication tokens and targeted session parameters.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Architecture 6: Multi-Server -->
+        <section id="multi-server" class="scroll-mt-28">
+          <div class="glass-card rounded-[24px] p-6 lg:p-8 border border-slate-800">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-[10px] font-mono font-bold text-gold-light uppercase tracking-wider px-2 py-0.5 bg-gold/10 border border-gold/20 rounded">Federated Mesh</span>
+            </div>
+            <h2 class="font-display font-bold text-2xl text-white mb-3">6. Federated Multi-Server Routing Mesh</h2>
+            <p class="text-sm text-slate-400 leading-relaxed font-light mb-6">
+              Orchestration setup showing how a single client session routes tool requests across multiple independent server sandboxes.
+            </p>
+            
+            <div class="mermaid">
+flowchart LR
+    subgraph Agent ["Host Orchestrator"]
+        Orchestrator["AI Agent Coordinator"]
+    end
+
+    subgraph Multiplexer ["MCP Client Router (Prefix Multiplexer)"]
+        Router["Routing Engine"]
+    end
+
+    Orchestrator -->|Unresolved Tool Call| Router
+
+    subgraph Servers ["Namespaced Sandboxed Servers"]
+        direction TB
+        S1["Weather Server (weather_*)"]
+        S2["Database Server (sqlite_*)"]
+        S3["Memory Server (vector_*)"]
+    end
+
+    Router -->|weather_get_forecast| S1
+    Router -->|sqlite_run_query| S2
+    Router -->|vector_search| S3
+
+    subgraph Targets ["Target Systems"]
+        direction TB
+        T1["OpenWeather API"]
+        T2["Local SQLite Database"]
+        T3["Vector DB (Pinecone)"]
+    end
+
+    S1 --> T1
+    S2 --> T2
+    S3 --> T3
+
+    subgraph Compiler ["Context Assembly"]
+        Aggregator["Context Aggregator"]
+        LLM["LLM Engine"]
+    end
+
+    T1 -->|Raw Context| Aggregator
+    T2 -->|Raw Context| Aggregator
+    T3 -->|Raw Context| Aggregator
+
+    Aggregator --> LLM
+    LLM --> Output["Final Synthesized Answer"]
+            </div>
+            
+            <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
+              <h4 class="text-sm font-semibold uppercase tracking-wider text-gold-light">System Design Process</h4>
+              <p class="text-xs text-slate-400 leading-relaxed font-light">
+                - **Namespace Routing Collision Prevention**: To allow many servers to connect simultaneously, the Client router registers tool names with prefixes (e.g., `sqlite_query`). Calls are routed to the specific server matching the prefix.
+              </p>
+              <p class="text-xs text-slate-400 leading-relaxed font-light">
+                - **Context Aggregation**: Responses from multiple servers are consolidated by the Client session manager and presented as a single context payload to the LLM agent.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Architecture 7: Deployment -->
+        <section id="deployment" class="scroll-mt-28">
+          <div class="glass-card rounded-[24px] p-6 lg:p-8 border border-slate-800">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-[10px] font-mono font-bold text-accent uppercase tracking-wider px-2 py-0.5 bg-accent/10 border border-accent/20 rounded">Devops &amp; VMs</span>
+            </div>
+            <h2 class="font-display font-bold text-2xl text-white mb-3">7. Production Deployment Pipeline</h2>
+            <p class="text-sm text-slate-400 leading-relaxed font-light mb-6">
+              Production compilation showing CI/CD workflows, Docker daemon image pulls, PM2 monitoring daemons, and SSL proxies.
+            </p>
+            
+            <div class="mermaid">
+flowchart LR
+    subgraph Dev ["1. Developer Workspace"]
+        direction TB
+        Code["Python Source Code"]
+        Git["Git Version Control"]
+        Code --> Git
+    end
+
+    subgraph Pipeline ["2. CI/CD Build Pipeline"]
+        direction TB
+        GitHub["GitHub Repository"]
+        Actions["GitHub Actions Runner"]
+        Registry["GitHub Container Registry"]
+        GitHub --> Actions
+        Actions -->|Build & Push Image| Registry
+    end
+
+    Git -->|git push| GitHub
+
+    subgraph Prod ["3. Production VPS Runtime"]
+        direction TB
+        Docker["Docker Engine Daemon"]
+        subgraph Container ["MCP Sandbox Container"]
+            PM2["PM2 Daemon Controller"]
+            App["MCP Python Server Process"]
+            PM2 -->|Process Daemon Monitor| App
+        end
+        Docker -->|Spawns Instance| Container
+        
+        Proxy["Nginx Reverse Proxy (SSL)"]
+        Proxy -->|Forward Requests (Local Port)| App
+    end
+
+    Registry -->|Docker Pull| Docker
+
+    subgraph Clients ["4. Connected Clients"]
+        direction TB
+        IDE["Claude Desktop / Cursor"]
+        Cli["Custom Agent Clients"]
+    end
+
+    IDE & Cli -->|Secure HTTPS / SSE| Proxy
+            </div>
+            
+            <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
+              <h4 class="text-sm font-semibold uppercase tracking-wider text-accent">System Design Process</h4>
+              <p class="text-xs text-slate-400 leading-relaxed font-light">
+                1. **CI/CD Build**: Local updates are pushed to GitHub. Continuous integration runs test checks and packs code into secure Docker images.
+              </p>
+              <p class="text-xs text-slate-400 leading-relaxed font-light">
+                2. **Deployment Delivery**: The server VM pulls the image. Nginx manages secure port forwarding (Let's Encrypt certificate translation) and directs messages to PM2 worker threads.
+              </p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="border-t border-slate-900 bg-bgDeep py-12 relative z-10 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div>
+        <p>&copy; 2026 Model Context Protocol (MCP) Python Guide. Created by Uditya Narayan Tiwari.</p>
+      </div>
+      <div class="flex gap-6 font-semibold">
+        <a href="index.html" class="hover:text-white transition-colors cursor-pointer">Back to Guide</a>
+        <a href="https://github.com/udityamerit/Complete-Guide-to-MCP-in-Python" target="_blank" rel="noopener" class="hover:text-white transition-colors cursor-pointer">GitHub</a>
+        <a href="https://www.linkedin.com/in/uditya-narayan-tiwari-562332289/" target="_blank" rel="noopener" class="hover:text-white transition-colors cursor-pointer">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== INTERACTIVE JAVASCRIPT ==================== -->
+  <script>
+    // Theme switching logic
+    function toggleTheme() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+      location.reload(); // Reload page to redraw Mermaid diagrams with matching styling
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+    });
+
+    // Sidebar smooth scroll active link highlighting
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.sidebar-link');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (window.scrollY >= (sectionTop - 150)) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // ==================== UNIVERSAL MERMAID PARTICLE FLOW ENGINE ====================
+    function animatePathParticles(svgElement) {
+      // Find all connection lines in Mermaid diagram
+      const paths = svgElement.querySelectorAll('.edgePaths .edgePath path, g.edgePaths path, path.messageLine0, path.messageLine1, .messageLine0, .messageLine1');
+      
+      paths.forEach((path, index) => {
+        const length = path.getTotalLength();
+        if (length <= 0) return;
+
+        // Create a particle overlay group
+        let particleGroup = svgElement.querySelector('.particle-overlay');
+        if (!particleGroup) {
+          particleGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+          particleGroup.setAttribute('class', 'particle-overlay');
+          svgElement.appendChild(particleGroup);
+        }
+
+        // Spawn two-way continuous particles
+        const numParticles = 2;
+        for (let i = 0; i < numParticles; i++) {
+          const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          circle.setAttribute('r', '3.5');
+          
+          // Separate direction flow: even goes forward (green), odd goes backward (cyan)
+          const isForward = i % 2 === 0;
+          circle.setAttribute('fill', isForward ? '#22C55E' : '#06B6D4');
+          
+          // In light mode, enhance contrast to Green 600 / Cyan 600
+          const isLight = !document.documentElement.classList.contains('dark');
+          if (isLight) {
+            circle.setAttribute('fill', isForward ? '#16A34A' : '#0891B2');
+          }
+          
+          circle.setAttribute('opacity', '0');
+          particleGroup.appendChild(circle);
+
+          // Animation timeline loop variables
+          let startTime = null;
+          const speed = 0.04; // speed in pixels per ms
+          const duration = length / speed;
+          // Stagger spawn delay
+          const delay = (i / numParticles) * duration;
+
+          function step(timestamp) {
+            if (!startTime) startTime = timestamp;
+            let elapsed = timestamp - startTime - delay;
+
+            // Handle infinite loop looping
+            if (elapsed > 0) {
+              let progress = (elapsed % duration) / duration;
+              let currentDist = isForward ? (progress * length) : ((1 - progress) * length);
+              
+              try {
+                const point = path.getPointAtLength(currentDist);
+                circle.setAttribute('cx', point.x);
+                circle.setAttribute('cy', point.y);
+                circle.setAttribute('opacity', '0.85');
+              } catch (err) {
+                // Catch any length bounds errors
+              }
+            } else {
+              circle.setAttribute('opacity', '0');
+            }
+            requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        }
+      });
+    }
+
+    // Check periodically for ready SVG rendering
+    const checkMermaidSVGs = setInterval(() => {
+      const svgs = document.querySelectorAll('.mermaid svg');
+      // Once all 7 cards have finished rendering the embedded SVGs
+      if (svgs.length >= 7) {
+        clearInterval(checkMermaidSVGs);
+        svgs.forEach(svg => {
+          // Initialize flows
+          animatePathParticles(svg);
+        });
+      }
+    }, 150);
+
+    // Stop searching after 8 seconds
+    setTimeout(() => {
+      clearInterval(checkMermaidSVGs);
+    }, 8000);
+  </script>
+</body>
+</html>
