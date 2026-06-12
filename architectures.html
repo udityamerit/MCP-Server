@@ -34,19 +34,19 @@
             primary: {
               DEFAULT: '#1E293B',
               light: '#334155',
-              dark: '#0F172A',
+              dark: '#0B1120',
             },
             accent: {
               DEFAULT: '#22C55E',
               light: '#4ADE80',
             },
             neon: {
-              DEFAULT: '#6366F1',
-              light: '#818CF8',
+              DEFAULT: '#818CF8',
+              light: '#A5B4FC',
             },
             gold: {
-              DEFAULT: '#F59E0B',
-              light: '#FCD34D',
+              DEFAULT: '#FBBF24',
+              light: '#FDE68A',
             },
             bgDeep: 'var(--bg-deep)',
             bgCard: 'var(--bg-card)',
@@ -76,77 +76,71 @@
 
   <!-- Custom Stylesheet overrides -->
   <style>
+    /* ─── Design Token System ─── */
     :root {
-      --bg-deep: #F8FAFC;
+      /* Light Mode — WCAG AA compliant */
+      --bg-deep: #F1F5F9;
       --bg-card: #FFFFFF;
-      --slate-50: #0F172A;
-      --slate-100: #1E293B;
-      --slate-200: #334155;
-      --slate-300: #475569;
-      --slate-400: #64748B;
-      --slate-500: #94A3B8;
-      --slate-600: #CBD5E1;
-      --slate-700: #CBD5E1;
-      --slate-800: #E2E8F0;
-      --slate-900: #F1F5F9;
-      --slate-950: #FFFFFF;
-      --glass-bg: rgba(255, 255, 255, 0.75);
-      --glass-border: rgba(15, 23, 42, 0.08);
-      --scrollbar-track: #F1F5F9;
-      --scrollbar-thumb: #CBD5E1;
-      --scrollbar-thumb-hover: #94A3B8;
-    }
-    
-    .dark {
-      --bg-deep: #0F172A;
-      --bg-card: #1E293B;
-      --slate-50: #F8FAFC;
-      --slate-100: #F1F5F9;
-      --slate-200: #E2E8F0;
-      --slate-300: #CBD5E1;
-      --slate-400: #94A3B8;
+      --slate-50:  #0B1120;
+      --slate-100: #0F172A;
+      --slate-200: #1E293B;
+      --slate-300: #334155;
+      --slate-400: #475569;
       --slate-500: #64748B;
-      --slate-600: #475569;
-      --slate-700: #334155;
-      --slate-800: #1E293B;
-      --slate-900: #0F172A;
-      --slate-950: #020617;
-      --glass-bg: rgba(30, 41, 59, 0.65);
-      --glass-border: rgba(255, 255, 255, 0.06);
-      --scrollbar-track: #0F172A;
-      --scrollbar-thumb: #1E293B;
-      --scrollbar-thumb-hover: #334155;
+      --slate-600: #CBD5E1;
+      --slate-700: #E2E8F0;
+      --slate-800: #E9EDF4;
+      --slate-900: #F8FAFC;
+      --slate-950: #FFFFFF;
+      --glass-bg: rgba(255, 255, 255, 0.88);
+      --glass-border: rgba(15, 23, 42, 0.10);
+      --scrollbar-track: #E2E8F0;
+      --scrollbar-thumb: #94A3B8;
+      --scrollbar-thumb-hover: #64748B;
     }
 
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: var(--scrollbar-track);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: var(--scrollbar-thumb);
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--scrollbar-thumb-hover);
+    .dark {
+      /* Dark Mode — WCAG AA compliant */
+      --bg-deep: #0B1120;
+      --bg-card: #131C2E;
+      --slate-50:  #F0F4FF;
+      --slate-100: #E2E8F4;
+      --slate-200: #C8D3E8;
+      --slate-300: #A8B8D0;
+      --slate-400: #7B91AD;
+      --slate-500: #4E6580;
+      --slate-600: #2E4060;
+      --slate-700: #1E3050;
+      --slate-800: #162440;
+      --slate-900: #0F1828;
+      --slate-950: #070D18;
+      --glass-bg: rgba(19, 28, 46, 0.75);
+      --glass-border: rgba(160, 184, 220, 0.08);
+      --scrollbar-track: #0B1120;
+      --scrollbar-thumb: #1E3050;
+      --scrollbar-thumb-hover: #2E4060;
     }
 
-    /* Glass card class */
+    /* Hover & group-hover text in light mode */
+    html:not(.dark) .hover\:text-white:hover {
+      color: #0B1120 !important;
+    }
+    html:not(.dark) .group:hover .group-hover\:text-white {
+      color: #0B1120 !important;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+    ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+
+    /* Glass card */
     .glass-card {
       background: var(--glass-bg);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--glass-border);
-    }
-
-    /* Hover and Group Hover text visibility overrides in Light Mode */
-    html:not(.dark) .hover\:text-white:hover {
-      color: #0F172A !important;
-    }
-    html:not(.dark) .group:hover .group-hover\:text-white {
-      color: #0F172A !important;
     }
 
     /* Mermaid custom styles overrides for seamless theme integration */
@@ -157,21 +151,60 @@
       padding: 32px;
       margin-bottom: 24px;
       box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
-      overflow-x: auto;
+      overflow-x: hidden;
       overflow-y: hidden;
       display: block;
       text-align: center;
       position: relative;
     }
     .mermaid svg {
-      max-width: 100%;
-      height: auto;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
       display: inline-block;
-      min-width: 750px;
-      transition: min-width 0.2s ease;
+      transition: all 0.25s ease;
     }
     .mermaid.seq-diag svg {
-      min-width: 650px;
+      min-width: auto !important;
+    }
+    
+    /* Force specific diagrams to fit inside the window width responsively */
+    .mermaid.wide-scroll-diag {
+      overflow-x: hidden !important;
+      text-align: center !important;
+    }
+    .mermaid.wide-scroll-diag svg {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      margin: 0 auto;
+    }
+
+    /* Ensure all interactive architectural SVGs scale and fit the window perfectly without scrollbars */
+    .arch-svg {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      max-height: 75vh !important;
+      display: block;
+      margin: 0 auto;
+      overflow: visible;
+    }
+    
+    /* Custom scrollbar styling for the diagrams */
+    .mermaid::-webkit-scrollbar {
+      height: 8px !important;
+    }
+    .mermaid::-webkit-scrollbar-track {
+      background: var(--scrollbar-track) !important;
+      border-radius: 8px !important;
+    }
+    .mermaid::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb) !important;
+      border-radius: 8px !important;
+    }
+    .mermaid::-webkit-scrollbar-thumb:hover {
+      background: var(--scrollbar-thumb-hover) !important;
     }
     
     /* Dynamic active node styles inside SVG */
@@ -192,6 +225,27 @@
       stroke: #22C55E !important;
       stroke-width: 1.8px !important;
       filter: drop-shadow(0 0 6px rgba(34, 197, 94, 0.35));
+    }
+    
+    /* Interactive cursor states and hover transitions */
+    .mermaid svg .node, 
+    .mermaid svg .actor,
+    .mermaid svg .actor-box,
+    .mermaid svg g.actor rect,
+    .mermaid svg .node rect,
+    .mermaid svg .node circle,
+    .mermaid svg .node polygon,
+    .mermaid svg .node path {
+      cursor: pointer;
+      transition: all 0.25s ease-in-out;
+    }
+    
+    /* Interactive hover highlight for sequence diagram actors */
+    .mermaid svg g.actor:hover rect,
+    .mermaid svg .actor:hover rect {
+      stroke: #22C55E !important;
+      stroke-width: 1.8px !important;
+      filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.45)) !important;
     }
     
     /* Clean overrides for Mermaid subgraph clusters */
@@ -217,7 +271,7 @@
       fill: var(--slate-50) !important;
       font-family: 'Space Grotesk', sans-serif !important;
       font-weight: 600 !important;
-      font-size: 13.5px !important;
+      font-size: 15.5px !important;
     }
     
     /* Edge Path lines and labels */
@@ -233,9 +287,9 @@
       background-color: var(--bg-card) !important;
       color: var(--slate-400) !important;
       font-family: 'Inter', sans-serif !important;
-      font-size: 11px !important;
-      font-weight: 500 !important;
-      padding: 2px 6px !important;
+      font-size: 12.5px !important;
+      font-weight: 550 !important;
+      padding: 3px 8px !important;
       border-radius: 4px !important;
     }
     
@@ -263,7 +317,7 @@
     }
     .mermaid svg .messageText {
       font-family: 'Inter', sans-serif !important;
-      font-size: 11px !important;
+      font-size: 13px !important;
       fill: var(--slate-300) !important;
       stroke: none !important;
     }
@@ -276,7 +330,7 @@
     }
     .mermaid svg .loopText {
       font-family: 'Space Grotesk', sans-serif !important;
-      font-size: 11px !important;
+      font-size: 13px !important;
       fill: var(--slate-50) !important;
     }
     
@@ -286,26 +340,234 @@
       fill: #0F172A !important;
     }
     html:not(.dark) .mermaid svg .edgePaths .edgePath .path {
-      stroke: #CBD5E1 !important;
+      stroke: #94A3B8 !important;
     }
     html:not(.dark) .mermaid svg .edgeLabel,
     html:not(.dark) .mermaid svg .edgeLabel span {
-      color: #475569 !important;
+      color: #334155 !important;
+    }
+    html:not(.dark) .mermaid svg .messageText {
+      fill: #1E293B !important;
+    }
+    html:not(.dark) .mermaid svg .messageLine0,
+    html:not(.dark) .mermaid svg .messageLine1 {
+      stroke: #94A3B8 !important;
+    }
+    html:not(.dark) .mermaid svg line.actor-line {
+      stroke: #94A3B8 !important;
+    }
+    html:not(.dark) .mermaid svg .loopText {
+      fill: #0F172A !important;
     }
 
-    /* Glow backdrop classes */
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0.15; }
-      50% { opacity: 0.35; }
-    }
-    .animate-glow-pulse {
-      animation: pulseGlow 6s ease-in-out infinite;
-    }
+    /* ─── Light Mode: global text & layout overrides ─── */
+
+    /* Page background glow dampened */
     html:not(.dark) .animate-glow-pulse {
-      opacity: 0.05 !important;
+      opacity: 0.04 !important;
     }
 
-    /* Active link style in sidebar */
+    /* Header nav bg/text */
+    html:not(.dark) header.glass-card {
+      background: rgba(255,255,255,0.92) !important;
+      border-bottom: 1px solid #E2E8F0 !important;
+    }
+    html:not(.dark) .text-white {
+      color: #0B1120 !important;
+    }
+    html:not(.dark) .text-slate-300 {
+      color: #334155 !important;    /* 8.2:1 ✓ */
+    }
+    html:not(.dark) .text-slate-400 {
+      color: #475569 !important;    /* 5.9:1 ✓ */
+    }
+    html:not(.dark) .text-slate-500 {
+      color: #334155 !important;    /* 8.2:1 ✓ */
+    }
+
+    /* Headings inside section cards */
+    html:not(.dark) h1, html:not(.dark) h2, html:not(.dark) h3, html:not(.dark) h4 {
+      color: #0B1120 !important;
+    }
+
+    /* Accent text tokens */
+    html:not(.dark) .text-accent        { color: #15803D !important; }  /* 6.1:1 ✓ */
+    html:not(.dark) .text-accent-light  { color: #15803D !important; }
+    html:not(.dark) .text-neon-light    { color: #4338CA !important; }  /* 6.3:1 ✓ */
+    html:not(.dark) .text-gold-light    { color: #B45309 !important; }  /* 5.0:1 ✓ */
+    html:not(.dark) .text-indigo-400    { color: #4338CA !important; }
+
+    /* Badges */
+    html:not(.dark) .bg-accent\/10      { background: rgba(21,128,61,0.08) !important; }
+    html:not(.dark) .border-accent\/20  { border-color: rgba(21,128,61,0.25) !important; }
+    html:not(.dark) .bg-neon\/10        { background: rgba(67,56,202,0.08) !important; }
+    html:not(.dark) .border-neon\/20    { border-color: rgba(67,56,202,0.25) !important; }
+    html:not(.dark) .bg-gold\/10        { background: rgba(180,83,9,0.08) !important; }
+    html:not(.dark) .border-gold\/20    { border-color: rgba(180,83,9,0.25) !important; }
+
+    /* Nav buttons: Back + Theme toggle */
+    html:not(.dark) .bg-slate-900 {
+      background: #F1F5F9 !important;
+    }
+    html:not(.dark) .border-slate-800 {
+      border-color: #CBD5E1 !important;
+    }
+    html:not(.dark) a.bg-slate-900,
+    html:not(.dark) button.bg-slate-900 {
+      background: #F1F5F9 !important;
+      border-color: #CBD5E1 !important;
+      color: #334155 !important;
+    }
+    html:not(.dark) a.bg-slate-900:hover,
+    html:not(.dark) button.bg-slate-900:hover,
+    html:not(.dark) .hover\:bg-slate-800:hover {
+      background: #E2E8F0 !important;
+      color: #0B1120 !important;
+    }
+
+    /* Glass cards */
+    html:not(.dark) .glass-card {
+      background: rgba(255,255,255,0.92) !important;
+      border-color: #CBD5E1 !important;
+    }
+
+    /* SVG diagram wrapper borders */
+    html:not(.dark) .border-slate-800 {
+      border-color: #CBD5E1 !important;
+    }
+
+    /* ─── Sidebar navigation ─── */
+    html:not(.dark) .sidebar-link {
+      color: #334155 !important;
+    }
+    html:not(.dark) .sidebar-link:hover {
+      color: #0B1120 !important;
+      background: #E9EDF4 !important;
+      border-left-color: #64748B !important;
+    }
+    html:not(.dark) .sidebar-link.active {
+      color: #15803D !important;
+      border-left-color: #15803D !important;
+      background: rgba(21,128,61,0.07) !important;
+    }
+
+    /* ─── Inline SVG diagram light-mode overrides ─── */
+
+    /* Node box fills: give slight tint so they stand out from page bg */
+    html:not(.dark) svg.arch-svg .node rect,
+    html:not(.dark) svg.arch-svg .interactable-node rect {
+      fill: #FFFFFF !important;
+      stroke: #94A3B8 !important;   /* 4.8:1 ✓ */
+      stroke-width: 1.5px !important;
+    }
+
+    /* Primary node text — title */
+    html:not(.dark) svg.arch-svg text[fill="var(--slate-50)"],
+    html:not(.dark) svg.arch-svg text[font-weight="600"] {
+      fill: #0F172A !important;     /* 14.8:1 ✓ */
+    }
+
+    /* Secondary node text — subtitle/description */
+    html:not(.dark) svg.arch-svg text[fill="var(--slate-400)"] {
+      fill: #475569 !important;     /* 5.9:1 ✓ */
+    }
+
+    /* Connector paths — was nearly invisible #CBD5E1, now slate-500 */
+    html:not(.dark) svg.arch-svg path[stroke="var(--slate-600)"] {
+      stroke: #64748B !important;   /* 4.6:1 ✓ */
+    }
+    /* Also target any paths with explicit slate-600 color */
+    html:not(.dark) svg.arch-svg path {
+      stroke: #94A3B8 !important;
+    }
+    /* But keep colored (active/highlighted) paths as-is */
+    html:not(.dark) svg.arch-svg path[stroke="#4ADE80"],
+    html:not(.dark) svg.arch-svg path[stroke="#22C55E"],
+    html:not(.dark) svg.arch-svg path[stroke="#60A5FA"],
+    html:not(.dark) svg.arch-svg path[stroke="#3B82F6"] {
+      stroke: inherit !important;
+    }
+
+    /* Boundary background fills — subtle tint on light bg */
+    html:not(.dark) svg.arch-svg rect.boundary-rect,
+    html:not(.dark) svg.arch-svg .boundary rect {
+      fill: rgba(241,245,249,0.7) !important;
+      stroke: #CBD5E1 !important;
+    }
+
+    /* Boundary / section label text */
+    html:not(.dark) svg.arch-svg .boundary text,
+    html:not(.dark) svg.arch-svg g.boundary text {
+      fill: #334155 !important;     /* 8.2:1 ✓ */
+    }
+
+    /* Sequence diagram lifelines */
+    html:not(.dark) svg.arch-svg line {
+      stroke: #94A3B8 !important;
+    }
+    /* Actor / participant boxes in sequence diagram */
+    html:not(.dark) svg.arch-svg .actor rect,
+    html:not(.dark) svg.arch-svg g[id*="node-seq"] rect {
+      fill: #FFFFFF !important;
+      stroke: #94A3B8 !important;
+    }
+    html:not(.dark) svg.arch-svg .actor text,
+    html:not(.dark) svg.arch-svg g[id*="node-seq"] text {
+      fill: #0F172A !important;
+    }
+
+    /* Arrowhead markers */
+    html:not(.dark) svg.arch-svg marker path {
+      fill: #64748B !important;
+    }
+    /* Keep active simulation markers colored */
+    html:not(.dark) svg.arch-svg marker[id$="-green"] path { fill: #16A34A !important; }
+    html:not(.dark) svg.arch-svg marker[id$="-blue"]  path { fill: #2563EB !important; }
+    html:not(.dark) svg.arch-svg marker[id$="-gray"]  path { fill: #64748B !important; }
+
+    /* Activation bars in sequence diagram */
+    html:not(.dark) svg.arch-svg rect[rx="3"] {
+      fill: #F1F5F9 !important;
+      stroke: #CBD5E1 !important;
+    }
+
+    /* ─── Sim console: professional light skin ─── */
+    html:not(.dark) .sim-console {
+      background: #FFFFFF !important;
+      border-color: #CBD5E1 !important;
+      box-shadow: 0 2px 12px rgba(15,23,42,0.08) !important;
+    }
+    html:not(.dark) .sim-console-header {
+      background: #F8FAFC !important;
+      border-bottom-color: #E2E8F0 !important;
+    }
+    html:not(.dark) .sim-console-header .text-slate-300 {
+      color: #334155 !important;
+    }
+
+    /* Run Simulation button */
+    html:not(.dark) button[onclick*="Simulation"],
+    html:not(.dark) button[onclick*="imulation"] {
+      background: rgba(21,128,61,0.08) !important;
+      border-color: rgba(21,128,61,0.3) !important;
+      color: #15803D !important;
+    }
+    html:not(.dark) button[onclick*="Simulation"]:hover,
+    html:not(.dark) button[onclick*="imulation"]:hover {
+      background: #15803D !important;
+      color: #FFFFFF !important;
+    }
+
+    /* System Design Analysis text blocks */
+    html:not(.dark) .border-t.border-slate-800\/80 {
+      border-top-color: #CBD5E1 !important;
+    }
+
+    /* Hover and Group hover */
+    html:not(.dark) .hover\:text-white:hover    { color: #0B1120 !important; }
+    html:not(.dark) .group:hover .group-hover\:text-white { color: #0B1120 !important; }
+
+    /* Active link style in sidebar — dark mode hover */
     .sidebar-link {
       border-left: 2px solid transparent;
       padding-left: 12px;
@@ -314,7 +576,7 @@
     .sidebar-link:hover {
       color: var(--slate-50) !important;
       background-color: var(--slate-900) !important;
-      border-left-color: var(--slate-450) !important;
+      border-left-color: var(--slate-600) !important;
     }
     .sidebar-link.active {
       color: #22C55E !important;
@@ -322,8 +584,75 @@
       background-color: rgba(34, 197, 94, 0.06) !important;
       font-weight: 600 !important;
     }
-    html:not(.dark) .sidebar-link:hover {
-      background-color: #F1F5F9 !important;
+
+    /* Glow animation */
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.15; }
+      50% { opacity: 0.35; }
+    }
+    .animate-glow-pulse {
+      animation: pulseGlow 6s ease-in-out infinite;
+    }
+
+    /* Simulation Active Node Highlights */
+    .mermaid svg .node.sim-active rect,
+    .mermaid svg .node.sim-active circle,
+    .mermaid svg .node.sim-active polygon,
+    .mermaid svg .node.sim-active path {
+      stroke: #22C55E !important;
+      stroke-width: 3.5px !important;
+      filter: drop-shadow(0 0 14px rgba(34, 197, 94, 0.85)) !important;
+      fill: rgba(34, 197, 94, 0.18) !important;
+    }
+    
+    /* Simulation Console UI styling */
+    .sim-console {
+      background: rgba(15, 23, 42, 0.45);
+      border: 1px solid var(--slate-800);
+      border-radius: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      overflow: hidden;
+      margin-top: 24px;
+      margin-bottom: 24px;
+    }
+    .sim-console-header {
+      background: rgba(30, 41, 59, 0.6);
+      border-bottom: 1px solid var(--slate-800);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(8px);
+    }
+    .sim-console-body {
+      padding: 16px 20px;
+      max-height: 240px;
+      overflow-y: auto;
+      background: #020617;
+      color: #A7F3D0; /* Emerald green text for success console look */
+      text-align: left;
+    }
+    .dark .sim-console-body {
+      background: #020617;
+    }
+    html:not(.dark) .sim-console-body {
+      background: #F8FAFC;
+      color: #065F46;
+      border-top: 1px solid #E2E8F0;
+    }
+    .sim-log-entry {
+      margin-bottom: 6px;
+      opacity: 0;
+      transform: translateY(4px);
+      animation: simLogFadeIn 0.3s forwards ease-out;
+    }
+    @keyframes simLogFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 
@@ -346,7 +675,7 @@
         secondaryColor: isDark ? '#1E293B' : '#F8FAFC',
         tertiaryColor: isDark ? '#1E293B' : '#F8FAFC',
         fontFamily: 'Space Grotesk, Inter, system-ui, sans-serif',
-        fontSize: '12px',
+        fontSize: '15px',
         nodeBorder: isDark ? '#334155' : '#CBD5E1',
         mainBkg: isDark ? '#0F172A' : '#FFFFFF',
         actorBorder: isDark ? '#334155' : '#CBD5E1',
@@ -453,49 +782,155 @@
               A comprehensive system data lifecycle mapping showing how operator prompts translate to client session transport layers and execute context routines.
             </p>
             
-            <!-- Mermaid Container -->
-            <div class="mermaid">
-flowchart LR
-    subgraph HostApp ["Host Application Boundary (e.g. Claude, IDE)"]
-        direction TB
-        LLM["LLM Engine (Claude / GPT-4o)"]
-        Client["MCP Client Session"]
-        LLM <-->|Context Exchange| Client
-    end
+            <!-- Inline SVG Diagram for MCP Core Architecture Flow -->
+            <div class="w-full overflow-hidden border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
+              <svg viewBox="0 0 900 780" class="arch-svg" id="svg-core-sim" style="width: 100%; height: auto; display: block; overflow: visible;">
+              <defs>
+                <marker id="arrow-core-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#22C55E" />
+                </marker>
+                <marker id="arrow-core-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#3B82F6" />
+                </marker>
+                <marker id="arrow-core-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748B" />
+                </marker>
+              </defs>
 
-    subgraph Transport ["Stateful Transport Layer"]
-        direction TB
-        Stdio["Local STDIO Pipe"]
-        Sse["Remote HTTP + SSE"]
-    end
+              <!-- Boundaries -->
+              <!-- Host App Boundary -->
+              <g class="boundary">
+                <rect x="50" y="40" width="800" height="140" rx="16" fill="rgba(30, 41, 59, 0.1)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="65" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">Host Application Boundary (e.g. Claude, IDE)</text>
+              </g>
 
-    Client <-->|JSON-RPC 2.0| Stdio
-    Client <-->|JSON-RPC 2.0| Sse
+              <!-- Transport Layer -->
+              <g class="boundary">
+                <rect x="50" y="220" width="800" height="120" rx="16" fill="rgba(30, 41, 59, 0.08)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="245" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">Stateful Transport Layer</text>
+              </g>
 
-    subgraph ServerSpace ["MCP Server Boundary"]
-        direction TB
-        Server["MCP Server Primitives"]
-        subgraph Primitives ["Exposed Catalogs"]
-            Tools["Tools (Actions)"]
-            Resources["Resources (Data)"]
-            Prompts["Prompts (Templates)"]
-        end
-        Server --- Primitives
-    end
+              <!-- Server Boundary -->
+              <g class="boundary">
+                <rect x="50" y="380" width="800" height="220" rx="16" fill="rgba(30, 41, 59, 0.1)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="405" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">MCP Server Boundary</text>
+              </g>
 
-    Stdio <-->|Context Queries| Server
-    Sse <-->|Context Queries| Server
+              <!-- External Systems -->
+              <g class="boundary">
+                <rect x="50" y="640" width="800" height="110" rx="16" fill="rgba(30, 41, 59, 0.1)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="665" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">External Data &amp; Systems</text>
+              </g>
 
-    subgraph External ["External Data & Systems"]
-        direction TB
-        APIs["Third-Party APIs"]
-        DBs["Databases (SQL/NoSQL)"]
-        FS["Host Filesystem"]
-    end
+              <!-- Paths -->
+              <path id="path-core-llm-client" d="M 340 110 L 560 110" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-core-gray)" marker-start="url(#arrow-core-gray)" />
+              
+              <path id="path-core-client-stdio" d="M 670 140 L 670 200 L 260 200 L 260 250" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-core-gray)" />
+              <path id="path-core-client-sse" d="M 670 140 L 670 200 L 640 200 L 640 250" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-core-gray)" />
+              
+              <path id="path-core-stdio-server" d="M 260 310 L 260 360 L 450 360 L 450 410" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-core-gray)" />
+              <path id="path-core-sse-server" d="M 640 310 L 640 360 L 450 360 L 450 410" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-core-gray)" />
+              
+              <path id="path-core-server-tools" d="M 450 470 L 450 500 L 210 500 L 210 520" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-core-gray)" />
+              <path id="path-core-server-res" d="M 450 470 L 450 520" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-core-gray)" />
+              <path id="path-core-server-prompts" d="M 450 470 L 450 500 L 690 500 L 690 520" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-core-gray)" />
+              
+              <path id="path-core-tools-apis" d="M 210 570 L 210 680" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-core-gray)" />
+              <path id="path-core-res-dbs" d="M 450 570 L 450 680" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-core-gray)" />
+              <path id="path-core-prompts-fs" d="M 690 570 L 690 680" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-core-gray)" />
 
-    Primitives <-->|Read/Write Operations| APIs
-    Primitives <-->|Query Execution| DBs
-    Primitives <-->|File System Access| FS
+              <!-- Nodes -->
+              <!-- LLM -->
+              <g id="node-core-LLM" class="node interactable-node" style="cursor: pointer;">
+                <rect x="120" y="80" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="230" y="110" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">LLM Engine</text>
+                <text x="230" y="128" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Claude / GPT-4o Reasoning</text>
+              </g>
+
+              <!-- Client -->
+              <g id="node-core-Client" class="node interactable-node" style="cursor: pointer;">
+                <rect x="560" y="80" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="670" y="110" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">MCP Client Session</text>
+                <text x="670" y="128" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Context Aggregator</text>
+              </g>
+
+              <!-- Stdio -->
+              <g id="node-core-Stdio" class="node interactable-node" style="cursor: pointer;">
+                <rect x="150" y="250" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="260" y="280" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Local STDIO Pipe</text>
+                <text x="260" y="298" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Low-Latency IPC Transport</text>
+              </g>
+
+              <!-- Sse -->
+              <g id="node-core-Sse" class="node interactable-node" style="cursor: pointer;">
+                <rect x="530" y="250" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="640" y="280" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Remote HTTP + SSE</text>
+                <text x="640" y="298" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Web Protocol Tunnel</text>
+              </g>
+
+              <!-- Server -->
+              <g id="node-core-Server" class="node interactable-node" style="cursor: pointer;">
+                <rect x="340" y="410" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="450" y="440" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">MCP Server Boundary</text>
+                <text x="450" y="458" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">FastMCP Server Instance</text>
+              </g>
+
+              <!-- Tools -->
+              <g id="node-core-Tools" class="node interactable-node" style="cursor: pointer;">
+                <rect x="120" y="520" width="180" height="50" rx="8" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.2" />
+                <text x="210" y="550" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">Tools (Actions)</text>
+              </g>
+
+              <!-- Resources -->
+              <g id="node-core-Resources" class="node interactable-node" style="cursor: pointer;">
+                <rect x="360" y="520" width="180" height="50" rx="8" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.2" />
+                <text x="450" y="550" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">Resources (Data)</text>
+              </g>
+
+              <!-- Prompts -->
+              <g id="node-core-Prompts" class="node interactable-node" style="cursor: pointer;">
+                <rect x="600" y="520" width="180" height="50" rx="8" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.2" />
+                <text x="690" y="550" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">Prompts (Templates)</text>
+              </g>
+
+              <!-- APIs -->
+              <g id="node-core-APIs" class="node interactable-node" style="cursor: pointer;">
+                <rect x="120" y="680" width="180" height="50" rx="8" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.2" />
+                <text x="210" y="710" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">Third-Party APIs</text>
+              </g>
+
+              <!-- DBs -->
+              <g id="node-core-DBs" class="node interactable-node" style="cursor: pointer;">
+                <rect x="360" y="680" width="180" height="50" rx="8" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.2" />
+                <text x="450" y="710" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">Databases (SQL)</text>
+              </g>
+
+              <!-- FS -->
+              <g id="node-core-FS" class="node interactable-node" style="cursor: pointer;">
+                <rect x="600" y="680" width="180" height="50" rx="8" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.2" />
+                <text x="690" y="710" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">Host Filesystem</text>
+              </g>
+            </svg>
+            </div>
+
+            <!-- Simulator Console -->
+            <div class="sim-console glass-card">
+              <div class="sim-console-header">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                  <span class="font-display font-bold text-xs uppercase tracking-wider text-slate-300">Core Flow Simulator</span>
+                </div>
+                <button onclick="runCoreSimulation(this)" class="px-3 py-1 bg-accent/10 border border-accent/20 hover:bg-accent hover:text-white text-accent rounded-lg text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Run Simulation</span>
+                </button>
+              </div>
+              <div id="core-console-body" class="sim-console-body text-xs">
+                <span class="text-slate-500">// Simulator idle. Click 'Run Simulation' to trace data queries from the LLM, through the client, to the server catalogs.</span>
+              </div>
             </div>
             
             <!-- Detailed System Design Analysis -->
@@ -525,52 +960,175 @@ flowchart LR
               A security boundary schematic showing session containment wrappers, parameter filter guards, and database isolation levels.
             </p>
             
-            <div class="mermaid">
-flowchart LR
-    subgraph ClientSpace ["Host Security Boundary (MCP Client)"]
-        direction LR
-        HostApp["Host App (Claude/IDE)"] --> SessionMgr["Session Manager"]
-        SessionMgr --> ParamFilter["Param Filter"]
-        ParamFilter --> TransportMgr["Transport Mgr"]
-    end
+            <!-- Inline SVG Diagram for Advanced Zero-Trust Architecture -->
+            <div class="w-full overflow-hidden border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
+              <svg viewBox="0 0 900 780" class="arch-svg" id="svg-zt-sim" style="width: 100%; height: auto; display: block; overflow: visible;">
+              <defs>
+                <marker id="arrow-zt-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#22C55E" />
+                </marker>
+                <marker id="arrow-zt-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#3B82F6" />
+                </marker>
+                <marker id="arrow-zt-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748B" />
+                </marker>
+              </defs>
 
-    subgraph TransportLayer ["Secure Transport Channel"]
-        direction TB
-        StdioPipe["STDIO Pipe (Local)"]
-        SseHttp["SSE HTTP Tunnel (Remote)"]
-    end
+              <!-- Boundaries -->
+              <!-- Host Security Boundary -->
+              <g class="boundary">
+                <rect x="50" y="40" width="300" height="390" rx="16" fill="rgba(30, 41, 59, 0.1)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="65" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">Host Security Boundary (MCP Client)</text>
+              </g>
 
-    TransportMgr --> StdioPipe
-    TransportMgr --> SseHttp
+              <!-- Secure Transport Channel -->
+              <g class="boundary">
+                <rect x="400" y="40" width="240" height="390" rx="16" fill="rgba(30, 41, 59, 0.08)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="420" y="65" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">Secure Transport Channel</text>
+              </g>
 
-    subgraph ServerSpace ["Isolated Server Sandbox (MCP Server)"]
-        direction LR
-        AuthToken["OAuth/DPoP Guard"] --> Router["Request Router"]
-        
-        subgraph Registries ["Registry Catalogs"]
-            direction TB
-            ToolReg["Tools Reg"]
-            ResReg["Resources Reg"]
-            PromptReg["Prompts Reg"]
-        end
-        
-        Router --> Registries
-        Registries --> ExecEngine["Safe Exec Engine"]
-    end
+              <!-- Isolated Server Sandbox -->
+              <g class="boundary">
+                <rect x="670" y="40" width="200" height="610" rx="16" fill="rgba(30, 41, 59, 0.1)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="680" y="65" fill="var(--slate-400)" font-family="Space Grotesk" font-size="10.5" font-weight="bold">Isolated Server Sandbox (MCP Server)</text>
+              </g>
 
-    StdioPipe --> AuthToken
-    SseHttp --> AuthToken
+              <!-- Isolated Resource Domain -->
+              <g class="boundary">
+                <rect x="50" y="650" width="820" height="110" rx="16" fill="rgba(30, 41, 59, 0.1)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="675" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">Isolated Resource Domain</text>
+              </g>
 
-    subgraph ResourceLayer ["Isolated Resource Domain"]
-        direction TB
-        LocalFS["Local Filesystem"]
-        RemoteAPIs["REST APIs"]
-        SecureDB["Secure Database"]
-    end
+              <!-- Paths -->
+              <path id="path-zt-host-session" d="M 200 130 L 200 160" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-zt-gray)" />
+              <path id="path-zt-session-filter" d="M 200 220 L 200 250" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-zt-gray)" />
+              <path id="path-zt-filter-transport" d="M 200 310 L 200 340" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-zt-gray)" />
+              
+              <path id="path-zt-transport-stdio" d="M 300 370 L 370 370 L 370 180 L 430 180" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-zt-gray)" />
+              <path id="path-zt-transport-sse" d="M 300 370 L 370 370 L 370 290 L 430 290" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-zt-gray)" />
+              
+              <path id="path-zt-stdio-auth" d="M 610 180 L 680 180" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-zt-gray)" />
+              <path id="path-zt-sse-auth" d="M 610 290 L 650 290 L 650 180 L 680 180" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-zt-gray)" />
+              
+              <path id="path-zt-auth-router" d="M 770 210 L 770 260" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-zt-gray)" />
+              <path id="path-zt-router-registries" d="M 770 320 L 770 370" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-zt-gray)" />
+              <path id="path-zt-registries-exec" d="M 770 540 L 770 570" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-zt-gray)" />
+              
+              <path id="path-zt-exec-fs" d="M 770 630 L 770 645 L 150 645 L 150 690" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-zt-gray)" />
+              <path id="path-zt-exec-apis" d="M 770 630 L 770 645 L 460 645 L 460 690" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-zt-gray)" />
+              <path id="path-zt-exec-db" d="M 770 630 L 770 645 L 750 645 L 750 690" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-zt-gray)" />
 
-    ExecEngine --> LocalFS
-    ExecEngine --> RemoteAPIs
-    ExecEngine --> SecureDB
+              <!-- Nodes -->
+              <g id="node-zt-HostApp" class="node interactable-node" style="cursor: pointer;">
+                <rect x="100" y="70" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="200" y="100" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">Host App (Claude/IDE)</text>
+                <text x="200" y="116" fill="var(--slate-400)" font-family="Inter" font-size="10" text-anchor="middle">Agent Coordinator</text>
+              </g>
+
+              <g id="node-zt-SessionMgr" class="node interactable-node" style="cursor: pointer;">
+                <rect x="100" y="160" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="200" y="190" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">Session Manager</text>
+                <text x="200" y="206" fill="var(--slate-400)" font-family="Inter" font-size="10" text-anchor="middle">Token Allocator</text>
+              </g>
+
+              <g id="node-zt-ParamFilter" class="node interactable-node" style="cursor: pointer;">
+                <rect x="100" y="250" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="200" y="280" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">Param Filter</text>
+                <text x="200" y="296" fill="var(--slate-400)" font-family="Inter" font-size="10" text-anchor="middle">JSON Schema Guard</text>
+              </g>
+
+              <g id="node-zt-TransportMgr" class="node interactable-node" style="cursor: pointer;">
+                <rect x="100" y="340" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="200" y="370" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">Transport Mgr</text>
+                <text x="200" y="386" fill="var(--slate-400)" font-family="Inter" font-size="10" text-anchor="middle">Payload Multiplexer</text>
+              </g>
+
+              <g id="node-zt-StdioPipe" class="node interactable-node" style="cursor: pointer;">
+                <rect x="430" y="150" width="180" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="520" y="180" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">STDIO Pipe (Local)</text>
+                <text x="520" y="196" fill="var(--slate-400)" font-family="Inter" font-size="10" text-anchor="middle">Subprocess stream</text>
+              </g>
+
+              <g id="node-zt-SseHttp" class="node interactable-node" style="cursor: pointer;">
+                <rect x="430" y="260" width="180" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="520" y="290" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">SSE HTTP Tunnel</text>
+                <text x="520" y="306" fill="var(--slate-400)" font-family="Inter" font-size="10" text-anchor="middle">Remote connection</text>
+              </g>
+
+              <g id="node-zt-AuthToken" class="node interactable-node" style="cursor: pointer;">
+                <rect x="680" y="150" width="180" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="770" y="180" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">OAuth/DPoP Guard</text>
+                <text x="770" y="196" fill="var(--slate-400)" font-family="Inter" font-size="10" text-anchor="middle">Cryptographic Validator</text>
+              </g>
+
+              <g id="node-zt-Router" class="node interactable-node" style="cursor: pointer;">
+                <rect x="680" y="260" width="180" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="770" y="290" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">Request Router</text>
+                <text x="770" y="306" fill="var(--slate-400)" font-family="Inter" font-size="10" text-anchor="middle">Method dispatch</text>
+              </g>
+
+              <g class="boundary">
+                <rect x="680" y="350" width="180" height="200" rx="12" fill="rgba(30, 41, 59, 0.15)" stroke="var(--slate-800)" stroke-width="1.2" stroke-dasharray="3" />
+                <text x="770" y="365" fill="var(--slate-400)" font-family="Space Grotesk" font-size="10" font-weight="bold" text-anchor="middle">Registry Catalogs</text>
+              </g>
+
+              <g id="node-zt-ToolReg" class="node interactable-node" style="cursor: pointer;">
+                <rect x="690" y="380" width="160" height="40" rx="6" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1" />
+                <text x="770" y="405" fill="var(--slate-50)" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Tools Reg</text>
+              </g>
+
+              <g id="node-zt-ResReg" class="node interactable-node" style="cursor: pointer;">
+                <rect x="690" y="435" width="160" height="40" rx="6" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1" />
+                <text x="770" y="460" fill="var(--slate-50)" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Resources Reg</text>
+              </g>
+
+              <g id="node-zt-PromptReg" class="node interactable-node" style="cursor: pointer;">
+                <rect x="690" y="490" width="160" height="40" rx="6" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1" />
+                <text x="770" y="515" fill="var(--slate-50)" font-family="Space Grotesk" font-size="12" font-weight="600" text-anchor="middle">Prompts Reg</text>
+              </g>
+
+              <g id="node-zt-ExecEngine" class="node interactable-node" style="cursor: pointer;">
+                <rect x="680" y="570" width="180" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="770" y="600" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">Safe Exec Engine</text>
+                <text x="770" y="616" fill="var(--slate-400)" font-family="Inter" font-size="10" text-anchor="middle">Execution isolate</text>
+              </g>
+
+              <g id="node-zt-LocalFS" class="node interactable-node" style="cursor: pointer;">
+                <rect x="50" y="690" width="200" height="50" rx="8" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.2" />
+                <text x="150" y="720" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">Local Filesystem</text>
+              </g>
+
+              <g id="node-zt-RemoteAPIs" class="node interactable-node" style="cursor: pointer;">
+                <rect x="360" y="690" width="200" height="50" rx="8" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.2" />
+                <text x="460" y="720" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">REST APIs</text>
+              </g>
+
+              <g id="node-zt-SecureDB" class="node interactable-node" style="cursor: pointer;">
+                <rect x="650" y="690" width="200" height="50" rx="8" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.2" />
+                <text x="750" y="720" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">Secure Database</text>
+              </g>
+            </svg>
+            </div>
+
+            <!-- Simulator Console -->
+            <div class="sim-console glass-card">
+              <div class="sim-console-header">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                  <span class="font-display font-bold text-xs uppercase tracking-wider text-slate-300">Zero-Trust Security Simulator</span>
+                </div>
+                <button onclick="runZtSimulation(this)" class="px-3 py-1 bg-accent/10 border border-accent/20 hover:bg-accent hover:text-white text-accent rounded-lg text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Run Simulation</span>
+                </button>
+              </div>
+              <div id="zt-console-body" class="sim-console-body text-xs">
+                <span class="text-slate-500">// Simulator idle. Click 'Run Simulation' to trace security tokens and parameter validations from Client to Server sandbox execution.</span>
+              </div>
             </div>
             
             <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
@@ -596,35 +1154,142 @@ flowchart LR
               JSON-RPC handshake sequences, capability listings, and tool execution routines detailed chronologically.
             </p>
             
-            <div class="mermaid seq-diag">
-sequenceDiagram
-    autonumber
-    actor User as User Operator
-    participant Host as Host (AI Orchestrator)
-    participant Client as MCP Client
-    participant Server as MCP Server
-    participant Res as Data Source / API
+            <!-- Inline SVG Diagram for Client-Server Communication Flow -->
+            <div class="w-full overflow-hidden border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
+              <svg viewBox="0 0 900 850" class="arch-svg" id="svg-seq-sim" style="width: 100%; height: auto; display: block; overflow: visible;">
+              <defs>
+                <marker id="arrow-seq-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#22C55E" />
+                </marker>
+                <marker id="arrow-seq-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#3B82F6" />
+                </marker>
+                <marker id="arrow-seq-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748B" />
+                </marker>
+              </defs>
 
-    User->>Host: Dispatch Intent (e.g., "Analyze user signup trends")
-    Note over Host, Client: Phase 1: Session Handshake & Protocol Negotiation
-    Host->>Client: Boot Connection (Negotiate versions)
-    Client->>Server: JSON-RPC 2.0: initialize (protocolVersion="2025-03-26", capabilities={})
-    Server-->>Client: 200 OK: InitializeResult (protocolVersion="2025-03-26", capabilities={tools, resources})
-    Client->>Server: JSON-RPC 2.0: notifications/initialized (Ready notification)
-    
-    Note over Host, Server: Phase 2: Schema Discovery & Capability Registration
-    Client->>Server: JSON-RPC 2.0: tools/list (Enumerate capabilities)
-    Server-->>Client: 200 OK: ToolListResponse (List of tools + JSON schemas)
-    Client->>Host: Register Available Tools (Expose to LLM reasoning model)
-    
-    Note over Host, Res: Phase 3: Execution Loop & Context Ingestion
-    Host->>Client: Trigger Tool Execution ("run_query", args={"limit": 100})
-    Client->>Server: JSON-RPC 2.0: tools/call (name="run_query", arguments={"limit": 100})
-    Server->>Res: Query SQL Database / Request HTTP API Endpoint
-    Res-->>Server: Return Raw Data / JSON Payload
-    Server-->>Client: 200 OK: CallToolResult (content=[{type="text", text="..."}], isError=false)
-    Client-->>Host: Synthesize Context Payload (Translate to prompt variables)
-    Host->>User: Render Final CoT Response (Natural language response)
+              <!-- Lifelines (Dashed Lines) -->
+              <line x1="80" y1="90" x2="80" y2="810" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 4" />
+              <line x1="270" y1="90" x2="270" y2="810" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 4" />
+              <line x1="460" y1="90" x2="460" y2="810" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 4" />
+              <line x1="650" y1="90" x2="650" y2="810" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 4" />
+              <line x1="840" y1="90" x2="840" y2="810" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 4" />
+
+              <!-- Activation Blocks (Glows & Bars) -->
+              <!-- Client Active Phase -->
+              <rect x="455" y="150" width="10" height="620" rx="3" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1" />
+              <!-- Server Active Phase -->
+              <rect x="645" y="200" width="10" height="530" rx="3" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1" />
+
+              <!-- Message Paths & Text Labels -->
+              <!-- 1. User -> Host -->
+              <path id="path-seq-msg1" d="M 80 120 L 270 120" fill="none" stroke="var(--slate-600)" stroke-width="1.5" marker-end="url(#arrow-seq-gray)" />
+              <text x="175" y="112" fill="var(--slate-400)" font-family="Inter" font-size="10" font-weight="bold" text-anchor="middle">1. Dispatch Intent</text>
+
+              <!-- 2. Host -> Client -->
+              <path id="path-seq-msg2" d="M 270 160 L 455 160" fill="none" stroke="var(--slate-600)" stroke-width="1.5" marker-end="url(#arrow-seq-gray)" />
+              <text x="362" y="152" fill="var(--slate-400)" font-family="Inter" font-size="10" font-weight="bold" text-anchor="middle">2. Boot Connection</text>
+
+              <!-- 3. Client -> Server: initialize -->
+              <path id="path-seq-msg3" d="M 465 210 L 645 210" fill="none" stroke="var(--slate-600)" stroke-width="1.5" marker-end="url(#arrow-seq-gray)" />
+              <text x="555" y="202" fill="var(--slate-400)" font-family="Inter" font-size="9.5" font-weight="bold" text-anchor="middle">3. JSON-RPC initialize</text>
+
+              <!-- 4. Server -> Client: InitializeResult -->
+              <path id="path-seq-msg4" d="M 645 260 L 465 260" fill="none" stroke="var(--slate-600)" stroke-width="1.5" marker-end="url(#arrow-seq-gray)" />
+              <text x="555" y="252" fill="var(--slate-400)" font-family="Inter" font-size="9.5" font-weight="bold" text-anchor="middle">4. InitializeResult</text>
+
+              <!-- 5. Client -> Server: initialized -->
+              <path id="path-seq-msg5" d="M 465 310 L 645 310" fill="none" stroke="var(--slate-600)" stroke-width="1.5" marker-end="url(#arrow-seq-gray)" />
+              <text x="555" y="302" fill="var(--slate-400)" font-family="Inter" font-size="9.5" font-weight="bold" text-anchor="middle">5. notifications/initialized</text>
+
+              <!-- 6. Client -> Server: tools/list -->
+              <path id="path-seq-msg6" d="M 465 370 L 645 370" fill="none" stroke="var(--slate-600)" stroke-width="1.5" marker-end="url(#arrow-seq-gray)" />
+              <text x="555" y="362" fill="var(--slate-400)" font-family="Inter" font-size="10" font-weight="bold" text-anchor="middle">6. tools/list</text>
+
+              <!-- 7. Server -> Client: ToolListResponse -->
+              <path id="path-seq-msg7" d="M 645 420 L 465 420" fill="none" stroke="var(--slate-600)" stroke-width="1.5" marker-end="url(#arrow-seq-gray)" />
+              <text x="555" y="412" fill="var(--slate-400)" font-family="Inter" font-size="9.5" font-weight="bold" text-anchor="middle">7. ToolListResponse</text>
+
+              <!-- 8. Client -> Host: Register Tools -->
+              <path id="path-seq-msg8" d="M 455 470 L 270 470" fill="none" stroke="var(--slate-600)" stroke-width="1.5" marker-end="url(#arrow-seq-gray)" />
+              <text x="362" y="462" fill="var(--slate-400)" font-family="Inter" font-size="9.5" font-weight="bold" text-anchor="middle">8. Register Tools</text>
+
+              <!-- 9. Host -> Client: Trigger Tool -->
+              <path id="path-seq-msg9" d="M 270 530 L 455 530" fill="none" stroke="var(--slate-600)" stroke-width="1.5" marker-end="url(#arrow-seq-gray)" />
+              <text x="362" y="522" fill="var(--slate-400)" font-family="Inter" font-size="10" font-weight="bold" text-anchor="middle">9. Trigger Tool Execution</text>
+
+              <!-- 10. Client -> Server: tools/call -->
+              <path id="path-seq-msg10" d="M 465 580 L 645 580" fill="none" stroke="var(--slate-600)" stroke-width="1.5" marker-end="url(#arrow-seq-gray)" />
+              <text x="555" y="572" fill="var(--slate-400)" font-family="Inter" font-size="10" font-weight="bold" text-anchor="middle">10. tools/call</text>
+
+              <!-- 11. Server -> Res -->
+              <path id="path-seq-msg11" d="M 655 630 L 840 630" fill="none" stroke="var(--slate-600)" stroke-width="1.5" marker-end="url(#arrow-seq-gray)" />
+              <text x="747" y="622" fill="var(--slate-400)" font-family="Inter" font-size="9.5" font-weight="bold" text-anchor="middle">11. Query Database/API</text>
+
+              <!-- 12. Res -> Server -->
+              <path id="path-seq-msg12" d="M 840 680 L 655 680" fill="none" stroke="var(--slate-600)" stroke-width="1.5" marker-end="url(#arrow-seq-gray)" />
+              <text x="747" y="672" fill="var(--slate-400)" font-family="Inter" font-size="9.5" font-weight="bold" text-anchor="middle">12. Return Raw Data</text>
+
+              <!-- 13. Server -> Client: CallToolResult -->
+              <path id="path-seq-msg13" d="M 645 720 L 465 720" fill="none" stroke="var(--slate-600)" stroke-width="1.5" marker-end="url(#arrow-seq-gray)" />
+              <text x="555" y="712" fill="var(--slate-400)" font-family="Inter" font-size="9.5" font-weight="bold" text-anchor="middle">13. CallToolResult</text>
+
+              <!-- 14. Client -> Host: Return Context -->
+              <path id="path-seq-msg14" d="M 455 760 L 270 760" fill="none" stroke="var(--slate-600)" stroke-width="1.5" marker-end="url(#arrow-seq-gray)" />
+              <text x="362" y="752" fill="var(--slate-400)" font-family="Inter" font-size="9.5" font-weight="bold" text-anchor="middle">14. Return Context</text>
+
+              <!-- 15. Host -> User -->
+              <path id="path-seq-msg15" d="M 270 800 L 80 800" fill="none" stroke="var(--slate-600)" stroke-width="1.5" marker-end="url(#arrow-seq-gray)" />
+              <text x="175" y="792" fill="var(--slate-400)" font-family="Inter" font-size="10" font-weight="bold" text-anchor="middle">15. Render Response</text>
+
+              <!-- Actor Labels (Boxes) -->
+              <!-- Top Actor Boxes -->
+              <g id="node-seq-User" class="node" style="cursor: pointer;">
+                <rect x="10" y="30" width="140" height="50" rx="8" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="80" y="60" fill="var(--slate-50)" font-family="Space Grotesk" font-size="12.5" font-weight="bold" text-anchor="middle">User Operator</text>
+              </g>
+
+              <g id="node-seq-Host" class="node" style="cursor: pointer;">
+                <rect x="175" y="30" width="190" height="50" rx="8" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="270" y="60" fill="var(--slate-50)" font-family="Space Grotesk" font-size="12.5" font-weight="bold" text-anchor="middle">Host Orchestrator</text>
+              </g>
+
+              <g id="node-seq-Client" class="node" style="cursor: pointer;">
+                <rect x="390" y="30" width="140" height="50" rx="8" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="460" y="60" fill="var(--slate-50)" font-family="Space Grotesk" font-size="12.5" font-weight="bold" text-anchor="middle">MCP Client</text>
+              </g>
+
+              <g id="node-seq-Server" class="node" style="cursor: pointer;">
+                <rect x="580" y="30" width="140" height="50" rx="8" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="650" y="60" fill="var(--slate-50)" font-family="Space Grotesk" font-size="12.5" font-weight="bold" text-anchor="middle">MCP Server</text>
+              </g>
+
+              <g id="node-seq-Res" class="node" style="cursor: pointer;">
+                <rect x="770" y="30" width="140" height="50" rx="8" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="840" y="60" fill="var(--slate-50)" font-family="Space Grotesk" font-size="12.5" font-weight="bold" text-anchor="middle">Data Source/API</text>
+              </g>
+            </svg>
+            </div>
+
+            <!-- Simulator Console -->
+            <div class="sim-console glass-card">
+              <div class="sim-console-header">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                  <span class="font-display font-bold text-xs uppercase tracking-wider text-slate-300">Client-Server Handshake Simulator</span>
+                </div>
+                <button onclick="runSequenceSimulation(this)" class="px-3 py-1 bg-accent/10 border border-accent/20 hover:bg-accent hover:text-white text-accent rounded-lg text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Run Simulation</span>
+                </button>
+              </div>
+              <div id="seq-console-body" class="sim-console-body text-xs">
+                <span class="text-slate-500">// Simulator idle. Click 'Run Simulation' to watch chronological JSON-RPC handshakes, schemas listing, and context aggregation.</span>
+              </div>
             </div>
             
             <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
@@ -650,39 +1315,153 @@ sequenceDiagram
               Low-level visualization of process boundaries, stdin/stdout stream redirects, and system pipe isolation boundaries.
             </p>
             
-            <div class="mermaid">
-flowchart LR
-    subgraph Parent ["Parent Process Boundary (Host App)"]
-        Client["MCP Client Engine"]
-        Debugger["Stderr Logs Logger"]
-    end
+            <!-- Inline SVG Diagram for Local STDIO Subprocess Architecture -->
+            <div class="w-full overflow-hidden border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
+              <svg viewBox="0 0 900 750" class="arch-svg" id="svg-stdio-sim" style="width: 100%; height: auto; display: block; overflow: visible;">
+              <defs>
+                <marker id="arrow-stdio-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#22C55E" />
+                </marker>
+                <marker id="arrow-stdio-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#3B82F6" />
+                </marker>
+                <marker id="arrow-stdio-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748B" />
+                </marker>
+              </defs>
 
-    subgraph Streams ["Subprocess Standard Streams"]
-        direction TB
-        Stdin["STDIN (JSON-RPC Requests)"]
-        Stdout["STDOUT (JSON-RPC Responses)"]
-        Stderr["STDERR (Console Logs / Debug Text)"]
-    end
+              <!-- Boundaries -->
+              <!-- Parent Process Boundary -->
+              <g class="boundary">
+                <rect x="50" y="40" width="800" height="100" rx="16" fill="rgba(30, 41, 59, 0.1)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="65" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">Parent Process Boundary (Host App)</text>
+              </g>
 
-    Client -->|Write Line Buffer| Stdin
-    Stdout -->|Read Line Buffer| Client
-    Stderr -->|Redirect Stream| Debugger
+              <!-- Subprocess Input Stream -->
+              <g class="boundary">
+                <rect x="50" y="165" width="800" height="100" rx="16" fill="rgba(30, 41, 59, 0.08)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="190" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">Subprocess Input Stream</text>
+              </g>
 
-    subgraph Child ["Child Process Boundary (MCP Server Subprocess)"]
-        direction TB
-        Server["MCP Python Server (FastMCP)"]
-        subgraph Handlers ["Execution Handlers"]
-            direction LR
-            Tools["Tools Exec"]
-            Res["Resources Read"]
-            Prompts["Prompts Render"]
-        end
-        Server --> Handlers
-    end
+              <!-- Child Process Boundary -->
+              <g class="boundary">
+                <rect x="50" y="290" width="800" height="210" rx="16" fill="rgba(30, 41, 59, 0.1)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="315" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">Child Process Boundary (MCP Server Subprocess)</text>
+              </g>
 
-    Stdin -->|Read Line| Server
-    Server -->|Write Line| Stdout
-    Handlers -->|Output Buffers| Server
+              <!-- Subprocess Output Streams -->
+              <g class="boundary">
+                <rect x="50" y="520" width="800" height="100" rx="16" fill="rgba(30, 41, 59, 0.08)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="545" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">Subprocess Output Streams</text>
+              </g>
+
+              <!-- Parent Response Handlers -->
+              <g class="boundary">
+                <rect x="50" y="640" width="800" height="100" rx="16" fill="rgba(30, 41, 59, 0.1)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="665" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">Parent Response Handlers</text>
+              </g>
+
+              <!-- Paths -->
+              <path id="path-stdio-client-stdin" d="M 450 120 L 450 185" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-stdio-gray)" />
+              <path id="path-stdio-stdin-server" d="M 450 245 L 450 310" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-stdio-gray)" />
+              
+              <path id="path-stdio-server-stdout" d="M 390 370 L 390 470 L 310 470 L 310 540" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-stdio-gray)" />
+              <path id="path-stdio-server-stderr" d="M 510 370 L 510 470 L 590 470 L 590 540" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-stdio-gray)" />
+              
+              <path id="path-stdio-stdout-reader" d="M 310 600 L 310 660" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-stdio-gray)" />
+              <path id="path-stdio-stderr-debugger" d="M 590 600 L 590 660" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-stdio-gray)" />
+
+              <!-- Nodes -->
+              <!-- Client -->
+              <g id="node-stdio-Client" class="node interactable-node" style="cursor: pointer;">
+                <rect x="340" y="60" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="450" y="90" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Client Engine</text>
+                <text x="450" y="108" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">MCP Client Engine</text>
+              </g>
+
+              <!-- Stdin -->
+              <g id="node-stdio-Stdin" class="node interactable-node" style="cursor: pointer;">
+                <rect x="340" y="185" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="450" y="215" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">STDIN Stream</text>
+                <text x="450" y="233" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">JSON-RPC line requests</text>
+              </g>
+
+              <!-- Server -->
+              <g id="node-stdio-Server" class="node interactable-node" style="cursor: pointer;">
+                <rect x="340" y="310" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="450" y="340" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">MCP Python Server</text>
+                <text x="450" y="358" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">FastMCP subprocess</text>
+              </g>
+
+              <!-- Handlers subgraph boundary -->
+              <g class="boundary">
+                <rect x="90" y="385" width="720" height="100" rx="12" fill="rgba(30, 41, 59, 0.15)" stroke="var(--slate-800)" stroke-width="1.2" stroke-dasharray="3" />
+                <text x="450" y="400" fill="var(--slate-400)" font-family="Space Grotesk" font-size="10" font-weight="bold" text-anchor="middle">Execution Handlers</text>
+              </g>
+
+              <g id="node-stdio-Tools" class="node interactable-node" style="cursor: pointer;">
+                <rect x="110" y="415" width="200" height="50" rx="8" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.2" />
+                <text x="210" y="445" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">Tools Exec</text>
+              </g>
+
+              <g id="node-stdio-Res" class="node interactable-node" style="cursor: pointer;">
+                <rect x="350" y="415" width="200" height="50" rx="8" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.2" />
+                <text x="450" y="445" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">Resources Read</text>
+              </g>
+
+              <g id="node-stdio-Prompts" class="node interactable-node" style="cursor: pointer;">
+                <rect x="590" y="415" width="200" height="50" rx="8" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.2" />
+                <text x="690" y="445" fill="var(--slate-50)" font-family="Space Grotesk" font-size="13" font-weight="600" text-anchor="middle">Prompts Render</text>
+              </g>
+
+              <!-- Stdout -->
+              <g id="node-stdio-Stdout" class="node interactable-node" style="cursor: pointer;">
+                <rect x="200" y="540" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="310" y="570" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">STDOUT Stream</text>
+                <text x="310" y="588" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">JSON-RPC responses</text>
+              </g>
+
+              <!-- Stderr -->
+              <g id="node-stdio-Stderr" class="node interactable-node" style="cursor: pointer;">
+                <rect x="480" y="540" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="590" y="570" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">STDERR Stream</text>
+                <text x="590" y="588" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Console logs &amp; debug text</text>
+              </g>
+
+              <!-- Reader -->
+              <g id="node-stdio-Reader" class="node interactable-node" style="cursor: pointer;">
+                <rect x="200" y="660" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="310" y="690" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Client Response Reader</text>
+                <text x="310" y="708" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Stdout deserializer</text>
+              </g>
+
+              <!-- Debugger -->
+              <g id="node-stdio-Debugger" class="node interactable-node" style="cursor: pointer;">
+                <rect x="480" y="660" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="590" y="690" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Stderr Logs Logger</text>
+                <text x="590" y="708" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Log redirect monitor</text>
+              </g>
+            </svg>
+            </div>
+
+            <!-- Simulator Console -->
+            <div class="sim-console glass-card">
+              <div class="sim-console-header">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                  <span class="font-display font-bold text-xs uppercase tracking-wider text-slate-300">Local STDIO Subprocess Simulator</span>
+                </div>
+                <button onclick="runStdioSimulation(this)" class="px-3 py-1 bg-accent/10 border border-accent/20 hover:bg-accent hover:text-white text-accent rounded-lg text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Run Simulation</span>
+                </button>
+              </div>
+              <div id="stdio-console-body" class="sim-console-body text-xs">
+                <span class="text-slate-500">// Simulator idle. Click 'Run Simulation' to trace local inter-process standard streams and error logs routing.</span>
+              </div>
             </div>
             
             <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
@@ -708,34 +1487,141 @@ flowchart LR
               Network service layout detailing persistent Server-Sent Events streams, HTTP POST communication endpoints, and proxy configurations.
             </p>
             
-            <div class="mermaid">
-flowchart LR
-    subgraph Client ["MCP Client"]
-        ClientCore["Client Engine"]
-        StreamListener["SSE Stream Listener"]
-    end
+            <!-- Inline SVG Diagram for Streamable HTTP / SSE -->
+            <div class="w-full overflow-hidden border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
+              <svg viewBox="0 0 900 680" class="arch-svg" id="svg-sse-sim" style="width: 100%; height: auto; display: block; overflow: visible;">
+              <!-- Definitions for arrow markers -->
+              <defs>
+                <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#22C55E" />
+                </marker>
+                <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#3B82F6" />
+                </marker>
+                <marker id="arrow-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748B" />
+                </marker>
+              </defs>
 
-    subgraph ProxyGateway ["Proxy & Edge Gateway"]
-        Nginx["Nginx Proxy (HTTPS / SSL)"]
-    end
+              <!-- Boundaries -->
+              <!-- Client Boundary -->
+              <g class="boundary">
+                <rect x="50" y="40" width="800" height="130" rx="16" fill="rgba(30, 41, 59, 0.1)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="65" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">Host Security Boundary (MCP Client)</text>
+              </g>
 
-    subgraph Server ["Cloud MCP Server Container"]
-        Router["HTTP Endpoint Router"]
-        SseMgr["SSE Session Manager"]
-        AuthGate["OAuth/DPoP Validator"]
-        Executor["Execution Engine"]
-        
-        Router --> AuthGate
-        AuthGate --> Executor
-        Executor -->|Push Response| SseMgr
-    end
+              <!-- Gateway Boundary -->
+              <g class="boundary">
+                <rect x="50" y="210" width="800" height="110" rx="16" fill="rgba(30, 41, 59, 0.08)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="235" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">Proxy &amp; Edge Gateway</text>
+              </g>
 
-    ClientCore -->|1. HTTP GET /sse| Nginx
-    Nginx -->|2. Forward Session Connection| SseMgr
-    SseMgr -->>|3. text/event-stream (active session id)| StreamListener
+              <!-- Server Container Boundary -->
+              <g class="boundary">
+                <rect x="50" y="360" width="800" height="280" rx="16" fill="rgba(30, 41, 59, 0.1)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="385" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">Cloud MCP Server Container</text>
+              </g>
 
-    ClientCore -->|4. HTTP POST /message?id=session_id| Nginx
-    Nginx -->|5. Forward Payload| Router
+              <!-- Connections and Labels (Background Paths) -->
+              <!-- 1. Client GET to Nginx -->
+              <path id="path-sse-get" d="M 260 150 L 260 190 L 410 190 L 410 240" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-gray)" />
+              <text x="335" y="180" fill="var(--slate-400)" font-family="Inter" font-size="10.5" font-weight="bold" text-anchor="middle">1. GET /sse</text>
+
+              <!-- 2. Nginx Forward to SseMgr -->
+              <path id="path-sse-forward-get" d="M 450 300 L 450 340 L 700 340 L 700 430" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-gray)" />
+              <text x="575" y="330" fill="var(--slate-400)" font-family="Inter" font-size="10.5" font-weight="bold" text-anchor="middle">2. Forward GET</text>
+
+              <!-- 3. EventStream response back from SseMgr to StreamListener -->
+              <path id="path-sse-stream" d="M 700 430 L 700 180 L 640 180 L 640 150" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-gray)" />
+              <text x="715" y="210" fill="var(--slate-400)" font-family="Inter" font-size="10.5" font-weight="bold" text-anchor="middle" transform="rotate(-90 715 210)">3. Event-Stream (active session id)</text>
+
+              <!-- 4. Client POST message to Nginx -->
+              <path id="path-sse-post-actual" d="M 220 150 L 220 200 L 430 200 L 430 240" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-gray)" />
+              <text x="210" y="225" fill="var(--slate-400)" font-family="Inter" font-size="10.5" font-weight="bold" text-anchor="middle">4. POST /message?id=session_id</text>
+
+              <!-- 5. Nginx Forward to Router -->
+              <path id="path-sse-forward-post" d="M 450 300 L 450 340 L 200 340 L 200 430" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-gray)" />
+              <text x="325" y="330" fill="var(--slate-400)" font-family="Inter" font-size="10.5" font-weight="bold" text-anchor="middle">5. Forward Payload</text>
+
+              <!-- 6. Router to AuthGate -->
+              <path id="path-sse-route-auth" d="M 200 490 L 200 540" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-gray)" />
+
+              <!-- 7. AuthGate to Executor -->
+              <path id="path-sse-auth-exec" d="M 300 570 L 350 570" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-gray)" />
+
+              <!-- 8. Executor to SseMgr -->
+              <path id="path-sse-exec-mgr" d="M 550 570 L 700 570 L 700 490" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-gray)" />
+
+              <!-- Node shapes & text (Drawn last so they lie on top of paths) -->
+              <!-- ClientCore -->
+              <g id="node-sse-ClientCore" class="node interactable-node" style="cursor: pointer;">
+                <rect x="150" y="90" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="260" y="120" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Client Engine</text>
+                <text x="260" y="138" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">MCP Session Initiator</text>
+              </g>
+
+              <!-- StreamListener -->
+              <g id="node-sse-StreamListener" class="node interactable-node" style="cursor: pointer;">
+                <rect x="530" y="90" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="640" y="120" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">SSE Stream Listener</text>
+                <text x="640" y="138" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">EventStream Handler</text>
+              </g>
+
+              <!-- Nginx Proxy -->
+              <g id="node-sse-Nginx" class="node interactable-node" style="cursor: pointer;">
+                <rect x="340" y="240" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="450" y="270" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Nginx Proxy</text>
+                <text x="450" y="288" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">SSL Reverse Gateway</text>
+              </g>
+
+              <!-- Router -->
+              <g id="node-sse-Router" class="node interactable-node" style="cursor: pointer;">
+                <rect x="100" y="430" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="200" y="460" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">HTTP Endpoint Router</text>
+                <text x="200" y="478" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Stateless POST Handler</text>
+              </g>
+
+              <!-- AuthGate -->
+              <g id="node-sse-AuthGate" class="node interactable-node" style="cursor: pointer;">
+                <rect x="100" y="540" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="200" y="570" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">OAuth/DPoP Guard</text>
+                <text x="200" y="588" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">DPoP Cryptographic Validator</text>
+              </g>
+
+              <!-- Executor -->
+              <g id="node-sse-Executor" class="node interactable-node" style="cursor: pointer;">
+                <rect x="350" y="540" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="450" y="570" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Execution Engine</text>
+                <text x="450" y="588" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Local Resource Resolver</text>
+              </g>
+
+              <!-- SseMgr -->
+              <g id="node-sse-SseMgr" class="node interactable-node" style="cursor: pointer;">
+                <rect x="600" y="430" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="700" y="460" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">SSE Session Manager</text>
+                <text x="700" y="478" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Unidirectional EventStream</text>
+              </g>
+            </svg>
+            </div>
+            
+            <!-- Simulator Console -->
+            <div class="sim-console glass-card">
+              <div class="sim-console-header">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                  <span class="font-display font-bold text-xs uppercase tracking-wider text-slate-300">SSE Data Flow Simulator</span>
+                </div>
+                <button onclick="runSseSimulation(this)" class="px-3 py-1 bg-accent/10 border border-accent/20 hover:bg-accent hover:text-white text-accent rounded-lg text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Run Simulation</span>
+                </button>
+              </div>
+              <div id="sse-console-body" class="sim-console-body text-xs">
+                <span class="text-slate-500">// Simulator idle. Click 'Run Simulation' to trace step-by-step HTTP & SSE connection data flows.</span>
+              </div>
             </div>
             
             <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
@@ -761,51 +1647,156 @@ flowchart LR
               Orchestration setup showing how a single client session routes tool requests across multiple independent server sandboxes.
             </p>
             
-            <div class="mermaid">
-flowchart LR
-    subgraph Agent ["Host Orchestrator"]
-        Orchestrator["AI Agent Coordinator"]
-    end
+            <!-- Inline SVG Diagram for Federated Multi-Server Routing Mesh -->
+            <div class="w-full overflow-hidden border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
+              <svg viewBox="0 0 900 750" class="arch-svg" id="svg-route-sim" style="width: 100%; height: auto; display: block; overflow: visible;">
+              <defs>
+                <marker id="arrow-route-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#22C55E" />
+                </marker>
+                <marker id="arrow-route-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#3B82F6" />
+                </marker>
+                <marker id="arrow-route-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748B" />
+                </marker>
+              </defs>
 
-    subgraph Multiplexer ["MCP Client Router (Prefix Multiplexer)"]
-        Router["Routing Engine"]
-    end
+              <!-- Boundaries -->
+              <!-- Agent Orchestrator -->
+              <g class="boundary">
+                <rect x="50" y="40" width="800" height="100" rx="16" fill="rgba(30, 41, 59, 0.1)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="65" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">Agent Orchestrator</text>
+              </g>
 
-    Orchestrator -->|Unresolved Tool Call| Router
+              <!-- Prefix Multiplexer -->
+              <g class="boundary">
+                <rect x="50" y="150" width="800" height="100" rx="16" fill="rgba(30, 41, 59, 0.08)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="175" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">MCP Client Router (Prefix Multiplexer)</text>
+              </g>
 
-    subgraph Servers ["Namespaced Sandboxed Servers"]
-        direction TB
-        S1["Weather Server (weather_*)"]
-        S2["Database Server (sqlite_*)"]
-        S3["Memory Server (vector_*)"]
-    end
+              <!-- Namespaced Servers -->
+              <g class="boundary">
+                <rect x="50" y="260" width="800" height="120" rx="16" fill="rgba(30, 41, 59, 0.1)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="285" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">Namespaced Sandboxed Servers</text>
+              </g>
 
-    Router -->|weather_get_forecast| S1
-    Router -->|sqlite_run_query| S2
-    Router -->|vector_search| S3
+              <!-- Target Systems -->
+              <g class="boundary">
+                <rect x="50" y="390" width="800" height="120" rx="16" fill="rgba(30, 41, 59, 0.08)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="415" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">Target Systems</text>
+              </g>
 
-    subgraph Targets ["Target Systems"]
-        direction TB
-        T1["OpenWeather API"]
-        T2["Local SQLite Database"]
-        T3["Vector DB (Pinecone)"]
-    end
+              <!-- Context Assembly -->
+              <g class="boundary">
+                <rect x="50" y="520" width="800" height="200" rx="16" fill="rgba(30, 41, 59, 0.1)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="545" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">Context Assembly &amp; Synthesizer</text>
+              </g>
 
-    S1 --> T1
-    S2 --> T2
-    S3 --> T3
+              <!-- Paths -->
+              <path id="path-route-orch-router" d="M 450 120 L 450 170" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-route-gray)" />
+              
+              <path id="path-route-router-s1" d="M 390 230 L 390 250 L 200 250 L 200 290" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-route-gray)" />
+              <path id="path-route-router-s2" d="M 450 230 L 450 290" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-route-gray)" />
+              <path id="path-route-router-s3" d="M 510 230 L 510 250 L 700 250 L 700 290" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-route-gray)" />
+              
+              <path id="path-route-s1-t1" d="M 200 350 L 200 410" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-route-gray)" />
+              <path id="path-route-s2-t2" d="M 450 350 L 450 410" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-route-gray)" />
+              <path id="path-route-s3-t3" d="M 700 350 L 700 410" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-route-gray)" />
+              
+              <path id="path-route-t1-agg" d="M 200 470 L 200 500 L 390 500 L 390 540" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-route-gray)" />
+              <path id="path-route-t2-agg" d="M 450 470 L 450 540" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-route-gray)" />
+              <path id="path-route-t3-agg" d="M 700 470 L 700 500 L 510 500 L 510 540" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-route-gray)" />
+              
+              <path id="path-route-agg-llm" d="M 450 600 L 450 650" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-route-gray)" />
 
-    subgraph Compiler ["Context Assembly"]
-        Aggregator["Context Aggregator"]
-        LLM["LLM Engine"]
-    end
+              <!-- Nodes -->
+              <!-- Orchestrator -->
+              <g id="node-route-Orchestrator" class="node interactable-node" style="cursor: pointer;">
+                <rect x="340" y="60" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="450" y="90" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">AI Agent Coordinator</text>
+                <text x="450" y="108" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Intent router</text>
+              </g>
 
-    T1 -->|Raw Context| Aggregator
-    T2 -->|Raw Context| Aggregator
-    T3 -->|Raw Context| Aggregator
+              <!-- Router -->
+              <g id="node-route-Router" class="node interactable-node" style="cursor: pointer;">
+                <rect x="340" y="170" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="450" y="200" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Routing Engine</text>
+                <text x="450" y="218" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Prefix Multiplexer client</text>
+              </g>
 
-    Aggregator --> LLM
-    LLM --> Output["Final Synthesized Answer"]
+              <!-- Servers -->
+              <g id="node-route-S1" class="node interactable-node" style="cursor: pointer;">
+                <rect x="100" y="290" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="200" y="320" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Weather Server</text>
+                <text x="200" y="338" fill="var(--slate-400)" font-family="Inter" font-size="10" text-anchor="middle">Prefix: weather_*</text>
+              </g>
+
+              <g id="node-route-S2" class="node interactable-node" style="cursor: pointer;">
+                <rect x="350" y="290" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="450" y="320" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Database Server</text>
+                <text x="450" y="338" fill="var(--slate-400)" font-family="Inter" font-size="10" text-anchor="middle">Prefix: sqlite_*</text>
+              </g>
+
+              <g id="node-route-S3" class="node interactable-node" style="cursor: pointer;">
+                <rect x="600" y="290" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="700" y="320" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Memory Server</text>
+                <text x="700" y="338" fill="var(--slate-400)" font-family="Inter" font-size="10" text-anchor="middle">Prefix: vector_*</text>
+              </g>
+
+              <!-- Targets -->
+              <g id="node-route-T1" class="node interactable-node" style="cursor: pointer;">
+                <rect x="100" y="410" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="200" y="440" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">OpenWeather API</text>
+                <text x="200" y="458" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">REST Endpoint</text>
+              </g>
+
+              <g id="node-route-T2" class="node interactable-node" style="cursor: pointer;">
+                <rect x="350" y="410" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="450" y="440" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">SQLite Database</text>
+                <text x="450" y="458" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Relational storage</text>
+              </g>
+
+              <g id="node-route-T3" class="node interactable-node" style="cursor: pointer;">
+                <rect x="600" y="410" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="700" y="440" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Vector DB</text>
+                <text x="700" y="458" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Pinecone Memory Store</text>
+              </g>
+
+              <!-- Aggregator -->
+              <g id="node-route-Aggregator" class="node interactable-node" style="cursor: pointer;">
+                <rect x="340" y="540" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="450" y="570" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Context Aggregator</text>
+                <text x="450" y="588" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Response Assembler</text>
+              </g>
+
+              <!-- LLM -->
+              <g id="node-route-LLM" class="node interactable-node" style="cursor: pointer;">
+                <rect x="340" y="650" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="450" y="680" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">LLM Engine</text>
+                <text x="450" y="698" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Final Synthesis model</text>
+              </g>
+            </svg>
+            </div>
+
+            <!-- Simulator Console -->
+            <div class="sim-console glass-card">
+              <div class="sim-console-header">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                  <span class="font-display font-bold text-xs uppercase tracking-wider text-slate-300">Federated Routing Simulator</span>
+                </div>
+                <button onclick="runRoutingSimulation(this)" class="px-3 py-1 bg-accent/10 border border-accent/20 hover:bg-accent hover:text-white text-accent rounded-lg text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Run Simulation</span>
+                </button>
+              </div>
+              <div id="route-console-body" class="sim-console-body text-xs">
+                <span class="text-slate-500">// Simulator idle. Click 'Run Simulation' to trace federated routing namespaces Weather, SQLite, and Vector DB in parallel.</span>
+              </div>
             </div>
             
             <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
@@ -831,49 +1822,188 @@ flowchart LR
               Production compilation showing CI/CD workflows, Docker daemon image pulls, PM2 monitoring daemons, and SSL proxies.
             </p>
             
-            <div class="mermaid">
-flowchart LR
-    subgraph Dev ["1. Developer Workspace"]
-        direction TB
-        Code["Python Source Code"]
-        Git["Git Version Control"]
-        Code --> Git
-    end
+            <!-- Inline SVG Diagram for Production Deployment Pipeline -->
+            <div class="w-full overflow-hidden border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
+              <svg viewBox="0 0 1200 920" class="arch-svg" id="svg-deploy-sim" style="width: 100%; height: auto; display: block; overflow: visible;">
+              <!-- Definitions for arrow markers -->
+              <defs>
+                <marker id="arrow-deploy-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#22C55E" />
+                </marker>
+                <marker id="arrow-deploy-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#3B82F6" />
+                </marker>
+                <marker id="arrow-deploy-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748B" />
+                </marker>
+              </defs>
 
-    subgraph Pipeline ["2. CI/CD Build Pipeline"]
-        direction TB
-        GitHub["GitHub Repository"]
-        Actions["GitHub Actions Runner"]
-        Registry["GitHub Container Registry"]
-        GitHub --> Actions
-        Actions -->|Build & Push Image| Registry
-    end
+              <!-- Boundaries -->
+              <!-- Developer Workspace -->
+              <g class="boundary">
+                <rect x="50" y="40" width="320" height="240" rx="16" fill="rgba(30, 41, 59, 0.1)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="65" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">1. Developer Workspace</text>
+              </g>
 
-    Git -->|git push| GitHub
+              <!-- CI/CD Build Pipeline -->
+              <g class="boundary">
+                <rect x="420" y="40" width="730" height="240" rx="16" fill="rgba(30, 41, 59, 0.1)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="440" y="65" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">2. CI/CD Build Pipeline</text>
+              </g>
 
-    subgraph Prod ["3. Production VPS Runtime"]
-        direction TB
-        Docker["Docker Engine Daemon"]
-        subgraph Container ["MCP Sandbox Container"]
-            PM2["PM2 Daemon Controller"]
-            App["MCP Python Server Process"]
-            PM2 -->|Process Daemon Monitor| App
-        end
-        Docker -->|Spawns Instance| Container
-        
-        Proxy["Nginx Reverse Proxy (SSL)"]
-        Proxy -->|Forward Requests (Local Port)| App
-    end
+              <!-- Production VPS Runtime -->
+              <g class="boundary">
+                <rect x="50" y="320" width="1100" height="400" rx="16" fill="rgba(30, 41, 59, 0.1)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="350" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">3. Production VPS Runtime</text>
+              </g>
 
-    Registry -->|Docker Pull| Docker
+              <!-- Connected Clients -->
+              <g class="boundary">
+                <rect x="50" y="760" width="1100" height="130" rx="16" fill="rgba(30, 41, 59, 0.1)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="4" />
+                <text x="70" y="785" fill="var(--slate-400)" font-family="Space Grotesk" font-size="12" font-weight="bold">4. Connected Clients</text>
+              </g>
 
-    subgraph Clients ["4. Connected Clients"]
-        direction TB
-        IDE["Claude Desktop / Cursor"]
-        Cli["Custom Agent Clients"]
-    end
+              <!-- Paths and Connections (Background Paths) -->
+              <!-- 1. Code to Git -->
+              <path id="path-deploy-code-git" d="M 210 150 L 210 190" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-deploy-gray)" />
 
-    IDE & Cli -->|Secure HTTPS / SSE| Proxy
+              <!-- 2. Git push to GitHub -->
+              <path id="path-deploy-git-github" d="M 320 220 L 410 220 L 410 120 L 460 120" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-deploy-gray)" />
+              <text x="385" y="210" fill="var(--slate-400)" font-family="Inter" font-size="10.5" font-weight="bold" text-anchor="middle">git push</text>
+
+              <!-- 3. GitHub trigger Actions -->
+              <path id="path-deploy-github-actions" d="M 560 150 L 560 190" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-deploy-gray)" />
+              <text x="595" y="175" fill="var(--slate-400)" font-family="Inter" font-size="10.5" font-weight="bold" text-anchor="middle">CI Trigger</text>
+
+              <!-- 4. Actions build & push to Registry -->
+              <path id="path-deploy-actions-registry" d="M 660 220 L 700 220 L 700 170 L 740 170" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-deploy-gray)" />
+              <text x="700" y="205" fill="var(--slate-400)" font-family="Inter" font-size="10.5" font-weight="bold" text-anchor="middle">Push Image</text>
+
+              <!-- 5. Registry pull to Docker -->
+              <path id="path-deploy-registry-docker" d="M 850 200 L 850 300 L 200 300 L 200 410" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-deploy-gray)" />
+              <text x="525" y="290" fill="var(--slate-400)" font-family="Inter" font-size="10.5" font-weight="bold" text-anchor="middle">Docker Pull</text>
+
+              <!-- 6. Docker spawns PM2 instance -->
+              <path id="path-deploy-docker-pm2" d="M 300 440 L 460 440" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-deploy-gray)" />
+              <text x="380" y="430" fill="var(--slate-400)" font-family="Inter" font-size="10.5" font-weight="bold" text-anchor="middle">Spawns App</text>
+
+              <!-- 7. PM2 monitors App -->
+              <path id="path-deploy-pm2-app" d="M 660 450 L 800 450" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-deploy-gray)" />
+              <text x="730" y="440" fill="var(--slate-400)" font-family="Inter" font-size="10.5" font-weight="bold" text-anchor="middle">PM2 Monitor</text>
+
+              <!-- 8. Clients connect to Nginx Proxy -->
+              <path id="path-deploy-ide-proxy" d="M 390 810 L 390 750 L 230 750 L 230 670" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-deploy-gray)" />
+              <path id="path-deploy-cli-proxy" d="M 810 810 L 810 750 L 230 750 L 230 670" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-deploy-gray)" />
+              <text x="310" y="740" fill="var(--slate-400)" font-family="Inter" font-size="10.5" font-weight="bold" text-anchor="middle">Secure HTTPS / SSE</text>
+
+              <!-- 9. Proxy routes to App -->
+              <path id="path-deploy-proxy-app" d="M 200 610 L 200 560 L 920 560 L 920 480" fill="none" stroke="var(--slate-600)" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow-deploy-gray)" />
+              <text x="560" y="550" fill="var(--slate-400)" font-family="Inter" font-size="10.5" font-weight="bold" text-anchor="middle">Forward Port (Localhost:8000)</text>
+
+              <!-- Node shapes & text (Drawn last so they lie on top of paths) -->
+              <!-- Code -->
+              <g id="node-deploy-Code" class="node interactable-node" style="cursor: pointer;">
+                <rect x="100" y="90" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="210" y="120" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Python Source Code</text>
+                <text x="210" y="138" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">FastMCP Server Code</text>
+              </g>
+
+              <!-- Git -->
+              <g id="node-deploy-Git" class="node interactable-node" style="cursor: pointer;">
+                <rect x="100" y="190" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="210" y="220" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Git Version Control</text>
+                <text x="210" y="238" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Branch commits push</text>
+              </g>
+
+              <!-- GitHub -->
+              <g id="node-deploy-GitHub" class="node interactable-node" style="cursor: pointer;">
+                <rect x="460" y="90" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="560" y="120" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">GitHub Repository</text>
+                <text x="560" y="138" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Remote origin trigger</text>
+              </g>
+
+              <!-- Actions -->
+              <g id="node-deploy-Actions" class="node interactable-node" style="cursor: pointer;">
+                <rect x="460" y="190" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="560" y="220" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">GitHub Actions Runner</text>
+                <text x="560" y="238" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">CI Tests &amp; Container compilation</text>
+              </g>
+
+              <!-- Registry -->
+              <g id="node-deploy-Registry" class="node interactable-node" style="cursor: pointer;">
+                <rect x="740" y="140" width="220" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="850" y="170" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">GitHub Container Registry</text>
+                <text x="850" y="188" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Docker image host (GHCR)</text>
+              </g>
+
+              <!-- Docker -->
+              <g id="node-deploy-Docker" class="node interactable-node" style="cursor: pointer;">
+                <rect x="100" y="410" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="200" y="440" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Docker Engine Daemon</text>
+                <text x="200" y="458" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Container supervisor</text>
+              </g>
+
+              <!-- MCP Sandbox Container -->
+              <g class="boundary">
+                <rect x="420" y="370" width="670" height="150" rx="12" fill="rgba(30, 41, 59, 0.15)" stroke="var(--slate-800)" stroke-width="1.5" stroke-dasharray="3" />
+                <text x="440" y="395" fill="var(--slate-400)" font-family="Space Grotesk" font-size="11" font-weight="bold">MCP Sandbox Container</text>
+              </g>
+
+              <!-- PM2 -->
+              <g id="node-deploy-PM2" class="node interactable-node" style="cursor: pointer;">
+                <rect x="460" y="420" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="560" y="450" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">PM2 Daemon Controller</text>
+                <text x="560" y="468" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Thread Process Monitor</text>
+              </g>
+
+              <!-- App -->
+              <g id="node-deploy-App" class="node interactable-node" style="cursor: pointer;">
+                <rect x="800" y="420" width="240" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="920" y="450" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">MCP Python Server Process</text>
+                <text x="920" y="468" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">FastMCP runtime thread</text>
+              </g>
+
+              <!-- Proxy -->
+              <g id="node-deploy-Proxy" class="node interactable-node" style="cursor: pointer;">
+                <rect x="100" y="610" width="200" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="200" y="640" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Nginx Reverse Proxy</text>
+                <text x="200" y="658" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">SSL/TLS Termination Edge</text>
+              </g>
+
+              <!-- IDE -->
+              <g id="node-deploy-IDE" class="node interactable-node" style="cursor: pointer;">
+                <rect x="250" y="810" width="280" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="390" y="840" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Claude Desktop / Cursor</text>
+                <text x="390" y="858" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">IDE Agent Host</text>
+              </g>
+
+              <!-- Cli -->
+              <g id="node-deploy-Cli" class="node interactable-node" style="cursor: pointer;">
+                <rect x="670" y="810" width="280" height="60" rx="10" fill="var(--bg-deep)" stroke="var(--slate-700)" stroke-width="1.5" />
+                <text x="810" y="840" fill="var(--slate-50)" font-family="Space Grotesk" font-size="14" font-weight="600" text-anchor="middle">Custom Agent Clients</text>
+                <text x="810" y="858" fill="var(--slate-400)" font-family="Inter" font-size="10.5" text-anchor="middle">Command CLI Sessions</text>
+              </g>
+            </svg>
+            </div>
+            
+            <!-- Simulator Console -->
+            <div class="sim-console glass-card">
+              <div class="sim-console-header">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                  <span class="font-display font-bold text-xs uppercase tracking-wider text-slate-300">Deployment Pipeline Simulator</span>
+                </div>
+                <button onclick="runDeploymentSimulation(this)" class="px-3 py-1 bg-accent/10 border border-accent/20 hover:bg-accent hover:text-white text-accent rounded-lg text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Run Simulation</span>
+                </button>
+              </div>
+              <div id="deploy-console-body" class="sim-console-body text-xs">
+                <span class="text-slate-500">// Simulator idle. Click 'Run Simulation' to trace git-push build triggers, PM2 process daemons, and Nginx proxy routing.</span>
+              </div>
             </div>
             
             <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
@@ -908,7 +2038,7 @@ flowchart LR
 
   <!-- ==================== INTERACTIVE JAVASCRIPT ==================== -->
   <script>
-    // Theme switching logic
+    // Theme switching logic without full page reload
     function toggleTheme() {
       if (document.documentElement.classList.contains('dark')) {
         document.documentElement.classList.remove('dark');
@@ -917,7 +2047,6 @@ flowchart LR
         document.documentElement.classList.add('dark');
         localStorage.setItem('theme', 'dark');
       }
-      location.reload(); // Reload page to redraw Mermaid diagrams with matching styling
     }
     
     document.addEventListener('DOMContentLoaded', () => {
@@ -947,93 +2076,1220 @@ flowchart LR
       });
     });
 
-    // ==================== UNIVERSAL MERMAID PARTICLE FLOW ENGINE ====================
-    function animatePathParticles(svgElement) {
-      // Find all connection lines in Mermaid diagram
-      const paths = svgElement.querySelectorAll('.edgePaths .edgePath path, g.edgePaths path, path.messageLine0, path.messageLine1, .messageLine0, .messageLine1');
-      
-      paths.forEach((path, index) => {
-        const length = path.getTotalLength();
-        if (length <= 0) return;
+    // ==================== INTERACTIVE HOVER INTERFACE ====================
+    
+    // Component dictionary mapping node labels to detailed descriptions
+    const componentDB = {
+      "llm engine": {
+        title: "LLM Engine",
+        type: "Cognitive Core",
+        desc: "The core AI reasoning model (e.g., Claude or GPT) that interprets user intents, decides when to run actions, and synthesizes final answers from injected context."
+      },
+      "mcp client": {
+        title: "MCP Client Session",
+        type: "Protocol Client",
+        desc: "Establishes connection handles, negotiates protocol versions, and translates LLM tool requirements into structured JSON-RPC messages."
+      },
+      "local stdio": {
+        title: "Local STDIO Pipe",
+        type: "Transport Layer",
+        desc: "A secure, low-latency Inter-Process Communication (IPC) transport. It spawns the server as a local child process and communicates using line-buffered standard streams (stdin/stdout)."
+      },
+      "stdin": {
+        title: "STDIN Stream",
+        type: "Communication Pipe",
+        desc: "The standard input pipe. JSON-RPC request lines are written here by the parent client for the server to read and process."
+      },
+      "stdout": {
+        title: "STDOUT Stream",
+        type: "Communication Pipe",
+        desc: "The standard output pipe. The child process writes JSON-RPC responses here for the parent client to read."
+      },
+      "stderr": {
+        title: "STDERR Stream",
+        type: "Debug Log Channel",
+        desc: "The standard error pipe. Redirects console logs, developer print statements, and warning messages to prevent breaking the stdout communication channel."
+      },
+      "sse": {
+        title: "Remote SSE Transport",
+        type: "Transport Layer",
+        desc: "Uses Server-Sent Events (SSE) for real-time server-to-client notifications, paired with HTTP POST requests for client-to-server command delivery."
+      },
+      "http + sse": {
+        title: "Remote HTTP & SSE",
+        type: "Transport Layer",
+        desc: "Transports messages over network boundaries. SSE provides a persistent stream for server notifications, while HTTP POST sends requests from the client."
+      },
+      "mcp server": {
+        title: "MCP Server",
+        type: "Protocol Server",
+        desc: "The foundational server runtime that manages resource registries, parses schemas, validates payloads, and routes actions to their respective execution handlers."
+      },
+      "tools": {
+        title: "Tools (Actions)",
+        type: "Capability Registry",
+        desc: "Executable functions exposed by the server. The LLM can call these with structured parameters (validated via JSON Schema) to perform active side-effects or computations."
+      },
+      "resources": {
+        title: "Resources (Context)",
+        type: "Capability Registry",
+        desc: "Structured data feeds (like files, database tables, or API outputs) that can be read by the LLM client, allowing dynamic context injection."
+      },
+      "prompts": {
+        title: "Prompts (Templates)",
+        type: "Capability Registry",
+        desc: "Pre-configured templates that help users structure inputs for the LLM engine."
+      },
+      "apis": {
+        title: "Third-Party APIs",
+        type: "External Integration",
+        desc: "External cloud services (like weather engines, web search, or SaaS integrations) invoked by MCP tools to retrieve external real-time data."
+      },
+      "db": {
+        title: "Databases (SQL/NoSQL)",
+        type: "Data Layer",
+        desc: "Persistent databases queried by the MCP server to fetch structured data or log operational telemetry."
+      },
+      "filesystem": {
+        title: "Host Filesystem",
+        type: "Data Layer",
+        desc: "The local system directories. MCP servers can read/write files here within strict security sandbox configurations defined by the host."
+      },
+      "session mgr": {
+        title: "Session Manager",
+        type: "Client Security",
+        desc: "Maintains connection states, tracks active processes, handles authentication handshakes, and cleans up resources when sessions close."
+      },
+      "param filter": {
+        title: "Parameter Filter Guard",
+        type: "Security Gateway",
+        desc: "Acts as a firewall by validating incoming tool request parameters against strict schemas, filtering out shell injection attacks and malicious inputs."
+      },
+      "transport mgr": {
+        title: "Transport Manager",
+        type: "Client Communication",
+        desc: "Coordinates active communication sockets and channels, serializing and deserializing JSON-RPC payloads."
+      },
+      "oauth": {
+        title: "OAuth / DPoP Guard",
+        type: "Security Gateway",
+        desc: "Ensures only authorized clients can send requests. Utilizes cryptographic tokens to prevent replay attacks and secure the communication endpoints."
+      },
+      "router": {
+        title: "Request Router",
+        type: "Server Dispatcher",
+        desc: "Inspects incoming JSON-RPC method strings and dispatches them to the registered Tool, Resource, or Prompt handlers."
+      },
+      "exec engine": {
+        title: "Safe Execution Engine",
+        type: "Server Core",
+        desc: "Executes tool actions inside a restricted sandboxed process to prevent arbitrary commands from affecting the parent operating system."
+      },
+      "user": {
+        title: "User Operator",
+        type: "User Interface",
+        desc: "The end-user or developer interacting with the AI agent, providing prompts and receiving answers."
+      },
+      "nginx": {
+        title: "Nginx Reverse Proxy",
+        type: "Edge Gateway",
+        desc: "Manages TLS/SSL encryption, performs load balancing, filters network traffic, and routes requests to the internal container ports."
+      },
+      "pm2": {
+        title: "PM2 Process Manager",
+        type: "Server DevOps",
+        desc: "Keeps python server threads running in the background, handles logs rotating, and manages automatic recovery on failure."
+      },
+      "docker": {
+        title: "Docker Daemon",
+        type: "Server DevOps",
+        desc: "Manages container boundaries, pulling images from the registry and spawning sandboxed runtime instances."
+      },
+      "claude desktop": {
+        title: "Claude Desktop / Cursor IDE",
+        type: "Host Application",
+        desc: "Integrates the MCP Client to read local directories, run terminal commands, and enhance its system capabilities."
+      },
+      "custom agent": {
+        title: "Custom Agent Client",
+        type: "Host Application",
+        desc: "Specialized client runtimes or automation scripts that implement the MCP spec to connect to local or remote servers."
+      },
+      "weather server": {
+        title: "Weather Server",
+        type: "Namespaced Server",
+        desc: "Exposes real-time weather details. Uses namespacing (e.g., `weather_`) to isolate its tool registry and avoid collisions."
+      },
+      "database server": {
+        title: "Database Server",
+        type: "Namespaced Server",
+        desc: "Runs operations on local relational database stores, translating queries into structured tabular formats for the client."
+      },
+      "memory server": {
+        title: "Vector Memory Server",
+        type: "Namespaced Server",
+        desc: "Manages semantic search operations, query indexing, and vector store uploads (e.g., Pinecone/Chroma) for long-term agent memory."
+      },
+      "aggregator": {
+        title: "Context Aggregator",
+        type: "Context Assembler",
+        desc: "Combines data streams and tool results from multiple active servers into a clean, unified structure for the LLM input prompt."
+      },
+      "actions runner": {
+        title: "GitHub Actions Runner",
+        type: "CI/CD Pipeline",
+        desc: "Automates testing and compilation. Builds containerized Docker images and publishes them to the registry on code updates."
+      },
+      "container registry": {
+        title: "GitHub Container Registry",
+        type: "CI/CD Pipeline",
+        desc: "A secure storage registry holding versioned container images ready to be pulled by the production runtime hosts."
+      },
+      "input stream": {
+        title: "Input Stream",
+        type: "Communication Pipe",
+        desc: "Redirects parent process JSON-RPC requests to the child process standard input."
+      },
+      "output stream": {
+        title: "Output Streams",
+        type: "Communication Pipe",
+        desc: "Captures child process stdout response bytes and stderr logs redirecting them to the parent context reader."
+      },
+      "parent response": {
+        title: "Parent Response Handlers",
+        type: "Client Runtime",
+        desc: "Client interfaces that listen to response output lines and parse incoming RPC return structures."
+      },
+      "reader": {
+        title: "Client Response Reader",
+        type: "Client Subprocess Link",
+        desc: "Listens directly to the child process stdout stream and parses text buffers into JSON-RPC response shapes."
+      },
+      "debugger": {
+        title: "Stderr Logs Logger",
+        type: "Client Debug Console",
+        desc: "Diverts stderr outputs from the child process to developer warning channels, ensuring they do not pollute the stdout JSON-RPC pipe."
+      },
+      "client engine": {
+        title: "Client Engine",
+        type: "Protocol Client",
+        desc: "The client core that initiates connection, performs handshakes, and maps user context requests."
+      },
+      "stream listener": {
+        title: "SSE Stream Listener",
+        type: "Client Transport Link",
+        desc: "A client listener that keeps an active HTTP connection open to listen to unidirectional server notifications."
+      },
+      "execution engine": {
+        title: "Execution Engine",
+        type: "Server Core",
+        desc: "Runs registered tool callback logic inside VM subnets to fetch context details."
+      },
+      "python source code": {
+        title: "Python Source Code",
+        type: "Source File",
+        desc: "The source files defining server primitives, schemas, and resource registration routines."
+      },
+      "git version control": {
+        title: "Git Version Control",
+        type: "Local Repo",
+        desc: "Maintains code branch versions, tracking edits and staging commits for remote push triggers."
+      },
+      "github repository": {
+        title: "GitHub Repository",
+        type: "Remote Code Host",
+        desc: "Exposes git push hooks that dispatch updates to connected build pipelines and container registries."
+      },
+      "mcp python server process": {
+        title: "MCP Python Server Process",
+        type: "Server Runtime",
+        desc: "The active FastMCP instance thread running queries inside VM sandboxes."
+      }
+    };
 
-        // Create a particle overlay group
-        let particleGroup = svgElement.querySelector('.particle-overlay');
-        if (!particleGroup) {
-          particleGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-          particleGroup.setAttribute('class', 'particle-overlay');
-          svgElement.appendChild(particleGroup);
+    function getComponentInfo(label) {
+      const cleanLabel = label.trim().replace(/\s+/g, ' ');
+      const lower = cleanLabel.toLowerCase();
+
+      for (const [key, value] of Object.entries(componentDB)) {
+        if (lower.includes(key)) {
+          return value;
         }
+      }
 
-        // Spawn two-way continuous particles
-        const numParticles = 2;
-        for (let i = 0; i < numParticles; i++) {
-          const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-          circle.setAttribute('r', '3.5');
-          
-          // Separate direction flow: even goes forward (green), odd goes backward (cyan)
-          const isForward = i % 2 === 0;
-          circle.setAttribute('fill', isForward ? '#22C55E' : '#06B6D4');
-          
-          // In light mode, enhance contrast to Green 600 / Cyan 600
-          const isLight = !document.documentElement.classList.contains('dark');
-          if (isLight) {
-            circle.setAttribute('fill', isForward ? '#16A34A' : '#0891B2');
-          }
-          
-          circle.setAttribute('opacity', '0');
-          particleGroup.appendChild(circle);
+      return {
+        title: cleanLabel,
+        type: "System Node",
+        desc: "An architectural element forming part of the Model Context Protocol network topology."
+      };
+    }
 
-          // Animation timeline loop variables
-          let startTime = null;
-          const speed = 0.04; // speed in pixels per ms
-          const duration = length / speed;
-          // Stagger spawn delay
-          const delay = (i / numParticles) * duration;
+    // Initialize tooltip elements and manage event bindings
+    let initializedSVGs = new Set();
+    let tooltip = null;
 
-          function step(timestamp) {
-            if (!startTime) startTime = timestamp;
-            let elapsed = timestamp - startTime - delay;
+    function initTooltip() {
+      tooltip = document.getElementById('arch-tooltip');
+      if (!tooltip) {
+        tooltip = document.createElement('div');
+        tooltip.id = 'arch-tooltip';
+        tooltip.className = 'fixed pointer-events-none z-[100] opacity-0 transition-opacity duration-200 glass-card p-4 rounded-xl shadow-2xl max-w-[320px] text-left border border-slate-700/60 hidden';
+        tooltip.style.backgroundColor = 'var(--bg-card)';
+        tooltip.innerHTML = `
+          <div class="flex items-center justify-between gap-3 mb-2">
+            <span class="font-display font-bold text-sm text-white" id="tooltip-title">Component</span>
+            <span class="text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 bg-accent/10 border border-accent/20 text-accent rounded" id="tooltip-badge">Type</span>
+          </div>
+          <p class="text-xs text-slate-400 dark:text-slate-350 leading-relaxed font-light" id="tooltip-desc">Description</p>
+        `;
+        document.body.appendChild(tooltip);
+      }
+    }
 
-            // Handle infinite loop looping
-            if (elapsed > 0) {
-              let progress = (elapsed % duration) / duration;
-              let currentDist = isForward ? (progress * length) : ((1 - progress) * length);
-              
-              try {
-                const point = path.getPointAtLength(currentDist);
-                circle.setAttribute('cx', point.x);
-                circle.setAttribute('cy', point.y);
-                circle.setAttribute('opacity', '0.85');
-              } catch (err) {
-                // Catch any length bounds errors
-              }
-            } else {
-              circle.setAttribute('opacity', '0');
+    function initSVGInteractions(svg) {
+      if (initializedSVGs.has(svg)) return;
+      initializedSVGs.add(svg);
+
+      // Tooltip initialization
+      if (!tooltip) initTooltip();
+
+      // Find interactable nodes/actors/elements
+      const interactables = svg.querySelectorAll('.node, .actor, g.actor, .interactable-node');
+      interactables.forEach(el => {
+        el.addEventListener('mouseenter', (e) => {
+          // Dim other nodes in the same diagram
+          interactables.forEach(other => {
+            if (other !== el) {
+              other.style.opacity = '0.25';
+              other.style.filter = 'grayscale(30%) blur(0.5px)';
             }
-            requestAnimationFrame(step);
+          });
+          el.style.opacity = '1';
+          el.style.filter = 'none';
+
+          // Glow effect on child shapes
+          const shapes = el.querySelectorAll('rect, circle, polygon, path');
+          shapes.forEach(s => {
+            s.style.stroke = '#22C55E';
+            s.style.strokeWidth = '2px';
+            s.style.filter = 'drop-shadow(0 0 8px rgba(34, 197, 94, 0.45))';
+          });
+
+          // Fetch descriptions
+          const labelNode = el.querySelector('.label, text');
+          const labelText = labelNode ? labelNode.textContent : el.textContent;
+          const info = getComponentInfo(labelText || '');
+
+          document.getElementById('tooltip-title').textContent = info.title;
+          document.getElementById('tooltip-badge').textContent = info.type;
+          document.getElementById('tooltip-desc').textContent = info.desc;
+
+          tooltip.style.display = 'block';
+          tooltip.offsetHeight; // force reflow
+          tooltip.classList.remove('opacity-0');
+        });
+
+        el.addEventListener('mousemove', (e) => {
+          if (!tooltip) return;
+          const x = e.clientX + 15;
+          const y = e.clientY + 15;
+          
+          const tooltipWidth = tooltip.offsetWidth;
+          const tooltipHeight = tooltip.offsetHeight;
+          const windowWidth = window.innerWidth;
+          const windowHeight = window.innerHeight;
+
+          let posX = x;
+          let posY = y;
+
+          if (x + tooltipWidth > windowWidth - 15) {
+            posX = e.clientX - tooltipWidth - 15;
           }
-          requestAnimationFrame(step);
+          if (y + tooltipHeight > windowHeight - 15) {
+            posY = e.clientY - tooltipHeight - 15;
+          }
+
+          tooltip.style.left = `${posX}px`;
+          tooltip.style.top = `${posY}px`;
+        });
+
+        el.addEventListener('mouseleave', (e) => {
+          // Restore opacity
+          interactables.forEach(other => {
+            other.style.opacity = '';
+            other.style.filter = '';
+          });
+
+          const shapes = el.querySelectorAll('rect, circle, polygon, path');
+          shapes.forEach(s => {
+            s.style.stroke = '';
+            s.style.strokeWidth = '';
+            s.style.filter = '';
+          });
+
+          if (tooltip) {
+            tooltip.classList.add('opacity-0');
+            setTimeout(() => {
+              if (tooltip.classList.contains('opacity-0')) {
+                tooltip.style.display = 'none';
+              }
+            }, 200);
+          }
+        });
+      });
+    }
+
+    // Periodic scanner to handle custom inline SVGs
+    const scanInterval = setInterval(() => {
+      const svgs = document.querySelectorAll('svg.arch-svg');
+      svgs.forEach(svg => {
+        initSVGInteractions(svg);
+      });
+
+      // Clear search when all diagrams are initialized (exactly 7 custom inline SVGs)
+      if (initializedSVGs.size >= 7) {
+        clearInterval(scanInterval);
+      }
+    }, 200);
+
+    // Backup safety timeout to stop interval polling
+    setTimeout(() => {
+      clearInterval(scanInterval);
+    }, 10000);
+
+    // ==================== INTERACTIVE DATA FLOW SIMULATION HANDLERS ====================
+    function highlightNode(sectionId, nodeId, active) {
+      const svg = document.querySelector(sectionId + ' svg');
+      if (!svg) return;
+      const nodes = svg.querySelectorAll('.node, .interactable-node, .actor');
+      nodes.forEach(n => {
+        const idAttr = n.getAttribute('id') || '';
+        const classAttr = n.getAttribute('class') || '';
+        const textContent = n.textContent || '';
+        
+        const lowerId = idAttr.toLowerCase();
+        const lowerNodeId = nodeId.toLowerCase();
+        
+        if (lowerId.includes('-' + lowerNodeId + '-') || 
+            lowerId.endsWith('-' + lowerNodeId) || 
+            lowerId === lowerNodeId || 
+            classAttr.includes('node-' + nodeId) ||
+            textContent.toLowerCase().includes(lowerNodeId) ||
+            lowerId.includes(lowerNodeId)) {
+          if (active) {
+            n.classList.add('sim-active');
+            // Inline glow fallback — color passed via global _simNodeColor
+            const highlightColor = window._simNodeColor || '#22C55E';
+            const isBlue = highlightColor === '#60A5FA' || highlightColor === '#3B82F6';
+            const strokeCol = isBlue ? '#60A5FA' : '#22C55E';
+            const glowCol = isBlue ? 'rgba(96, 165, 250, 0.8)' : 'rgba(34, 197, 94, 0.8)';
+            const fillCol = isBlue ? 'rgba(96, 165, 250, 0.12)' : 'rgba(34, 197, 94, 0.12)';
+            const shapes = n.querySelectorAll('rect, circle, polygon, path');
+            shapes.forEach(s => {
+              s.style.setProperty('stroke', strokeCol, 'important');
+              s.style.setProperty('stroke-width', '3px', 'important');
+              s.style.setProperty('filter', `drop-shadow(0 0 10px ${glowCol})`, 'important');
+              s.style.setProperty('fill', fillCol, 'important');
+            });
+          } else {
+            n.classList.remove('sim-active');
+            const shapes = n.querySelectorAll('rect, circle, polygon, path');
+            shapes.forEach(s => {
+              s.style.removeProperty('stroke');
+              s.style.removeProperty('stroke-width');
+              s.style.removeProperty('filter');
+              s.style.removeProperty('fill');
+            });
+          }
         }
       });
     }
 
-    // Check periodically for ready SVG rendering
-    const checkMermaidSVGs = setInterval(() => {
-      const svgs = document.querySelectorAll('.mermaid svg');
-      // Once all 7 cards have finished rendering the embedded SVGs
-      if (svgs.length >= 7) {
-        clearInterval(checkMermaidSVGs);
-        svgs.forEach(svg => {
-          // Initialize flows
-          animatePathParticles(svg);
+    function clearAllHighlights(sectionId) {
+      const svg = document.querySelector(sectionId + ' svg');
+      if (!svg) return;
+      
+      // Clear nodes
+      svg.querySelectorAll('.node, .interactable-node, .actor').forEach(n => {
+        n.classList.remove('sim-active');
+        const shapes = n.querySelectorAll('rect, circle, polygon, path');
+        shapes.forEach(s => {
+          s.style.removeProperty('stroke');
+          s.style.removeProperty('stroke-width');
+          s.style.removeProperty('filter');
+          s.style.removeProperty('fill');
         });
-      }
-    }, 150);
+      });
 
-    // Stop searching after 8 seconds
-    setTimeout(() => {
-      clearInterval(checkMermaidSVGs);
-    }, 8000);
+      // Clear paths — restore stroke and marker to gray
+      svg.querySelectorAll('path').forEach(p => {
+        if (p.getAttribute('id')) {
+          p.style.removeProperty('stroke');
+          p.style.removeProperty('stroke-width');
+          p.style.removeProperty('filter');
+          p.style.removeProperty('stroke-dasharray');
+          // Restore marker-end to gray variant
+          const me = p.getAttribute('marker-end') || '';
+          const ms = p.getAttribute('marker-start') || '';
+          const prefixMatch = me.match(/url\(#arrow-([a-z]+)-/);
+          if (prefixMatch) {
+            p.setAttribute('marker-end', `url(#arrow-${prefixMatch[1]}-gray)`);
+          }
+          const startPrefixMatch = ms.match(/url\(#arrow-([a-z]+)-/);
+          if (startPrefixMatch) {
+            p.setAttribute('marker-start', `url(#arrow-${startPrefixMatch[1]}-gray)`);
+          }
+        }
+      });
+      
+      // Clear active particles
+      const activeGroup = svg.querySelector('.active-particles');
+      if (activeGroup) {
+        activeGroup.innerHTML = '';
+      }
+    }
+
+    function highlightPath(pathElementId, active, color) {
+      const path = document.getElementById(pathElementId);
+      if (!path) return;
+      if (active) {
+        // Use style.setProperty with 'important' so it beats CSS !important rules (light mode)
+        path.style.setProperty('stroke', color, 'important');
+        path.style.setProperty('stroke-width', '2.5', 'important');
+        path.style.setProperty('filter', `drop-shadow(0 0 6px ${color})`, 'important');
+        path.style.setProperty('stroke-dasharray', 'none', 'important');
+        // Swap marker to match color (green=forward, blue=backward)
+        let markerVariant = 'gray';
+        if (color === '#4ADE80' || color === '#22C55E') markerVariant = 'green';
+        else if (color === '#60A5FA' || color === '#3B82F6') markerVariant = 'blue';
+        const me = path.getAttribute('marker-end') || '';
+        const ms = path.getAttribute('marker-start') || '';
+        const prefixMatch = me.match(/url\(#arrow-([a-z]+)-/);
+        if (prefixMatch) {
+          path.setAttribute('marker-end', `url(#arrow-${prefixMatch[1]}-${markerVariant})`);
+        }
+        const startPrefixMatch = ms.match(/url\(#arrow-([a-z]+)-/);
+        if (startPrefixMatch) {
+          path.setAttribute('marker-start', `url(#arrow-${startPrefixMatch[1]}-${markerVariant})`);
+        }
+      } else {
+        // Remove inline styles — falls back to CSS rules (correct for both themes)
+        path.style.removeProperty('stroke');
+        path.style.removeProperty('stroke-width');
+        path.style.removeProperty('filter');
+        path.style.removeProperty('stroke-dasharray');
+        // Restore marker to gray
+        const me = path.getAttribute('marker-end') || '';
+        const ms = path.getAttribute('marker-start') || '';
+        const prefixMatch = me.match(/url\(#arrow-([a-z]+)-/);
+        if (prefixMatch) {
+          path.setAttribute('marker-end', `url(#arrow-${prefixMatch[1]}-gray)`);
+        }
+        const startPrefixMatch = ms.match(/url\(#arrow-([a-z]+)-/);
+        if (startPrefixMatch) {
+          path.setAttribute('marker-start', `url(#arrow-${startPrefixMatch[1]}-gray)`);
+        }
+      }
+    }
+
+    function spawnActiveParticles(pathElementId, color, customDuration = null, count = 5, isBackward = false) {
+      const path = document.getElementById(pathElementId);
+      if (!path) return;
+      const svg = path.ownerSVGElement;
+      if (!svg) return;
+      
+      const length = path.getTotalLength();
+      if (length <= 0) return;
+      
+      let activeGroup = svg.querySelector('.active-particles');
+      if (!activeGroup) {
+        activeGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        activeGroup.setAttribute('class', 'active-particles');
+        svg.appendChild(activeGroup);
+      }
+      
+      // Speed in pixels per ms (calm flow speed: ~80px/s)
+      const speed = 0.08; 
+      const duration = customDuration || (length / speed);
+      
+      for (let i = 0; i < count; i++) {
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('r', '3.5');
+        circle.setAttribute('fill', color);
+        circle.setAttribute('opacity', '0');
+        circle.setAttribute('style', `filter: drop-shadow(0 0 6px ${color});`);
+        activeGroup.appendChild(circle);
+        
+        // Staggered delay
+        const delay = i * (duration / (count * 1.5));
+        let startTime = null;
+        
+        function animate(timestamp) {
+          if (!startTime) startTime = timestamp;
+          const elapsed = timestamp - startTime - delay;
+          
+          if (elapsed > 0) {
+            const progress = Math.min(elapsed / duration, 1);
+            const currentDist = isBackward ? ((1 - progress) * length) : (progress * length);
+            
+            try {
+              const point = path.getPointAtLength(currentDist);
+              circle.setAttribute('cx', point.x);
+              circle.setAttribute('cy', point.y);
+              const opacity = progress < 0.1 ? (progress * 10) : (progress > 0.9 ? (1 - progress) * 10 : 1.0);
+              circle.setAttribute('opacity', opacity.toString());
+            } catch (e) {}
+            
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            } else {
+              circle.remove();
+            }
+          } else {
+            requestAnimationFrame(animate);
+          }
+        }
+        requestAnimationFrame(animate);
+      }
+    }
+
+    // Console Logging utility
+    function addConsoleLog(consoleBody, ms, message) {
+      const entry = document.createElement('div');
+      entry.className = 'sim-log-entry';
+      entry.innerHTML = `<span class="text-accent font-mono font-bold">[+${ms}ms]</span> ${message}`;
+      consoleBody.appendChild(entry);
+      consoleBody.scrollTop = consoleBody.scrollHeight;
+    }
+
+    // Button Spinner utility
+    function setButtonLoading(btn, active, originalHtml) {
+      if (active) {
+        btn.disabled = true;
+        btn.innerHTML = `
+          <svg class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <span>Running...</span>
+        `;
+      } else {
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+      }
+    }
+
+    // Declarative Simulation Runner
+    function runDeclarativeSim(sectionId, btn, steps, timersKey) {
+      window[timersKey] = window[timersKey] || [];
+      window[timersKey].forEach(clearTimeout);
+      window[timersKey] = [];
+      
+      const consoleBody = document.querySelector(sectionId + ' .sim-console-body');
+      if (!consoleBody) return;
+      consoleBody.innerHTML = '';
+      clearAllHighlights(sectionId);
+      
+      const originalHtml = btn.innerHTML;
+      setButtonLoading(btn, true, originalHtml);
+      
+      steps.forEach((step, index) => {
+        const timer = setTimeout(() => {
+          clearAllHighlights(sectionId);
+          
+          // Determine dominant color for this step to color nodes correctly
+          // If any path in this step is blue (backward), color nodes blue
+          const stepPaths = step.paths || [];
+          const stepParticles = step.particles || [];
+          const allColors = [...stepPaths, ...stepParticles].map(p => p.color || '#4ADE80');
+          const hasBlue = allColors.some(c => c === '#60A5FA' || c === '#3B82F6');
+          window._simNodeColor = hasBlue ? '#60A5FA' : '#22C55E';
+          
+          if (step.nodes) {
+            step.nodes.forEach(n => highlightNode(sectionId, n, true));
+          }
+          if (step.paths) {
+            step.paths.forEach(p => {
+              const color = p.color || '#4ADE80';
+              highlightPath(p.id, true, color);
+            });
+          }
+          if (step.particles) {
+            step.particles.forEach(p => {
+              const color = p.color || '#4ADE80';
+              const isBackward = p.dir === 'backward';
+              spawnActiveParticles(p.id, color, null, p.count || 5, isBackward);
+            });
+          }
+          if (step.log) {
+            addConsoleLog(consoleBody, step.delay, step.log);
+          }
+          
+          if (index === steps.length - 1) {
+            setButtonLoading(btn, false, originalHtml);
+          }
+        }, step.delay);
+        window[timersKey].push(timer);
+      });
+    }
+
+    // ==================== SIMULATOR 1: CORE FLOW ====================
+    window.coreSimTimers = window.coreSimTimers || [];
+    window.runCoreSimulation = function(btn) {
+      const steps = [
+        {
+          delay: 0,
+          nodes: ['LLM'],
+          paths: [{ id: 'path-core-llm-client' }],
+          particles: [{ id: 'path-core-llm-client' }],
+          log: '[LLM Engine] Query request requires system contexts. Directing prompt payload to client session...'
+        },
+        {
+          delay: 2000,
+          nodes: ['Client'],
+          paths: [{ id: 'path-core-client-stdio' }, { id: 'path-core-client-sse' }],
+          particles: [{ id: 'path-core-client-stdio' }, { id: 'path-core-client-sse' }],
+          log: '[MCP Client] Multiplexing connection: forwarding line queries over local STDIO and remote HTTP + SSE layers...'
+        },
+        {
+          delay: 4200,
+          nodes: ['Stdio', 'Sse'],
+          paths: [{ id: 'path-core-stdio-server' }, { id: 'path-core-sse-server' }],
+          particles: [{ id: 'path-core-stdio-server' }, { id: 'path-core-sse-server' }],
+          log: '[Transport Channels] Line-buffered bytes transferred. Dispatching signals to MCP server catalog registry...'
+        },
+        {
+          delay: 6500,
+          nodes: ['Server'],
+          paths: [{ id: 'path-core-server-tools' }, { id: 'path-core-server-res' }, { id: 'path-core-server-prompts' }],
+          particles: [{ id: 'path-core-server-tools' }, { id: 'path-core-server-res' }, { id: 'path-core-server-prompts' }],
+          log: '[MCP Server] Resolving tool callbacks and schema configurations. Routing executions to targets...'
+        },
+        {
+          delay: 8800,
+          nodes: ['Tools', 'Resources', 'Prompts'],
+          paths: [{ id: 'path-core-tools-apis' }, { id: 'path-core-res-dbs' }, { id: 'path-core-prompts-fs' }],
+          particles: [{ id: 'path-core-tools-apis' }, { id: 'path-core-res-dbs' }, { id: 'path-core-prompts-fs' }],
+          log: '[Registries] Running Pydantic code validators. Querying DBs, fetching APIs, and reading file records...'
+        },
+        {
+          delay: 11200,
+          nodes: ['APIs', 'DBs', 'FS'],
+          log: '[External Targets] Context metrics resolved. Formulating return payloads...'
+        },
+        {
+          delay: 13200,
+          nodes: ['APIs', 'DBs', 'FS'],
+          paths: [{ id: 'path-core-tools-apis', color: '#60A5FA' }, { id: 'path-core-res-dbs', color: '#60A5FA' }, { id: 'path-core-prompts-fs', color: '#60A5FA' }],
+          particles: [{ id: 'path-core-tools-apis', color: '#60A5FA', dir: 'backward' }, { id: 'path-core-res-dbs', color: '#60A5FA', dir: 'backward' }, { id: 'path-core-prompts-fs', color: '#60A5FA', dir: 'backward' }],
+          log: '[External Targets] Streaming response text and markdown fragments back to server registries...'
+        },
+        {
+          delay: 15400,
+          nodes: ['Tools', 'Resources', 'Prompts'],
+          paths: [{ id: 'path-core-server-tools', color: '#60A5FA' }, { id: 'path-core-server-res', color: '#60A5FA' }, { id: 'path-core-server-prompts', color: '#60A5FA' }],
+          particles: [{ id: 'path-core-server-tools', color: '#60A5FA', dir: 'backward' }, { id: 'path-core-server-res', color: '#60A5FA', dir: 'backward' }, { id: 'path-core-server-prompts', color: '#60A5FA', dir: 'backward' }],
+          log: '[MCP Server] Wrapping schema response logs. Packaging JSON-RPC results return payload...'
+        },
+        {
+          delay: 17600,
+          nodes: ['Server'],
+          paths: [{ id: 'path-core-stdio-server', color: '#60A5FA' }, { id: 'path-core-sse-server', color: '#60A5FA' }],
+          particles: [{ id: 'path-core-stdio-server', color: '#60A5FA', dir: 'backward' }, { id: 'path-core-sse-server', color: '#60A5FA', dir: 'backward' }],
+          log: '[Transport Channels] Flushing outputs back to client socket interfaces...'
+        },
+        {
+          delay: 19800,
+          nodes: ['Stdio', 'Sse'],
+          paths: [{ id: 'path-core-client-stdio', color: '#60A5FA' }, { id: 'path-core-client-sse', color: '#60A5FA' }],
+          particles: [{ id: 'path-core-client-stdio', color: '#60A5FA', dir: 'backward' }, { id: 'path-core-client-sse', color: '#60A5FA', dir: 'backward' }],
+          log: '[MCP Client] Aggregating multi-source variables. Injecting unified prompt context block...'
+        },
+        {
+          delay: 22000,
+          nodes: ['Client'],
+          paths: [{ id: 'path-core-llm-client', color: '#60A5FA' }],
+          particles: [{ id: 'path-core-llm-client', color: '#60A5FA', dir: 'backward' }],
+          log: '[LLM Engine] Ingesting prompt additions. Compiling final natural language answer response.'
+        },
+        {
+          delay: 24000,
+          log: '<span class="text-accent font-semibold">// Simulation Complete. Core flow paths fully resolved and active.</span>'
+        }
+      ];
+      runDeclarativeSim('#core-flow', btn, steps, 'coreSimTimers');
+    };
+
+    // ==================== SIMULATOR 2: ZERO-TRUST ====================
+    window.ztSimTimers = window.ztSimTimers || [];
+    window.runZtSimulation = function(btn) {
+      const steps = [
+        {
+          delay: 0,
+          nodes: ['HostApp'],
+          paths: [{ id: 'path-zt-host-session' }],
+          particles: [{ id: 'path-zt-host-session', count: 4 }],
+          log: '[Host App] Session initialized. Passing tokens to security coordinators...'
+        },
+        {
+          delay: 1600,
+          nodes: ['SessionMgr'],
+          paths: [{ id: 'path-zt-session-filter' }],
+          particles: [{ id: 'path-zt-session-filter', count: 4 }],
+          log: '[Session Manager] Generating single-use cryptographic connection keys and assigning scopes...'
+        },
+        {
+          delay: 3200,
+          nodes: ['ParamFilter'],
+          paths: [{ id: 'path-zt-filter-transport' }],
+          particles: [{ id: 'path-zt-filter-transport', count: 4 }],
+          log: '[Param Filter] Running JSON-schema parameter validation to prevent arbitrary terminal arguments and inputs.'
+        },
+        {
+          delay: 4800,
+          nodes: ['TransportMgr'],
+          paths: [{ id: 'path-zt-transport-stdio' }, { id: 'path-zt-transport-sse' }],
+          particles: [{ id: 'path-zt-transport-stdio', count: 4 }, { id: 'path-zt-transport-sse', count: 4 }],
+          log: '[Transport Mgr] Redirecting validated command streams via secure local subprocess pipes or remote tunnels...'
+        },
+        {
+          delay: 6400,
+          nodes: ['StdioPipe', 'SseHttp'],
+          paths: [{ id: 'path-zt-stdio-auth' }, { id: 'path-zt-sse-auth' }],
+          particles: [{ id: 'path-zt-stdio-auth', count: 4 }, { id: 'path-zt-sse-auth', count: 4 }],
+          log: '[Secure Channels] Stream lines written to edge port. Verifying client signatures...'
+        },
+        {
+          delay: 8000,
+          nodes: ['AuthToken'],
+          paths: [{ id: 'path-zt-auth-router' }],
+          particles: [{ id: 'path-zt-auth-router', count: 4 }],
+          log: '[OAuth/DPoP Guard] Cryptographic authorization handshake parsed. DPoP signature validated. Access Approved.'
+        },
+        {
+          delay: 9600,
+          nodes: ['Router'],
+          paths: [{ id: 'path-zt-router-registries' }],
+          particles: [{ id: 'path-zt-router-registries', count: 4 }],
+          log: '[Router] Routing method parameter tokens to corresponding isolated catalogs...'
+        },
+        {
+          delay: 11200,
+          nodes: ['ToolReg', 'ResReg', 'PromptReg'],
+          paths: [{ id: 'path-zt-registries-exec' }],
+          particles: [{ id: 'path-zt-registries-exec', count: 4 }],
+          log: '[Registries] Handlers mapped. Directing query context details to execution environments...'
+        },
+        {
+          delay: 12800,
+          nodes: ['ExecEngine'],
+          paths: [{ id: 'path-zt-exec-fs' }, { id: 'path-zt-exec-apis' }, { id: 'path-zt-exec-db' }],
+          particles: [{ id: 'path-zt-exec-fs', count: 4 }, { id: 'path-zt-exec-apis', count: 4 }, { id: 'path-zt-exec-db', count: 4 }],
+          log: '[Safe Exec Engine] Spawning isolated VM thread. Binding operations to read-only resource scopes.'
+        },
+        {
+          delay: 14400,
+          nodes: ['LocalFS', 'RemoteAPIs', 'SecureDB'],
+          log: '[Resources] Accessing sandbox filesystem routes, DB collections, and REST integrations safely.'
+        },
+        {
+          delay: 16000,
+          log: '<span class="text-accent font-semibold">// Simulation Complete. Zero-Trust security pipeline verified.</span>'
+        }
+      ];
+      runDeclarativeSim('#advanced-zt', btn, steps, 'ztSimTimers');
+    };
+
+    // ==================== SIMULATOR 3: CLIENT-SERVER SEQUENCE ====================
+    window.seqSimTimers = window.seqSimTimers || [];
+    window.runSequenceSimulation = function(btn) {
+      const steps = [
+        {
+          delay: 0,
+          nodes: ['User'],
+          paths: [{ id: 'path-seq-msg1' }],
+          particles: [{ id: 'path-seq-msg1', count: 5 }],
+          log: '[User Operator] Prompting agent coordinates. Dispatching intent requirements...'
+        },
+        {
+          delay: 1400,
+          nodes: ['Host'],
+          paths: [{ id: 'path-seq-msg2' }],
+          particles: [{ id: 'path-seq-msg2', count: 5 }],
+          log: '[Host Orchestrator] Ingesting prompt. Resolving connections. Booting client session.'
+        },
+        {
+          delay: 2800,
+          nodes: ['Client'],
+          paths: [{ id: 'path-seq-msg3' }],
+          particles: [{ id: 'path-seq-msg3', count: 5 }],
+          log: '[MCP Client] Directing initialize JSON-RPC handshake request to endpoint...'
+        },
+        {
+          delay: 4200,
+          nodes: ['Server'],
+          paths: [{ id: 'path-seq-msg4', color: '#60A5FA' }],
+          particles: [{ id: 'path-seq-msg4', color: '#60A5FA', count: 5 }],
+          log: '[MCP Server] Handshake parsed. Returning capabilities array inside InitializeResult schema.'
+        },
+        {
+          delay: 5600,
+          nodes: ['Client'],
+          paths: [{ id: 'path-seq-msg5' }],
+          particles: [{ id: 'path-seq-msg5', count: 5 }],
+          log: '[MCP Client] Acknowledging server scopes. Replying with notifications/initialized.'
+        },
+        {
+          delay: 7000,
+          nodes: ['Client'],
+          paths: [{ id: 'path-seq-msg6' }],
+          particles: [{ id: 'path-seq-msg6', count: 5 }],
+          log: '[MCP Client] Pulling catalog definitions: sending tools/list request.'
+        },
+        {
+          delay: 8400,
+          nodes: ['Server'],
+          paths: [{ id: 'path-seq-msg7', color: '#60A5FA' }],
+          particles: [{ id: 'path-seq-msg7', color: '#60A5FA', count: 5 }],
+          log: '[MCP Server] Resolving routes. Returning ToolListResponse containing JSON-schemas.'
+        },
+        {
+          delay: 9800,
+          nodes: ['Client'],
+          paths: [{ id: 'path-seq-msg8', color: '#60A5FA' }],
+          particles: [{ id: 'path-seq-msg8', color: '#60A5FA', count: 5 }],
+          log: '[MCP Client] Injecting server capability signatures into Host model registries.'
+        },
+        {
+          delay: 11200,
+          nodes: ['Host'],
+          paths: [{ id: 'path-seq-msg9' }],
+          particles: [{ id: 'path-seq-msg9', count: 5 }],
+          log: '[Host Orchestrator] Reason complete. Invoking tool command execution parameters.'
+        },
+        {
+          delay: 12600,
+          nodes: ['Client'],
+          paths: [{ id: 'path-seq-msg10' }],
+          particles: [{ id: 'path-seq-msg10', count: 5 }],
+          log: '[MCP Client] Sending tools/call RPC request lines containing dynamic args...'
+        },
+        {
+          delay: 14000,
+          nodes: ['Server'],
+          paths: [{ id: 'path-seq-msg11' }],
+          particles: [{ id: 'path-seq-msg11', count: 5 }],
+          log: '[MCP Server] Running tool logic. Accessing target database/API.'
+        },
+        {
+          delay: 15400,
+          nodes: ['Res'],
+          paths: [{ id: 'path-seq-msg12', color: '#60A5FA' }],
+          particles: [{ id: 'path-seq-msg12', color: '#60A5FA', count: 5 }],
+          log: '[Data Source] Returning database/API results.'
+        },
+        {
+          delay: 16800,
+          nodes: ['Server'],
+          paths: [{ id: 'path-seq-msg13', color: '#60A5FA' }],
+          particles: [{ id: 'path-seq-msg13', color: '#60A5FA', count: 5 }],
+          log: '[MCP Server] Packaging results text array inside CallToolResult response data.'
+        },
+        {
+          delay: 18200,
+          nodes: ['Client'],
+          paths: [{ id: 'path-seq-msg14', color: '#60A5FA' }],
+          particles: [{ id: 'path-seq-msg14', color: '#60A5FA', count: 5 }],
+          log: '[MCP Client] Merging context streams. Formulating prompt parameters back to Host.'
+        },
+        {
+          delay: 19600,
+          nodes: ['Host'],
+          paths: [{ id: 'path-seq-msg15', color: '#60A5FA' }],
+          particles: [{ id: 'path-seq-msg15', color: '#60A5FA', count: 5 }],
+          log: '[Host Orchestrator] Stream closed. Formatting markdown response answer outputs for User.'
+        },
+        {
+          delay: 21000,
+          log: '<span class="text-accent font-semibold">// Simulation Complete. Communication sequence resolved and kept active.</span>'
+        }
+      ];
+      runSequenceSimulationInternal('#client-server', btn, steps, 'seqSimTimers');
+    };
+    function runSequenceSimulationInternal(sectionId, btn, steps, timersKey) {
+      runDeclarativeSim(sectionId, btn, steps, timersKey);
+    }
+
+    // ==================== SIMULATOR 4: LOCAL STDIO SUBPROCESS ====================
+    window.stdioSimTimers = window.stdioSimTimers || [];
+    window.runStdioSimulation = function(btn) {
+      const steps = [
+        {
+          delay: 0,
+          nodes: ['Client'],
+          paths: [{ id: 'path-stdio-client-stdin' }],
+          particles: [{ id: 'path-stdio-client-stdin' }],
+          log: '[Client Engine] Formulating JSON-RPC command string. Writing lines to subprocess stdin stream...'
+        },
+        {
+          delay: 1800,
+          nodes: ['Stdin'],
+          paths: [{ id: 'path-stdio-stdin-server' }],
+          particles: [{ id: 'path-stdio-stdin-server' }],
+          log: '[STDIN Stream] Parent process writes byte characters. Subprocess read listeners triggered...'
+        },
+        {
+          delay: 3600,
+          nodes: ['Server', 'Tools', 'Res', 'Prompts'],
+          paths: [{ id: 'path-stdio-server-stdout', color: '#60A5FA' }, { id: 'path-stdio-server-stderr', color: '#60A5FA' }],
+          particles: [{ id: 'path-stdio-server-stdout', color: '#60A5FA' }, { id: 'path-stdio-server-stderr', color: '#60A5FA' }],
+          log: '[MCP Python Server] Command payload parsed. Invoking VM callback execution thread. Writing answers to stdout, and warning outputs to stderr...'
+        },
+        {
+          delay: 5800,
+          nodes: ['Stdout', 'Stderr'],
+          paths: [{ id: 'path-stdio-stdout-reader', color: '#60A5FA' }, { id: 'path-stdio-stderr-debugger', color: '#60A5FA' }],
+          particles: [{ id: 'path-stdio-stdout-reader', color: '#60A5FA' }, { id: 'path-stdio-stderr-debugger', color: '#60A5FA' }],
+          log: '[Output Streams] Stream redirectors catch subprocess output. Formatting buffers back to client context...'
+        },
+        {
+          delay: 8000,
+          nodes: ['Reader', 'Debugger'],
+          log: '[Response Handlers] Client response reader processes stdout query array. Stderr monitor captures system log files.'
+        },
+        {
+          delay: 9600,
+          log: '<span class="text-accent font-semibold">// Simulation Complete. Local STDIO pipe pipelines traced and active.</span>'
+        }
+      ];
+      runDeclarativeSim('#stdio-transport', btn, steps, 'stdioSimTimers');
+    };
+
+    // ==================== SIMULATOR 5: STREAMABLE HTTP / SSE ====================
+    window.sseSimTimers = window.sseSimTimers || [];
+    window.runSseSimulation = function(btn) {
+      const steps = [
+        {
+          delay: 0,
+          nodes: ['ClientCore'],
+          paths: [{ id: 'path-sse-get' }],
+          particles: [{ id: 'path-sse-get' }],
+          log: '[Client Engine] Dispatching HTTP GET /sse session request to Nginx edge gateway...'
+        },
+        {
+          delay: 2000,
+          nodes: ['Nginx'],
+          paths: [{ id: 'path-sse-forward-get' }],
+          particles: [{ id: 'path-sse-forward-get' }],
+          log: '[Nginx] Proxy HTTP GET /sse request: TLS Handshake verified. Forwarding session initialization headers...'
+        },
+        {
+          delay: 4200,
+          nodes: ['SseMgr'],
+          paths: [{ id: 'path-sse-stream', color: '#60A5FA' }],
+          particles: [{ id: 'path-sse-stream', color: '#60A5FA', dir: 'backward', count: 6 }],
+          log: '[SseMgr] SSE Session created (ID: sse_session_7f9b2). Writing EventStream response headers (Content-Type: text/event-stream)...'
+        },
+        {
+          delay: 7200,
+          nodes: ['StreamListener'],
+          log: '[StreamListener] EventStream connection established. Client is now listening on sse_session_7f9b2 events.'
+        },
+        {
+          delay: 9200,
+          nodes: ['ClientCore'],
+          paths: [{ id: 'path-sse-post-actual' }],
+          particles: [{ id: 'path-sse-post-actual' }],
+          log: '[Client Engine] User triggered tool execution. Dispatching stateless JSON-RPC call (run_query) via POST /message?id=sse_session_7f9b2...'
+        },
+        {
+          delay: 11200,
+          nodes: ['Nginx'],
+          paths: [{ id: 'path-sse-forward-post' }],
+          particles: [{ id: 'path-sse-forward-post' }],
+          log: '[Nginx] Forwarding POST request body containing payload data to internal container routing port...'
+        },
+        {
+          delay: 13200,
+          nodes: ['Router'],
+          paths: [{ id: 'path-sse-route-auth' }],
+          particles: [{ id: 'path-sse-route-auth', count: 4 }],
+          log: '[Router] Received POST payload. Handshaking headers and mapping JSON-RPC method params...'
+        },
+        {
+          delay: 15000,
+          nodes: ['AuthGate'],
+          paths: [{ id: 'path-sse-auth-exec' }],
+          particles: [{ id: 'path-sse-auth-exec', count: 4 }],
+          log: '[AuthGate] Validating client DPoP cryptographic tokens and session ownership credentials... Access Granted.'
+        },
+        {
+          delay: 16800,
+          nodes: ['Executor'],
+          paths: [{ id: 'path-sse-exec-mgr' }],
+          particles: [{ id: 'path-sse-exec-mgr' }],
+          log: '[Executor] Invoking server tool: run_query with arguments {"limit": 100}... Code execution completed.'
+        },
+        {
+          delay: 19000,
+          nodes: ['SseMgr'],
+          paths: [{ id: 'path-sse-stream', color: '#60A5FA' }],
+          particles: [{ id: 'path-sse-stream', color: '#60A5FA', dir: 'backward', count: 6 }],
+          log: '[SseMgr] Push active. Forwarding synthesized ToolListResult results to session client stream buffer.'
+        },
+        {
+          delay: 21500,
+          nodes: ['StreamListener'],
+          log: '[StreamListener] SSE event received: "message". Parsed 200 OK Response (JSON-RPC results array).'
+        },
+        {
+          delay: 23000,
+          log: '<span class="text-accent font-semibold">// Simulation Complete. Data flow trace resolved and active.</span>'
+        }
+      ];
+      runDeclarativeSim('#http-transport', btn, steps, 'sseSimTimers');
+    };
+
+    // ==================== SIMULATOR 6: FEDERATED ROUTING ====================
+    window.routeSimTimers = window.routeSimTimers || [];
+    window.runRoutingSimulation = function(btn) {
+      const steps = [
+        {
+          delay: 0,
+          nodes: ['Orchestrator'],
+          paths: [{ id: 'path-route-orch-router' }],
+          particles: [{ id: 'path-route-orch-router' }],
+          log: '[Coordinator] User prompt contains multi-domain targets. Spawning multiplexer routing calls...'
+        },
+        {
+          delay: 1800,
+          nodes: ['Router'],
+          paths: [{ id: 'path-route-router-s1' }, { id: 'path-route-router-s2' }, { id: 'path-route-router-s3' }],
+          particles: [{ id: 'path-route-router-s1' }, { id: 'path-route-router-s2' }, { id: 'path-route-router-s3' }],
+          log: '[Routing Engine] Splitting calls by method prefixes. Delegating requests to registered namespace subnets...'
+        },
+        {
+          delay: 4000,
+          nodes: ['S1', 'S2', 'S3'],
+          paths: [{ id: 'path-route-s1-t1' }, { id: 'path-route-s2-t2' }, { id: 'path-route-s3-t3' }],
+          particles: [{ id: 'path-route-s1-t1' }, { id: 'path-route-s2-t2' }, { id: 'path-route-s3-t3' }],
+          log: '[Sandboxed Servers] Mapping method arguments: weather_get, sqlite_query, and vector_search executing in parallel VM bounds.'
+        },
+        {
+          delay: 6200,
+          nodes: ['T1', 'T2', 'T3'],
+          paths: [{ id: 'path-route-t1-agg', color: '#60A5FA' }, { id: 'path-route-t2-agg', color: '#60A5FA' }, { id: 'path-route-t3-agg', color: '#60A5FA' }],
+          particles: [{ id: 'path-route-t1-agg', color: '#60A5FA' }, { id: 'path-route-t2-agg', color: '#60A5FA' }, { id: 'path-route-t3-agg', color: '#60A5FA' }],
+          log: '[Target Systems] Database and REST API results returned. Writing values to aggregator interface streams...'
+        },
+        {
+          delay: 8400,
+          nodes: ['Aggregator'],
+          paths: [{ id: 'path-route-agg-llm', color: '#60A5FA' }],
+          particles: [{ id: 'path-route-agg-llm', color: '#60A5FA' }],
+          log: '[Context Aggregator] Formatting and sanitizing multi-server responses. Constructing unified prompt inject context.'
+        },
+        {
+          delay: 10400,
+          nodes: ['LLM'],
+          log: '[LLM Engine] Injecting token context streams. Preparing natural language generation response.'
+        },
+        {
+          delay: 12000,
+          log: '<span class="text-accent font-semibold">// Simulation Complete. Federated routing mesh paths verified and active.</span>'
+        }
+      ];
+      runDeclarativeSim('#multi-server', btn, steps, 'routeSimTimers');
+    };
+
+    // ==================== SIMULATOR 7: DEPLOYMENT ====================
+    window.deploySimTimers = window.deploySimTimers || [];
+    window.runDeploymentSimulation = function(btn) {
+      const steps = [
+        {
+          delay: 0,
+          nodes: ['Code', 'Git'],
+          paths: [{ id: 'path-deploy-code-git' }],
+          particles: [{ id: 'path-deploy-code-git' }],
+          log: '[Developer Workspace] File edit detected in server.py. Committing changes to branch...'
+        },
+        {
+          delay: 2800,
+          nodes: ['Git'],
+          paths: [{ id: 'path-deploy-git-github' }],
+          particles: [{ id: 'path-deploy-git-github' }],
+          log: '[Git] Dispatching: git push origin main to remote repository...'
+        },
+        {
+          delay: 5800,
+          nodes: ['GitHub'],
+          paths: [{ id: 'path-deploy-github-actions' }],
+          particles: [{ id: 'path-deploy-github-actions' }],
+          log: '[GitHub] Webhook triggered by push. Running code checks...'
+        },
+        {
+          delay: 8600,
+          nodes: ['Actions'],
+          paths: [{ id: 'path-deploy-actions-registry' }],
+          particles: [{ id: 'path-deploy-actions-registry' }],
+          log: '[Actions] GitHub Actions runner completed tests. Pushing Docker image to Registry...'
+        },
+        {
+          delay: 11400,
+          nodes: ['Registry'],
+          paths: [{ id: 'path-deploy-registry-docker' }],
+          particles: [{ id: 'path-deploy-registry-docker', count: 6 }],
+          log: '[Docker] Production host VM pulls updated image layers from Registry...'
+        },
+        {
+          delay: 15000,
+          nodes: ['Docker'],
+          paths: [{ id: 'path-deploy-docker-pm2' }],
+          particles: [{ id: 'path-deploy-docker-pm2' }],
+          log: '[PM2] Spawning process worker thread and linking monitoring logs...'
+        },
+        {
+          delay: 17800,
+          nodes: ['PM2'],
+          paths: [{ id: 'path-deploy-pm2-app' }],
+          particles: [{ id: 'path-deploy-pm2-app' }],
+          log: '[App] FastMCP server process booted in sandbox container, listening on port 8000.'
+        },
+        {
+          delay: 20600,
+          nodes: ['IDE', 'Cli'],
+          paths: [{ id: 'path-deploy-ide-proxy' }, { id: 'path-deploy-cli-proxy' }],
+          particles: [{ id: 'path-deploy-ide-proxy' }, { id: 'path-deploy-cli-proxy' }],
+          log: '[IDE/Cli] Client application sends secure HTTPS/SSE initialization handshake...'
+        },
+        {
+          delay: 23600,
+          nodes: ['Proxy'],
+          paths: [{ id: 'path-deploy-proxy-app' }],
+          particles: [{ id: 'path-deploy-proxy-app' }],
+          log: '[Proxy] Nginx edge router terminates SSL certificates and forwards session stream context to FastMCP container...'
+        },
+        {
+          delay: 26400,
+          nodes: ['App'],
+          paths: [{ id: 'path-deploy-proxy-app', color: '#60A5FA' }],
+          particles: [{ id: 'path-deploy-proxy-app', color: '#60A5FA', dir: 'backward' }],
+          log: '[App] Handshake completed successfully. Active Client session open.'
+        },
+        {
+          delay: 29200,
+          nodes: ['Proxy'],
+          paths: [{ id: 'path-deploy-ide-proxy', color: '#60A5FA' }, { id: 'path-deploy-cli-proxy', color: '#60A5FA' }],
+          particles: [{ id: 'path-deploy-ide-proxy', color: '#60A5FA', dir: 'backward' }, { id: 'path-deploy-cli-proxy', color: '#60A5FA', dir: 'backward' }],
+          log: '[IDE/Cli] Connected. Ready to stream Model Context Protocols.'
+        },
+        {
+          delay: 32200,
+          log: '<span class="text-accent font-semibold">// Simulation Complete. Deployment pipeline fully verified and active.</span>'
+        }
+      ];
+      runDeclarativeSim('#deployment', btn, steps, 'deploySimTimers');
+    };
   </script>
 </body>
 </html>
