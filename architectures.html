@@ -76,6 +76,36 @@
 
   <!-- Custom Stylesheet overrides -->
   <style>
+    html {
+      font-size: 105% !important; /* Slightly larger base typography for enhanced readability */
+    }
+
+    /* Premium Header text multi-color gradients */
+    h2:not(.no-gradient), h1:not(.no-gradient) {
+      background: linear-gradient(135deg, #FFFFFF 0%, #A5B4FC 50%, #4ADE80 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+    }
+    html:not(.dark) h2:not(.no-gradient), html:not(.dark) h1:not(.no-gradient) {
+      background: linear-gradient(135deg, #0F172A 0%, #4338CA 50%, #16A34A 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+    }
+    .logo-gradient-text {
+      background-image: linear-gradient(to right, #FFFFFF, #22C55E, #818CF8) !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+    html:not(.dark) .logo-gradient-text {
+      background-image: linear-gradient(to right, #0F172A, #16A34A, #4338CA) !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+
     /* ─── Design Token System ─── */
     :root {
       /* Light Mode — WCAG AA compliant */
@@ -151,7 +181,7 @@
       padding: 32px;
       margin-bottom: 24px;
       box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
-      overflow-x: hidden;
+      overflow-x: auto;
       overflow-y: hidden;
       display: block;
       text-align: center;
@@ -165,30 +195,45 @@
       transition: all 0.25s ease;
     }
     .mermaid.seq-diag svg {
-      min-width: auto !important;
+      min-width: 800px !important;
+    }
+    @media (min-width: 1024px) {
+      .mermaid.seq-diag svg {
+        min-width: auto !important;
+      }
     }
     
     /* Force specific diagrams to fit inside the window width responsively */
     .mermaid.wide-scroll-diag {
-      overflow-x: hidden !important;
+      overflow-x: auto !important;
       text-align: center !important;
     }
     .mermaid.wide-scroll-diag svg {
       width: 100% !important;
-      max-width: 100% !important;
+      min-width: 800px;
       height: auto !important;
       margin: 0 auto;
+    }
+    @media (min-width: 1024px) {
+      .mermaid.wide-scroll-diag svg {
+        min-width: 0;
+      }
     }
 
     /* Ensure all interactive architectural SVGs scale and fit the window perfectly without scrollbars */
     .arch-svg {
       width: 100% !important;
-      max-width: 100% !important;
+      min-width: 800px;
       height: auto !important;
       max-height: 75vh !important;
       display: block;
       margin: 0 auto;
       overflow: visible;
+    }
+    @media (min-width: 1024px) {
+      .arch-svg {
+        min-width: 0;
+      }
     }
     
     /* Custom scrollbar styling for the diagrams */
@@ -705,7 +750,7 @@
   <header class="fixed top-0 left-0 right-0 z-50 glass-card py-4" id="main-header">
     <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
       <!-- Logo -->
-      <a href="index.html" class="flex items-center gap-3 font-display font-extrabold text-lg tracking-tight text-white group cursor-pointer">
+      <a href="index.html" class="flex items-center gap-3 font-display font-extrabold text-sm sm:text-base md:text-lg tracking-tight text-white group cursor-pointer">
         <span class="w-3.5 h-3.5 rounded-full bg-accent shadow-neonAccent relative flex items-center justify-center">
           <span class="absolute inline-flex h-full w-full rounded-full bg-accent opacity-75 animate-ping"></span>
         </span>
@@ -716,7 +761,7 @@
       <div class="flex items-center gap-4">
         <!-- Back Button -->
         <a href="index.html" class="px-4 py-2 bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer">
-          &larr; Back to Main Guide
+          <span>&larr;</span> <span class="hidden sm:inline">Back to Main Guide</span><span class="sm:hidden">Back</span>
         </a>
         
         <!-- Theme Toggle Button -->
@@ -771,6 +816,27 @@
       <!-- Specifications Main Panels -->
       <div class="lg:col-span-9 space-y-16">
 
+        <!-- Collapsible Mobile Table of Contents (shown only on mobile/tablet) -->
+        <div class="lg:hidden glass-card rounded-2xl p-4 border border-slate-800 mb-8">
+          <details class="group">
+            <summary class="flex justify-between items-center font-display font-bold text-sm text-white cursor-pointer select-none">
+              <span>Jump to Section</span>
+              <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform duration-200 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <nav class="mt-4 space-y-2 border-t border-slate-800/80 pt-3">
+              <a href="#core-flow" class="block py-2 px-3 text-sm text-slate-400 hover:text-white hover:bg-slate-900/60 rounded-lg transition-colors">1. Core Architecture Flow</a>
+              <a href="#advanced-zt" class="block py-2 px-3 text-sm text-slate-400 hover:text-white hover:bg-slate-900/60 rounded-lg transition-colors">2. Advanced Zero-Trust Model</a>
+              <a href="#client-server" class="block py-2 px-3 text-sm text-slate-400 hover:text-white hover:bg-slate-900/60 rounded-lg transition-colors">3. Client-Server Sequence</a>
+              <a href="#stdio-transport" class="block py-2 px-3 text-sm text-slate-400 hover:text-white hover:bg-slate-900/60 rounded-lg transition-colors">4. Local STDIO Subprocess</a>
+              <a href="#http-transport" class="block py-2 px-3 text-sm text-slate-400 hover:text-white hover:bg-slate-900/60 rounded-lg transition-colors">5. Streamable HTTP / SSE</a>
+              <a href="#multi-server" class="block py-2 px-3 text-sm text-slate-400 hover:text-white hover:bg-slate-900/60 rounded-lg transition-colors">6. Federated Routing Mesh</a>
+              <a href="#deployment" class="block py-2 px-3 text-sm text-slate-400 hover:text-white hover:bg-slate-900/60 rounded-lg transition-colors">7. Production Deployment</a>
+            </nav>
+          </details>
+        </div>
+
         <!-- Architecture 1: Core Flow -->
         <section id="core-flow" class="scroll-mt-28">
           <div class="glass-card rounded-[24px] p-6 lg:p-8 border border-slate-800">
@@ -783,7 +849,7 @@
             </p>
             
             <!-- Inline SVG Diagram for MCP Core Architecture Flow -->
-            <div class="w-full overflow-hidden border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
+            <div class="w-full overflow-x-auto border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
               <svg viewBox="0 0 900 780" class="arch-svg" id="svg-core-sim" style="width: 100%; height: auto; display: block; overflow: visible;">
               <defs>
                 <marker id="arrow-core-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -934,17 +1000,28 @@
             </div>
             
             <!-- Detailed System Design Analysis -->
-            <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
-              <h4 class="text-sm font-semibold uppercase tracking-wider text-accent">System Design Process</h4>
-              <p class="text-xs text-slate-400 leading-relaxed font-light">
-                1. **Request Inception**: The user interacts with an AI agent. The coordinator triggers the **MCP Client** layer to look up capabilities required to resolve the user's intent.
-              </p>
-              <p class="text-xs text-slate-400 leading-relaxed font-light">
-                2. **Multiplexing Transport**: The client directs payloads to either a local child process pipe (STDIO) or remote web socket/HTTP connection (SSE).
-              </p>
-              <p class="text-xs text-slate-400 leading-relaxed font-light">
-                3. **Context Assembly**: The server resolves the variables (fetching database tables, running scripts, rendering markdown prompt templates) and sends structured JSON schemas back to the client. The client feeds this context to the LLM to write the final synthesized answer.
-              </p>
+            <div class="border-t border-slate-800/80 pt-6 mt-6">
+              <h4 class="text-sm font-semibold uppercase tracking-wider text-accent mb-4">System Design Process</h4>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60">
+                  <div class="text-[10px] font-mono text-accent uppercase font-bold tracking-wider mb-2">1. Request Inception</div>
+                  <p class="text-xs text-slate-300 leading-relaxed font-light">
+                    The user interacts with an AI agent. The coordinator triggers the **MCP Client** layer to look up capabilities required to resolve the user's intent.
+                  </p>
+                </div>
+                <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60">
+                  <div class="text-[10px] font-mono text-accent uppercase font-bold tracking-wider mb-2">2. Multiplexing Transport</div>
+                  <p class="text-xs text-slate-300 leading-relaxed font-light">
+                    The client directs payloads to either a local child process pipe (STDIO) or remote web socket/HTTP connection (SSE).
+                  </p>
+                </div>
+                <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60">
+                  <div class="text-[10px] font-mono text-accent uppercase font-bold tracking-wider mb-2">3. Context Assembly</div>
+                  <p class="text-xs text-slate-300 leading-relaxed font-light">
+                    The server resolves variables and sends structured JSON schemas back to the client. The client feeds this context to the LLM to write the final synthesized answer.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -961,7 +1038,7 @@
             </p>
             
             <!-- Inline SVG Diagram for Advanced Zero-Trust Architecture -->
-            <div class="w-full overflow-hidden border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
+            <div class="w-full overflow-x-auto border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
               <svg viewBox="0 0 900 780" class="arch-svg" id="svg-zt-sim" style="width: 100%; height: auto; display: block; overflow: visible;">
               <defs>
                 <marker id="arrow-zt-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -1131,14 +1208,22 @@
               </div>
             </div>
             
-            <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
-              <h4 class="text-sm font-semibold uppercase tracking-wider text-neon-light">System Design Process</h4>
-              <p class="text-xs text-slate-400 leading-relaxed font-light">
-                - **Session Sandbox Containment**: The Client Session isolates individual connection handles. Even if one server is compromised, it cannot write or query data outside its local session or view variables from another server.
-              </p>
-              <p class="text-xs text-slate-400 leading-relaxed font-light">
-                - **Command & Schema Guards**: Before routing tool calls, parameters are validated against strict JSON schemas. Authentication middleware validates JWT headers and checks secure network certificates to protect local operating systems.
-              </p>
+            <div class="border-t border-slate-800/80 pt-6 mt-6">
+              <h4 class="text-sm font-semibold uppercase tracking-wider text-neon-light mb-4">System Design Process</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60">
+                  <div class="text-[10px] font-mono text-neon-light uppercase font-bold tracking-wider mb-2">Session Sandbox Containment</div>
+                  <p class="text-xs text-slate-300 leading-relaxed font-light">
+                    The Client Session isolates individual connection handles. Even if one server is compromised, it cannot write or query data outside its local session or view variables from another server.
+                  </p>
+                </div>
+                <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60">
+                  <div class="text-[10px] font-mono text-neon-light uppercase font-bold tracking-wider mb-2">Command & Schema Guards</div>
+                  <p class="text-xs text-slate-300 leading-relaxed font-light">
+                    Before routing tool calls, parameters are validated against strict JSON schemas. Authentication middleware validates JWT headers and checks secure network certificates to protect local operating systems.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -1155,7 +1240,7 @@
             </p>
             
             <!-- Inline SVG Diagram for Client-Server Communication Flow -->
-            <div class="w-full overflow-hidden border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
+            <div class="w-full overflow-x-auto border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
               <svg viewBox="0 0 900 850" class="arch-svg" id="svg-seq-sim" style="width: 100%; height: auto; display: block; overflow: visible;">
               <defs>
                 <marker id="arrow-seq-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
@@ -1292,14 +1377,22 @@
               </div>
             </div>
             
-            <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
-              <h4 class="text-sm font-semibold uppercase tracking-wider text-gold-light">System Design Process</h4>
-              <p class="text-xs text-slate-400 leading-relaxed font-light">
-                1. **Handshake Lifecycle**: On connection, an exchange of `initialize` schemas maps protocol versions and client credentials. Client replies with an `initialized` notification to unlock routes.
-              </p>
-              <p class="text-xs text-slate-400 leading-relaxed font-light">
-                2. **Protocol Multiplexing**: After registering tools via `tools/list`, requests translate parameters to specific Pydantic types. The execution returns results to the client inside standard message structures.
-              </p>
+            <div class="border-t border-slate-800/80 pt-6 mt-6">
+              <h4 class="text-sm font-semibold uppercase tracking-wider text-gold-light mb-4">System Design Process</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60">
+                  <div class="text-[10px] font-mono text-gold-light uppercase font-bold tracking-wider mb-2">1. Handshake Lifecycle</div>
+                  <p class="text-xs text-slate-300 leading-relaxed font-light">
+                    On connection, an exchange of `initialize` schemas maps protocol versions and client credentials. Client replies with an `initialized` notification to unlock routes.
+                  </p>
+                </div>
+                <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60">
+                  <div class="text-[10px] font-mono text-gold-light uppercase font-bold tracking-wider mb-2">2. Protocol Multiplexing</div>
+                  <p class="text-xs text-slate-300 leading-relaxed font-light">
+                    After registering tools via `tools/list`, requests translate parameters to specific Pydantic types. The execution returns results to the client inside standard message structures.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -1316,7 +1409,7 @@
             </p>
             
             <!-- Inline SVG Diagram for Local STDIO Subprocess Architecture -->
-            <div class="w-full overflow-hidden border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
+            <div class="w-full overflow-x-auto border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
               <svg viewBox="0 0 900 750" class="arch-svg" id="svg-stdio-sim" style="width: 100%; height: auto; display: block; overflow: visible;">
               <defs>
                 <marker id="arrow-stdio-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -1464,14 +1557,22 @@
               </div>
             </div>
             
-            <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
-              <h4 class="text-sm font-semibold uppercase tracking-wider text-accent">System Design Process</h4>
-              <p class="text-xs text-slate-400 leading-relaxed font-light">
-                - **Subprocess Isolation**: The parent application spawns the Python server as an isolated subprocess. No networking ports are opened, keeping interactions strictly local.
-              </p>
-              <p class="text-xs text-slate-400 leading-relaxed font-light">
-                - **Stream Redirects**: JSON-RPC lines write to `stdin` and response logs stream from `stdout`. Crucially, `stderr` is captured by the client and written to a developer logs panel to prevent terminal noise.
-              </p>
+            <div class="border-t border-slate-800/80 pt-6 mt-6">
+              <h4 class="text-sm font-semibold uppercase tracking-wider text-accent mb-4">System Design Process</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60">
+                  <div class="text-[10px] font-mono text-accent uppercase font-bold tracking-wider mb-2">Subprocess Isolation</div>
+                  <p class="text-xs text-slate-300 leading-relaxed font-light">
+                    The parent application spawns the Python server as an isolated subprocess. No networking ports are opened, keeping interactions strictly local.
+                  </p>
+                </div>
+                <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60">
+                  <div class="text-[10px] font-mono text-accent uppercase font-bold tracking-wider mb-2">Stream Redirects</div>
+                  <p class="text-xs text-slate-300 leading-relaxed font-light">
+                    JSON-RPC lines write to `stdin` and response logs stream from `stdout`. Crucially, `stderr` is captured by the client and written to a developer logs panel to prevent terminal noise.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -1488,7 +1589,7 @@
             </p>
             
             <!-- Inline SVG Diagram for Streamable HTTP / SSE -->
-            <div class="w-full overflow-hidden border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
+            <div class="w-full overflow-x-auto border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
               <svg viewBox="0 0 900 680" class="arch-svg" id="svg-sse-sim" style="width: 100%; height: auto; display: block; overflow: visible;">
               <!-- Definitions for arrow markers -->
               <defs>
@@ -1624,14 +1725,22 @@
               </div>
             </div>
             
-            <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
-              <h4 class="text-sm font-semibold uppercase tracking-wider text-neon-light">System Design Process</h4>
-              <p class="text-xs text-slate-400 leading-relaxed font-light">
-                1. **GET Stream Connection**: The client initiates an SSE connection (`GET /sse`). The server creates a continuous unidirectional stream to push server notifications.
-              </p>
-              <p class="text-xs text-slate-400 leading-relaxed font-light">
-                2. **Stateless POST Actions**: Since SSE is read-only, client commands are sent as separate, stateless `POST /messages` requests containing authentication tokens and targeted session parameters.
-              </p>
+            <div class="border-t border-slate-800/80 pt-6 mt-6">
+              <h4 class="text-sm font-semibold uppercase tracking-wider text-neon-light mb-4">System Design Process</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60">
+                  <div class="text-[10px] font-mono text-neon-light uppercase font-bold tracking-wider mb-2">1. GET Stream Connection</div>
+                  <p class="text-xs text-slate-300 leading-relaxed font-light">
+                    The client initiates an SSE connection (`GET /sse`). The server creates a continuous unidirectional stream to push server notifications.
+                  </p>
+                </div>
+                <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60">
+                  <div class="text-[10px] font-mono text-neon-light uppercase font-bold tracking-wider mb-2">2. Stateless POST Actions</div>
+                  <p class="text-xs text-slate-300 leading-relaxed font-light">
+                    Since SSE is read-only, client commands are sent as separate, stateless `POST /messages` requests containing authentication tokens and targeted session parameters.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -1648,7 +1757,7 @@
             </p>
             
             <!-- Inline SVG Diagram for Federated Multi-Server Routing Mesh -->
-            <div class="w-full overflow-hidden border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
+            <div class="w-full overflow-x-auto border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
               <svg viewBox="0 0 900 750" class="arch-svg" id="svg-route-sim" style="width: 100%; height: auto; display: block; overflow: visible;">
               <defs>
                 <marker id="arrow-route-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -1799,14 +1908,22 @@
               </div>
             </div>
             
-            <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
-              <h4 class="text-sm font-semibold uppercase tracking-wider text-gold-light">System Design Process</h4>
-              <p class="text-xs text-slate-400 leading-relaxed font-light">
-                - **Namespace Routing Collision Prevention**: To allow many servers to connect simultaneously, the Client router registers tool names with prefixes (e.g., `sqlite_query`). Calls are routed to the specific server matching the prefix.
-              </p>
-              <p class="text-xs text-slate-400 leading-relaxed font-light">
-                - **Context Aggregation**: Responses from multiple servers are consolidated by the Client session manager and presented as a single context payload to the LLM agent.
-              </p>
+            <div class="border-t border-slate-800/80 pt-6 mt-6">
+              <h4 class="text-sm font-semibold uppercase tracking-wider text-gold-light mb-4">System Design Process</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60">
+                  <div class="text-[10px] font-mono text-gold-light uppercase font-bold tracking-wider mb-2">Namespace Routing</div>
+                  <p class="text-xs text-slate-300 leading-relaxed font-light">
+                    To allow many servers to connect simultaneously, the Client router registers tool names with prefixes (e.g., `sqlite_query`). Calls are routed to the specific server matching the prefix.
+                  </p>
+                </div>
+                <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60">
+                  <div class="text-[10px] font-mono text-gold-light uppercase font-bold tracking-wider mb-2">Context Aggregation</div>
+                  <p class="text-xs text-slate-300 leading-relaxed font-light">
+                    Responses from multiple servers are consolidated by the Client session manager and presented as a single context payload to the LLM agent.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -1823,7 +1940,7 @@
             </p>
             
             <!-- Inline SVG Diagram for Production Deployment Pipeline -->
-            <div class="w-full overflow-hidden border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
+            <div class="w-full overflow-x-auto border border-slate-800 bg-bgCard rounded-[20px] shadow-2xl p-4 md:p-6 mb-6">
               <svg viewBox="0 0 1200 920" class="arch-svg" id="svg-deploy-sim" style="width: 100%; height: auto; display: block; overflow: visible;">
               <!-- Definitions for arrow markers -->
               <defs>
@@ -2006,14 +2123,22 @@
               </div>
             </div>
             
-            <div class="border-t border-slate-800/80 pt-6 mt-6 space-y-4">
-              <h4 class="text-sm font-semibold uppercase tracking-wider text-accent">System Design Process</h4>
-              <p class="text-xs text-slate-400 leading-relaxed font-light">
-                1. **CI/CD Build**: Local updates are pushed to GitHub. Continuous integration runs test checks and packs code into secure Docker images.
-              </p>
-              <p class="text-xs text-slate-400 leading-relaxed font-light">
-                2. **Deployment Delivery**: The server VM pulls the image. Nginx manages secure port forwarding (Let's Encrypt certificate translation) and directs messages to PM2 worker threads.
-              </p>
+            <div class="border-t border-slate-800/80 pt-6 mt-6">
+              <h4 class="text-sm font-semibold uppercase tracking-wider text-accent mb-4">System Design Process</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60">
+                  <div class="text-[10px] font-mono text-accent uppercase font-bold tracking-wider mb-2">1. CI/CD Build</div>
+                  <p class="text-xs text-slate-300 leading-relaxed font-light">
+                    Local updates are pushed to GitHub. Continuous integration runs test checks and packs code into secure Docker images.
+                  </p>
+                </div>
+                <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60">
+                  <div class="text-[10px] font-mono text-accent uppercase font-bold tracking-wider mb-2">2. Deployment Delivery</div>
+                  <p class="text-xs text-slate-300 leading-relaxed font-light">
+                    The server VM pulls the image. Nginx manages secure port forwarding (Let's Encrypt certificate translation) and directs messages to PM2 worker threads.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
